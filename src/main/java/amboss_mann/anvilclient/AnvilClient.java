@@ -20,7 +20,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("anvilclient")
+@Mod(AnvilClient.MOD_ID)
 public class AnvilClient
 {
     // Directly reference a log4j logger.
