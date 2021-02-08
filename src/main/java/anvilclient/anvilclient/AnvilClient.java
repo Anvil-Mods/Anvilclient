@@ -1,4 +1,4 @@
-package amboss_mann.anvilclient;
+package anvilclient.anvilclient;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
