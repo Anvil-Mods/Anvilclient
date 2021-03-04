@@ -1,9 +1,27 @@
+/*******************************************************************************
+ * Copyright (C) 2021 Anvilclient and contibutors
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package anvilclient.anvilclient;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import anvilclient.anvilclient.gui.config.FullbrightConfigGui;
+import anvilclient.anvilclient.gui.config.MainConfigGui;
 import net.minecraft.client.AbstractOption;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,6 +47,11 @@ public class AnvilClient
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+        
+        ModLoadingContext.get().registerExtensionPoint(
+                ExtensionPoint.CONFIGGUIFACTORY,
+                () -> (mc, screen) -> new MainConfigGui(screen)
+        );
 
         MinecraftForge.EVENT_BUS.register(this);
     }
