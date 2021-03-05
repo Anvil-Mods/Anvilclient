@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 
 import anvilclient.anvilclient.gui.config.FullbrightConfigGui;
 import anvilclient.anvilclient.gui.config.MainConfigGui;
+import anvilclient.anvilclient.util.Keybinds;
 import net.minecraft.client.AbstractOption;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -39,7 +40,7 @@ import net.minecraftforge.fml.network.FMLNetworkConstants;
 public class AnvilClient
 {
     // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "anvilclient";
 
     public AnvilClient() {
@@ -62,8 +63,7 @@ public class AnvilClient
 
     private void doClientStuff(final FMLClientSetupEvent event)
     {
-    	//AbstractOption.NARRATOR.setOptionValues((0));
-        AbstractOption.GAMMA.setMaxValue(12.0F);
+    	Keybinds.register();
     }
 
     @SubscribeEvent

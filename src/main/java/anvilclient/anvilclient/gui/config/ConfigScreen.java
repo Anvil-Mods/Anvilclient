@@ -18,7 +18,7 @@ package anvilclient.anvilclient.gui.config;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import anvilclient.anvilclient.util.SettingManager;
+import anvilclient.anvilclient.util.ConfigManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -94,6 +94,6 @@ public class ConfigScreen extends Screen {
 	
 	@Override
 	public void onClose() {
-		SettingManager.getInstance().save();
+		ConfigManager.getInstance().save();
 	}
 }
