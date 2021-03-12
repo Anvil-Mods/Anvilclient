@@ -6,12 +6,12 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class ClickButton extends AbstractOption implements Button.IPressable{
+public class ClickOption extends AbstractOption implements Button.IPressable{
 	
 	protected String translationKey;
 	protected Button.IPressable pressedAction;
 
-	public ClickButton(String translationKeyIn, Button.IPressable pressedAction) {
+	public ClickOption(String translationKeyIn, Button.IPressable pressedAction) {
 		super(translationKeyIn);
 		this.translationKey = translationKeyIn;
 		this.pressedAction = pressedAction;

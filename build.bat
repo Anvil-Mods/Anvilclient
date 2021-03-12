@@ -14,4 +14,4 @@
 @rem     You should have received a copy of the GNU General Public License
 @rem     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 @rem ***************************************************************************
-gradlew build
+gradlew clean&&gradlew build

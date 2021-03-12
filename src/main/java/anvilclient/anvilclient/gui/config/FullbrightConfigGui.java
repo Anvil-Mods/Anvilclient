@@ -20,12 +20,12 @@ public class FullbrightConfigGui extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		this.optionsRowList.addOption(new BooleanOption(
-                "anvilclient.configGui.fullbright.title",
+                "anvilclient.configGui.fullbright.toggle",
                 unused -> ConfigManager.getInstance().getFullbright(),
                 (unused, newValue) -> ConfigManager.getInstance().setFullbright(newValue)
         ));
 		this.optionsRowList.addOption(new SliderPercentageOption(
-		        "hbwhelper.configGui.hudX.title",
+				"anvilclient.configGui.fullbrightLevel.title",
 		        0.0, 12.0, (float) 0.1,
 		        unused -> (double) ConfigManager.getInstance().getFullbrightLevel(),
 		        (unused, newValue) -> ConfigManager.getInstance().setFullbrightLevel(newValue.doubleValue()),

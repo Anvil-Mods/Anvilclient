@@ -8,7 +8,7 @@ license="GPLv3"
 
 modId="anvilclient" #mandatory
 
-version="1.0.0.0" #mandatory
+version="${file.jarVersion}" #mandatory
 
 displayName="Anvilclient" #mandatory
 
@@ -24,7 +24,7 @@ description='''
 A utility mod for Minecraft
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.examplemod]] #optional
+[[dependencies.anvilclient]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
@@ -35,11 +35,19 @@ A utility mod for Minecraft
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
+    
 # Here's another dependency
-[[dependencies.examplemod]]
+[[dependencies.anvilclient]]
     modId="minecraft"
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.16.3, 1.16.4, 1.16.5,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.anvilclient]]
+    modId="baritoe"
+    mandatory=false
+    versionRange="[1.16.3,)"
+    ordering="NONE"
+    side="CLIENT"

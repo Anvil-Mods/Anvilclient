@@ -20,10 +20,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import anvilclient.anvilclient.gui.config.FullbrightConfigGui;
 import anvilclient.anvilclient.gui.config.MainConfigGui;
 import anvilclient.anvilclient.util.Keybinds;
-import net.minecraft.client.AbstractOption;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;

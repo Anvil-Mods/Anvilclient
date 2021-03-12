@@ -16,27 +16,31 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.config;
 
-import anvilclient.anvilclient.util.ClickButton;
+import anvilclient.anvilclient.util.ClickOption;
+import anvilclient.anvilclient.util.ConfigManager;
+import net.minecraft.client.AbstractOption;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.settings.BooleanOption;
 
 public final class MainConfigGui extends ConfigScreen {
+
+	private AbstractOption[] fullbrightOptions = {
+			new BooleanOption("anvilclient.configGui.fullbright.toggle",
+					unused -> ConfigManager.getInstance().getFullbright(),
+					(unused, newValue) -> ConfigManager.getInstance().setFullbright(newValue)),
+			new ClickOption("anvilclient.configGui.fullbright.title",
+					(unused) -> this.minecraft.displayGuiScreen(new FullbrightConfigGui(this))) };
 
 	public MainConfigGui(Screen parentScreen) {
 		super("anvilclient.mainConfigGui.title", parentScreen);
 	}
-	
+
 	public MainConfigGui() {
 		super("anvilclient.mainConfigGui.title");
-	}
-	
-	@Override
-	protected void init() {
-		super.init();
 	}
 
 	@Override
 	protected void addOptions() {
-		this.optionsRowList.addOption(new ClickButton("anvilclient.configGui.fullbright.title", (unused) -> this.minecraft.displayGuiScreen(new FullbrightConfigGui(this))));
+		this.optionsRowList.addOptions(fullbrightOptions);
 	}
 }
