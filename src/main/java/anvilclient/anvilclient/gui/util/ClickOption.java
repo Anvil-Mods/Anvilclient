@@ -1,4 +1,4 @@
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.gui.util;
 
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.GameSettings;
