@@ -26,8 +26,8 @@ public final class MainConfigGui extends ConfigScreen {
 
 	private AbstractOption[] fullbrightOptions = {
 			new BooleanOption("anvilclient.configGui.fullbright.toggle",
-					unused -> ConfigManager.getInstance().getFullbright(),
-					(unused, newValue) -> ConfigManager.getInstance().setFullbright(newValue)),
+					unused -> configManager.getFullbright(),
+					(unused, newValue) -> configManager.setFullbright(newValue)),
 			new ClickOption("anvilclient.configGui.fullbright.title",
 					(unused) -> this.minecraft.displayGuiScreen(new FullbrightConfigGui(this))) };
 

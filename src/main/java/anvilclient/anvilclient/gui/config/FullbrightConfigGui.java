@@ -1,6 +1,5 @@
 package anvilclient.anvilclient.gui.config;
 
-import anvilclient.anvilclient.util.ConfigManager;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.BooleanOption;
@@ -21,14 +20,14 @@ public class FullbrightConfigGui extends ConfigScreen {
 	protected void addOptions() {
 		this.optionsRowList.addOption(new BooleanOption(
                 "anvilclient.configGui.fullbright.toggle",
-                unused -> ConfigManager.getInstance().getFullbright(),
-                (unused, newValue) -> ConfigManager.getInstance().setFullbright(newValue)
+                unused -> configManager.getFullbright(),
+                (unused, newValue) -> configManager.setFullbright(newValue)
         ));
 		this.optionsRowList.addOption(new SliderPercentageOption(
 				"anvilclient.configGui.fullbrightLevel.title",
 		        0.0, 12.0, (float) 0.1,
-		        unused -> (double) ConfigManager.getInstance().getFullbrightLevel(),
-		        (unused, newValue) -> ConfigManager.getInstance().setFullbrightLevel(newValue.doubleValue()),
+		        unused -> (double) configManager.getFullbrightLevel(),
+		        (unused, newValue) -> configManager.setFullbrightLevel(newValue.doubleValue()),
 		        // BiFunction that returns a string text component in format "<name>: <value>"
 		        (gs, option) -> new StringTextComponent(
 		                // Use I18n.format(String) to get a translation key's value

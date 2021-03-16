@@ -19,7 +19,6 @@ package anvilclient.anvilclient.gui.config;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.util.ConfigManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.list.OptionsRowList;
@@ -37,6 +36,8 @@ public class ConfigScreen extends Screen {
 	protected static final int DONE_BUTTON_TOP_OFFSET = 26;
 
 	protected OptionsRowList optionsRowList;
+	
+	protected final ConfigManager configManager = ConfigManager.getInstance();
 	
 	private Screen parentScreen;
 
