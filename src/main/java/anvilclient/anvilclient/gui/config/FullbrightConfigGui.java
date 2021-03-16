@@ -28,9 +28,7 @@ public class FullbrightConfigGui extends ConfigScreen {
 		        0.0, 12.0, (float) 0.1,
 		        unused -> (double) configManager.getFullbrightLevel(),
 		        (unused, newValue) -> configManager.setFullbrightLevel(newValue.doubleValue()),
-		        // BiFunction that returns a string text component in format "<name>: <value>"
 		        (gs, option) -> new StringTextComponent(
-		                // Use I18n.format(String) to get a translation key's value
 		                I18n.format("anvilclient.configGui.fullbrightLevel.title")
 		                + ": "
 		                + ((double) Math.round(((double) option.get(gs))*10))/10
