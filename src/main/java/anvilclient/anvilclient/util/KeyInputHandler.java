@@ -10,6 +10,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
 public class KeyInputHandler{
+	
+	private static final ConfigManager configManager = ConfigManager.getInstance();
+	private static final SettingManager settingManager = SettingManager.getInstance();
 
 	@SubscribeEvent
     public static void onKeyInput(KeyInputEvent event) {
@@ -17,9 +20,9 @@ public class KeyInputHandler{
             Minecraft.getInstance().displayGuiScreen(new MainConfigGui());
         }
         if (Keybinds.fullbright.isPressed() ) {
-        	ConfigManager.getInstance().toggleFullbright();
-        	ConfigManager.getInstance().save();
-        	SettingManager.getInstance().update();
+        	configManager.toggleFullbright();
+        	configManager.save();
+        	settingManager.update();
         }
     }
 }

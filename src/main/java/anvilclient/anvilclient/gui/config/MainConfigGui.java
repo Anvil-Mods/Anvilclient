@@ -17,7 +17,6 @@
 package anvilclient.anvilclient.gui.config;
 
 import anvilclient.anvilclient.gui.util.ClickOption;
-import anvilclient.anvilclient.util.ConfigManager;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.BooleanOption;

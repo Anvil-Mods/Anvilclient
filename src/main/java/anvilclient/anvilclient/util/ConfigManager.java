@@ -13,7 +13,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
 	private static final ConfigManager INSTANCE;
