@@ -17,6 +17,11 @@ import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 public class ConfigManager {
 	private static final ConfigManager INSTANCE;
 
+	public static ConfigManager getInstance() {
+		return INSTANCE;
+	}
+	
+	
 	private static final ForgeConfigSpec SPEC;
 
 	private static final Path CONFIG_PATH = Paths.get("config", AnvilClient.MOD_ID + ".toml");
@@ -41,11 +46,7 @@ public class ConfigManager {
 				.defineInRange("fullbrightLevel", 12.0, 0.0, 12.0);
 		vanillaGamma = configSpecBuilder.defineInRange("vanillaGamma", 1.0, 0.0, 1.0);
 	}
-
-	public static ConfigManager getInstance() {
-		return INSTANCE;
-	}
-
+	
 	public void save() {
 		SPEC.save();
 		SettingManager.getInstance().update();

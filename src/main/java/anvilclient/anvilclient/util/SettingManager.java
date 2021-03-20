@@ -9,17 +9,18 @@ public class SettingManager {
 
 	private static final SettingManager INSTANCE = new SettingManager();
 	
+	public static SettingManager getInstance() {
+		return INSTANCE;
+	}
+		
+	
 	private GameSettings gameSettings = Minecraft.getInstance().gameSettings;
 	
 	private boolean vanillaGammaInitialized = true;
 	
-	public SettingManager() {
+	private SettingManager() {
 	}
 
-	public static SettingManager getInstance() {
-		return INSTANCE;
-	}
-	
 	public void update() {
 		updateFullbright();
 	}
