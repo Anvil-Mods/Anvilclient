@@ -44,10 +44,3 @@ A utility mod for Minecraft
     versionRange="[1.16.3, 1.16.4, 1.16.5,)"
     ordering="NONE"
     side="BOTH"
-
-[[dependencies.anvilclient]]
-    modId="baritoe"
-    mandatory=false
-    versionRange="[1.16.3,)"
-    ordering="NONE"
-    side="CLIENT"
