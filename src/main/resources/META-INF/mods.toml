@@ -12,7 +12,7 @@ version="${file.jarVersion}" #mandatory
 
 displayName="Anvilclient" #mandatory
 
-displayURL="https://github.com/Anvilclient/Anvilclient" #optional
+displayURL="https://anvilclient.github.io" #optional
 
 logoFile="anvilclient.png" #optional
 
