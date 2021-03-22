@@ -3,6 +3,7 @@
 	"anvilclient.configGui.fullbright.title": "Fullbright",
 	"anvilclient.configGui.fullbrightLevel.title": "Fullbrightlevel",
 	"anvilclient.configGui.fullbright.toggle": "Toggle Fullbright",
+	"anvilclient.configGui.coordinates.toggle": "Show Coordinates",
 	
 	"anvilclient.key.openSettings": "Open Settings",
 	"anvilclient.key.categories.anvilclient": "Anvilclient"

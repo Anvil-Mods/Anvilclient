@@ -19,10 +19,14 @@ public class KeyInputHandler{
         if (Keybinds.openSettings.isPressed()) {
             Minecraft.getInstance().displayGuiScreen(new MainConfigGui());
         }
-        if (Keybinds.fullbright.isPressed() ) {
+        if (Keybinds.fullbright.isPressed()) {
         	configManager.toggleFullbright();
         	configManager.save();
         	settingManager.update();
+        }
+        if (Keybinds.coordinates.isPressed()) {
+        	configManager.toggleCoordinates();
+        	configManager.save();
         }
     }
 }

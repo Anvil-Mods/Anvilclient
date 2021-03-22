@@ -21,6 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import anvilclient.anvilclient.gui.config.MainConfigGui;
+import anvilclient.anvilclient.util.EventManager;
 import anvilclient.anvilclient.util.Keybinds;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,6 +63,7 @@ public class AnvilClient
     private void doClientStuff(final FMLClientSetupEvent event)
     {
     	Keybinds.register();
+    	EventManager.getInstance().registerOnEventBus();
     }
 
     @SubscribeEvent

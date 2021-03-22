@@ -28,7 +28,14 @@ public final class MainConfigGui extends ConfigScreen {
 					unused -> configManager.getFullbright(),
 					(unused, newValue) -> configManager.setFullbright(newValue)),
 			new ClickOption("anvilclient.configGui.fullbright.title",
-					(unused) -> this.minecraft.displayGuiScreen(new FullbrightConfigGui(this))) };
+					(unused) -> this.minecraft.displayGuiScreen(new FullbrightConfigGui(this)))
+			};
+	
+	private AbstractOption[] coordinatesOptions = {
+			new BooleanOption("anvilclient.configGui.coordinates.toggle",
+					unused -> configManager.getCoordinates(),
+					(unused, newValue) -> configManager.setCoordinates(newValue))
+			};
 
 	public MainConfigGui(Screen parentScreen) {
 		super("anvilclient.mainConfigGui.title", parentScreen);
@@ -41,5 +48,6 @@ public final class MainConfigGui extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		this.optionsRowList.addOptions(fullbrightOptions);
+		this.optionsRowList.addOptions(coordinatesOptions);
 	}
 }

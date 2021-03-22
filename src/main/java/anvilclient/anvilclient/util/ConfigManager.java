@@ -9,7 +9,6 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
 import anvilclient.anvilclient.AnvilClient;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
@@ -20,8 +19,7 @@ public class ConfigManager {
 	public static ConfigManager getInstance() {
 		return INSTANCE;
 	}
-	
-	
+
 	private static final ForgeConfigSpec SPEC;
 
 	private static final Path CONFIG_PATH = Paths.get("config", AnvilClient.MOD_ID + ".toml");
@@ -39,14 +37,13 @@ public class ConfigManager {
 
 	private ConfigManager(ForgeConfigSpec.Builder configSpecBuilder) {
 
-		fullbright = configSpecBuilder.translation("anvilclient.configGui.fullbright.title")
-				.comment(new TranslationTextComponent("anvilclient.configGui.fullbright.description").getString())
-				.define("fullbright", false);
-		fullbrightLevel = configSpecBuilder.translation("anvilclient.configGui.fullbrightLevel.title")
-				.defineInRange("fullbrightLevel", 12.0, 0.0, 12.0);
+		fullbright = configSpecBuilder.define("fullbright", false);
+		fullbrightLevel = configSpecBuilder.defineInRange("fullbrightLevel", 12.0, 0.0, 12.0);
 		vanillaGamma = configSpecBuilder.defineInRange("vanillaGamma", 1.0, 0.0, 1.0);
+
+		coordinates = configSpecBuilder.define("coordinates", false);
 	}
-	
+
 	public void save() {
 		SPEC.save();
 		SettingManager.getInstance().update();
@@ -84,5 +81,19 @@ public class ConfigManager {
 
 	public void setVanillaGamma(Double newValue) {
 		vanillaGamma.set(newValue);
+	}
+
+	private final BooleanValue coordinates;
+
+	public boolean getCoordinates() {
+		return coordinates.get();
+	}
+
+	public void setCoordinates(boolean newValue) {
+		coordinates.set(newValue);
+	}
+	
+	public void toggleCoordinates() {
+		coordinates.set(!coordinates.get());
 	}
 }
