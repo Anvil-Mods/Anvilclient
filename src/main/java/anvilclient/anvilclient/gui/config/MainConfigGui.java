@@ -34,7 +34,9 @@ public final class MainConfigGui extends ConfigScreen {
 	private AbstractOption[] coordinatesOptions = {
 			new BooleanOption("anvilclient.configGui.coordinates.toggle",
 					unused -> configManager.getCoordinates(),
-					(unused, newValue) -> configManager.setCoordinates(newValue))
+					(unused, newValue) -> configManager.setCoordinates(newValue)),
+			new ClickOption("anvilclient.configGui.coordinates.title",
+					(unused) -> this.minecraft.displayGuiScreen(new CoordinatesConfigGui(this)))
 			};
 
 	public MainConfigGui(Screen parentScreen) {
