@@ -18,10 +18,10 @@ package anvilclient.anvilclient.gui.config;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import anvilclient.anvilclient.gui.util.ExtendedOptionsRowList;
 import anvilclient.anvilclient.util.ConfigManager;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.gui.widget.list.OptionsRowList;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class ConfigScreen extends Screen {
@@ -35,7 +35,7 @@ public class ConfigScreen extends Screen {
 	protected static final int BUTTON_HEIGHT = 20;
 	protected static final int DONE_BUTTON_TOP_OFFSET = 26;
 
-	protected OptionsRowList optionsRowList;
+	protected ExtendedOptionsRowList optionsRowList;
 	
 	protected final ConfigManager configManager = ConfigManager.getInstance();
 	
@@ -52,7 +52,7 @@ public class ConfigScreen extends Screen {
 
 	@Override
     protected void init() {
-		this.optionsRowList = new OptionsRowList(
+		this.optionsRowList = new ExtendedOptionsRowList(
                 this.minecraft, this.width, this.height,
                 OPTIONS_LIST_TOP_HEIGHT,
                 this.height - OPTIONS_LIST_BOTTOM_OFFSET,
