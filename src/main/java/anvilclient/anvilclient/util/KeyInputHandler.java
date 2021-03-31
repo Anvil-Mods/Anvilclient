@@ -44,5 +44,9 @@ public class KeyInputHandler{
         	configManager.toggleCoordinates();
         	configManager.save();
         }
+        if (Keybinds.autoTool.isPressed()) {
+        	configManager.toggleAutoTool();
+        	configManager.save();
+        }
     }
 }
