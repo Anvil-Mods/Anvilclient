@@ -14,31 +14,30 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.gui.util;
+package anvilclient.anvilclient.features;
 
+import anvilclient.anvilclient.AnvilClient;
+import anvilclient.anvilclient.util.ConfigManager;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.GameSettings;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.Minecraft;
 
-public class ClickOption extends AbstractOption implements Button.IPressable{
+public class Fullbright {
 	
-	protected String translationKey;
-	protected Button.IPressable pressedAction;
-
-	public ClickOption(String translationKeyIn, Button.IPressable pressedAction) {
-		super(translationKeyIn);
-		this.translationKey = translationKeyIn;
-		this.pressedAction = pressedAction;
-	}
-
-	@Override
-	public Widget createWidget(GameSettings options, int xIn, int yIn, int widthIn) {
-		return new Button(xIn, yIn, widthIn, 20, new TranslationTextComponent(translationKey), pressedAction);
-	}
-
-	@Override
-	public void onPress(Button p_onPress_1_) {
+	private static GameSettings gameSettings = Minecraft.getInstance().gameSettings;
+	
+	private static boolean vanillaGammaInitialized = true;
+	
+	public static void update() {
+		if (ConfigManager.getInstance().getFullbright()) {
+			if (!vanillaGammaInitialized && AbstractOption.GAMMA.get(gameSettings) <= 1.0) {
+				ConfigManager.getInstance().setVanillaGamma(AbstractOption.GAMMA.get(gameSettings));
+			}
+			AbstractOption.GAMMA.set(gameSettings, ConfigManager.getInstance().getFullbrightLevel());
+		} else if (!ConfigManager.getInstance().getFullbright()){
+			AbstractOption.GAMMA.set(gameSettings, ConfigManager.getInstance().getVanillaGamma());
+			AnvilClient.LOGGER.info("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
+			vanillaGammaInitialized = false;
+		}
 	}
 }

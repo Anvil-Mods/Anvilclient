@@ -1,4 +1,5 @@
 # eclipse
+eclipse
 bin
 *.launch
 .settings
@@ -20,10 +21,11 @@ build
 .gradle
 
 # other
-eclipse
 run
 logs
 latest.log
+/Users/
 
 # Files from Forge MDK
 forge*changelog.txt
+

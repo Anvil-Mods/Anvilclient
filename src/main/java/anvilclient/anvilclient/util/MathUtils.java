@@ -14,31 +14,25 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.gui.util;
+package anvilclient.anvilclient.util;
 
-import net.minecraft.client.AbstractOption;
-import net.minecraft.client.GameSettings;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.TranslationTextComponent;
+import java.util.Random;
 
-public class ClickOption extends AbstractOption implements Button.IPressable{
+import net.minecraft.util.math.MathHelper;
+
+public class MathUtils {
+
+	private static Random randomGenerator = new Random();
 	
-	protected String translationKey;
-	protected Button.IPressable pressedAction;
-
-	public ClickOption(String translationKeyIn, Button.IPressable pressedAction) {
-		super(translationKeyIn);
-		this.translationKey = translationKeyIn;
-		this.pressedAction = pressedAction;
+	public static int randInt(int min, int max) {
+		int number = randomGenerator.nextInt((max-min)+1);
+		return normalizeInt(number, 0, max-min, min, max, false);
 	}
-
-	@Override
-	public Widget createWidget(GameSettings options, int xIn, int yIn, int widthIn) {
-		return new Button(xIn, yIn, widthIn, 20, new TranslationTextComponent(translationKey), pressedAction);
-	}
-
-	@Override
-	public void onPress(Button p_onPress_1_) {
+	
+	public static int normalizeInt(int value, int minold, int maxold, int min, int max, boolean clamp) {
+		if (clamp) {
+			value = MathHelper.clamp(value, minold, maxold);
+		}
+		return (max-min)/(maxold-minold)*(value-minold)+min;
 	}
 }

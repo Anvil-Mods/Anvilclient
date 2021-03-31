@@ -24,7 +24,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class ConfigScreen extends Screen {
+public abstract class ConfigScreen extends Screen {
 	private static final int TITLE_HEIGHT = 8;
 
 	protected static final int OPTIONS_LIST_TOP_HEIGHT = 24;
@@ -72,8 +72,7 @@ public class ConfigScreen extends Screen {
         ));
 	}
 	
-	protected void addOptions() {
-	}
+	protected abstract void addOptions();
 	
 	public void showScreen(Screen screen) {
 		this.minecraft.displayGuiScreen(screen);
