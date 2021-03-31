@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2021  Anvilclient and Contributors
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package anvilclient.anvilclient.util;
 
 import java.nio.file.Path;
@@ -9,9 +25,11 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
 import anvilclient.anvilclient.AnvilClient;
+import anvilclient.anvilclient.features.Fullbright;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
 	private static final ConfigManager INSTANCE;
@@ -42,11 +60,14 @@ public class ConfigManager {
 		vanillaGamma = configSpecBuilder.defineInRange("vanillaGamma", 1.0, 0.0, 1.0);
 
 		coordinates = configSpecBuilder.define("coordinates", false);
+		
+		autoTool = configSpecBuilder.define("autoTool", false);
+		autoToolMinDurability = configSpecBuilder.defineInRange("autoToolMinDurability", 5, 0, Byte.MAX_VALUE);
 	}
 
 	public void save() {
 		SPEC.save();
-		SettingManager.getInstance().update();
+		Fullbright.update();
 	}
 
 	private final BooleanValue fullbright;
@@ -75,11 +96,11 @@ public class ConfigManager {
 
 	private final DoubleValue vanillaGamma;
 
-	public Double getVanillaGamma() {
+	public double getVanillaGamma() {
 		return vanillaGamma.get();
 	}
 
-	public void setVanillaGamma(Double newValue) {
+	public void setVanillaGamma(double newValue) {
 		vanillaGamma.set(newValue);
 	}
 
@@ -95,5 +116,29 @@ public class ConfigManager {
 	
 	public void toggleCoordinates() {
 		coordinates.set(!coordinates.get());
+	}
+	
+	private final BooleanValue autoTool;
+	
+	public boolean getAutoTool() {
+		return autoTool.get();
+	}
+	
+	public void setAutoTool(boolean newValue) {
+		autoTool.set(newValue);
+	}
+	
+	public void toggleAutoTool() {
+		autoTool.set(!autoTool.get());
+	}
+	
+	private final IntValue autoToolMinDurability;
+	
+	public int getAutoToolMinDurability() {
+		return autoToolMinDurability.get();
+	}
+
+	public void setAutoToolMinDurability(int newValue) {
+		autoToolMinDurability.set(newValue);
 	}
 }

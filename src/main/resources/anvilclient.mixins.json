@@ -5,5 +5,11 @@
 	"refmap": "anvilclient.refmap.json",
 	"mixins": [
 	],
+	"client": [
+		"MixinPlayerController"
+	],
+	"injectors": {
+    	"defaultRequire": 1
+    },
 	"minVersion": "0.8"
 }

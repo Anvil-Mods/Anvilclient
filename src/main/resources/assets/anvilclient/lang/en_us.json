@@ -1,10 +1,17 @@
 {
 	"anvilclient.mainConfigGui.title": "Anvilclient",
+	
 	"anvilclient.configGui.fullbright.title": "Fullbright",
-	"anvilclient.configGui.fullbrightLevel.title": "Fullbrightlevel",
 	"anvilclient.configGui.fullbright.toggle": "Toggle Fullbright",
+	"anvilclient.configGui.fullbrightLevel.title": "Fullbrightlevel",
+	
 	"anvilclient.configGui.coordinates.title": "Coordinates",
 	"anvilclient.configGui.coordinates.toggle": "Show Coordinates",
+	
+	"anvilclient.configGui.autoTool.title": "Auto Tool",
+	"anvilclient.configGui.autoTool.toggle": "Toogle Auto Tool",
+	"anvilclient.configGui.autoToolMinDurability.title": "Min Durability",
+	
 	
 	"anvilclient.key.openSettings": "Open Settings",
 	"anvilclient.key.categories.anvilclient": "Anvilclient"

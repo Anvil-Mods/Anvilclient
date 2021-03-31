@@ -28,7 +28,7 @@ public final class MainConfigGui extends ConfigScreen {
 					unused -> configManager.getFullbright(),
 					(unused, newValue) -> configManager.setFullbright(newValue)),
 			new ClickOption("anvilclient.configGui.fullbright.title",
-					(unused) -> this.minecraft.displayGuiScreen(new FullbrightConfigGui(this)))
+					unused -> this.minecraft.displayGuiScreen(new FullbrightConfigGui(this)))
 			};
 	
 	private AbstractOption[] coordinatesOptions = {
@@ -36,7 +36,15 @@ public final class MainConfigGui extends ConfigScreen {
 					unused -> configManager.getCoordinates(),
 					(unused, newValue) -> configManager.setCoordinates(newValue)),
 			new ClickOption("anvilclient.configGui.coordinates.title",
-					(unused) -> this.minecraft.displayGuiScreen(new CoordinatesConfigGui(this)))
+					unused -> this.minecraft.displayGuiScreen(new CoordinatesConfigGui(this)))
+			};
+	
+	private AbstractOption[] autoToolOptions = {
+			new BooleanOption("anvilclient.configGui.autoTool.toggle",
+					unused -> configManager.getAutoTool(),
+					(unused, newValue) -> configManager.setAutoTool(newValue)),
+			new ClickOption("anvilclient.configGui.autoTool.title",
+					unused -> this.minecraft.displayGuiScreen(new AutoToolConfigGui(this)))
 			};
 
 	public MainConfigGui(Screen parentScreen) {
@@ -51,5 +59,6 @@ public final class MainConfigGui extends ConfigScreen {
 	protected void addOptions() {
 		this.optionsRowList.addOptions(fullbrightOptions);
 		this.optionsRowList.addOptions(coordinatesOptions);
+		this.optionsRowList.addOptions(autoToolOptions);
 	}
 }
