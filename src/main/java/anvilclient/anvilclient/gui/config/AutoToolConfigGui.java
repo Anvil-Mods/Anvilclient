@@ -46,6 +46,9 @@ public class AutoToolConfigGui extends ConfigScreen {
 		                I18n.format("anvilclient.configGui.autoToolMinDurability.title")
 		                + ": "
 		                + configManager.getAutoToolMinDurability())));
+		this.optionsRowList.addOption(new BooleanOption("anvilclient.configGui.autoToolRevertTool.toggle",
+					unused -> configManager.getAutoToolRevertTool(),
+					(unused, newValue) -> configManager.setAutoToolRevertTool(newValue)));
 	}
 
 }

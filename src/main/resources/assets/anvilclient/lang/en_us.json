@@ -11,6 +11,7 @@
 	"anvilclient.configGui.autoTool.title": "Auto Tool",
 	"anvilclient.configGui.autoTool.toggle": "Toogle Auto Tool",
 	"anvilclient.configGui.autoToolMinDurability.title": "Min Durability",
+	"anvilclient.configGui.autoToolRevertTool.toggle": "Revert Back to old Slot",
 	
 	
 	"anvilclient.key.openSettings": "Open Settings",

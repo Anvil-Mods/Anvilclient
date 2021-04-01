@@ -29,6 +29,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class AutoTool {
 	
+	private static boolean isOriginalTool = true;
+	private static Slot originalTool;
+	
 	private static boolean isDurabilityGood(ItemStack tool) {
 		ConfigManager configManager = ConfigManager.getInstance();
 		return configManager.getAutoToolMinDurability() < 1
@@ -55,7 +58,22 @@ public class AutoTool {
 
 	public static void selectBestTool(BlockPos blockPos) {
 		if (ConfigManager.getInstance().getAutoTool()) {
-			LocalPlayerHelper.setSelectedSlot(LocalPlayerHelper.getLocalPlayer(), getBestTool(blockPos));
+			Slot bestTool = getBestTool(blockPos);
+			ClientPlayerEntity localPlayer = LocalPlayerHelper.getLocalPlayer();
+			if (isOriginalTool) {
+				originalTool = LocalPlayerHelper.getSelectedSlot(localPlayer);
+			}
+			LocalPlayerHelper.setSelectedSlot(localPlayer, bestTool);
+			isOriginalTool = false;
+		}
+	}
+	
+	public static void resetTool() {
+		if (ConfigManager.getInstance().getAutoToolRevertTool()) {
+			if (!isOriginalTool) {
+				LocalPlayerHelper.setSelectedSlot(LocalPlayerHelper.getLocalPlayer(), originalTool);
+				isOriginalTool = true;
+			} 
 		}
 	}
 }

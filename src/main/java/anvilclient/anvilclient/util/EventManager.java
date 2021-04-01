@@ -17,6 +17,7 @@
 package anvilclient.anvilclient.util;
 
 import anvilclient.anvilclient.event.PlayerDamageBlockEvent;
+import anvilclient.anvilclient.event.PlayerResetBreakingBlockEvent;
 import anvilclient.anvilclient.features.AutoTool;
 import anvilclient.anvilclient.gui.hud.Hud;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -60,5 +61,10 @@ public class EventManager {
 	@SubscribeEvent
 	public void onPlayerDamageBlock(PlayerDamageBlockEvent event) {
 		AutoTool.selectBestTool(event.getBlockPos());
+	}
+	
+	@SubscribeEvent
+	public void onPlayerResetBreakingBlock(PlayerResetBreakingBlockEvent event) {
+		AutoTool.resetTool();
 	}
 }

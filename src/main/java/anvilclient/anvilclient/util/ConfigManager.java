@@ -63,6 +63,7 @@ public class ConfigManager {
 		
 		autoTool = configSpecBuilder.define("autoTool", false);
 		autoToolMinDurability = configSpecBuilder.defineInRange("autoToolMinDurability", 5, 0, Byte.MAX_VALUE);
+		autoToolRevertTool = configSpecBuilder.define("autoToolRevertTool", true);
 	}
 
 	public void save() {
@@ -140,5 +141,19 @@ public class ConfigManager {
 
 	public void setAutoToolMinDurability(int newValue) {
 		autoToolMinDurability.set(newValue);
+	}
+	
+	private final BooleanValue autoToolRevertTool;
+	
+	public boolean getAutoToolRevertTool() {
+		return autoToolRevertTool.get();
+	}
+
+	public void setAutoToolRevertTool(boolean newValue) {
+		autoToolRevertTool.set(newValue);
+	}
+
+	public void toggleAutoToolRevertTool() {
+		autoToolRevertTool.set(!autoToolRevertTool.get());
 	}
 }

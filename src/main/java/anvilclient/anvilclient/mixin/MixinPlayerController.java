@@ -19,9 +19,11 @@ package anvilclient.anvilclient.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import anvilclient.anvilclient.event.PlayerDamageBlockEvent;
+import anvilclient.anvilclient.event.PlayerResetBreakingBlockEvent;
 import anvilclient.anvilclient.util.EventManager;
 import net.minecraft.client.multiplayer.PlayerController;
 import net.minecraft.util.Direction;
@@ -32,5 +34,10 @@ public class MixinPlayerController {
 	@Inject(at = @At("HEAD"), method = "onPlayerDamageBlock(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;)Z")
 	private void onPlayerDamageBlock(BlockPos posBlock, Direction directionFacing, CallbackInfoReturnable<Boolean> callback) {
 		EventManager.FORGE_EVENT_BUS.post(new PlayerDamageBlockEvent(posBlock, directionFacing));
+	}
+	
+	@Inject(at = @At("HEAD"), method = "resetBlockRemoving")
+	private void resetBlockRemoving(CallbackInfo callback) {
+		EventManager.FORGE_EVENT_BUS.post(new PlayerResetBreakingBlockEvent());
 	}
 }
