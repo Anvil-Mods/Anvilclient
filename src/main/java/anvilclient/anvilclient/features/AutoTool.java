@@ -50,7 +50,8 @@ public class AutoTool {
 		          .filter(AutoTool::isDurabilityGood)
 		          .max(Comparator.comparing(Slot::getStack,
 		              Comparator.<ItemStack>comparingDouble(tool -> ItemHelper.getDiggingSpeedAt(localPlayer, tool, blockPos))
-		              .thenComparing(ItemHelper::isUnbreakable)))
+		              .thenComparing(ItemHelper::isUnbreakable))
+		              .thenComparing(slot -> slot == LocalPlayerHelper.getSelectedSlot(localPlayer)))
 		          .orElse(LocalPlayerHelper.getSelectedSlot(localPlayer));
 		    }
 		return LocalPlayerHelper.getSelectedSlot(localPlayer);
