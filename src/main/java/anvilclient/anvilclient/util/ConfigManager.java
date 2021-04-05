@@ -25,10 +25,12 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
 import anvilclient.anvilclient.AnvilClient;
+import anvilclient.anvilclient.features.AutoTool;
 import anvilclient.anvilclient.features.Fullbright;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.EnumValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
@@ -64,6 +66,7 @@ public class ConfigManager {
 		autoTool = configSpecBuilder.define("autoTool", false);
 		autoToolMinDurability = configSpecBuilder.defineInRange("autoToolMinDurability", 5, 0, Byte.MAX_VALUE);
 		autoToolRevertTool = configSpecBuilder.define("autoToolRevertTool", true);
+		autoToolSilkTouchMode = configSpecBuilder.defineEnum("autoToolSilkTouchMode", AutoTool.SilkTouchMode.DOESNT_MATTER);
 	}
 
 	public void save() {
@@ -155,5 +158,15 @@ public class ConfigManager {
 
 	public void toggleAutoToolRevertTool() {
 		autoToolRevertTool.set(!autoToolRevertTool.get());
+	}
+	
+	private final EnumValue<AutoTool.SilkTouchMode> autoToolSilkTouchMode;
+	
+	public AutoTool.SilkTouchMode getAutoToolSilkTouchMode() {
+		return autoToolSilkTouchMode.get();
+	}
+	
+	public void setAutoToolSilkTouchMode(AutoTool.SilkTouchMode newValue) {
+		autoToolSilkTouchMode.set(newValue);
 	}
 }

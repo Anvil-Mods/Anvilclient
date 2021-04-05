@@ -16,9 +16,11 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.config;
 
+import anvilclient.anvilclient.features.AutoTool;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.BooleanOption;
+import net.minecraft.client.settings.IteratableOption;
 import net.minecraft.client.settings.SliderPercentageOption;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -35,8 +37,8 @@ public class AutoToolConfigGui extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		this.optionsRowList.addOption(new BooleanOption("anvilclient.configGui.autoTool.toggle",
-					unused -> configManager.getAutoTool(),
-					(unused, newValue) -> configManager.setAutoTool(newValue)));
+				unused -> configManager.getAutoTool(),
+				(unused, newValue) -> configManager.setAutoTool(newValue)));
 		this.optionsRowList.addOption(new SliderPercentageOption(
 				"anvilclient.configGui.autoToolMinDurability.title",
 		        0, Byte.MAX_VALUE, 1,
@@ -47,8 +49,17 @@ public class AutoToolConfigGui extends ConfigScreen {
 		                + ": "
 		                + configManager.getAutoToolMinDurability())));
 		this.optionsRowList.addOption(new BooleanOption("anvilclient.configGui.autoToolRevertTool.toggle",
-					unused -> configManager.getAutoToolRevertTool(),
-					(unused, newValue) -> configManager.setAutoToolRevertTool(newValue)));
+				unused -> configManager.getAutoToolRevertTool(),
+				(unused, newValue) -> configManager.setAutoToolRevertTool(newValue)));
+		this.optionsRowList.addOption(new IteratableOption("anvilclient.configGui.autoToolSilkTouchMode.title",
+				(unused, newValue) -> 
+					configManager.setAutoToolSilkTouchMode(AutoTool.SilkTouchMode.values()[
+						(configManager.getAutoToolSilkTouchMode().ordinal() + newValue)
+							% AutoTool.SilkTouchMode.values().length]),
+				(unused, option) -> new StringTextComponent(
+					I18n.format("anvilclient.configGui.autoToolSilkTouchMode.title")
+					+ ": "
+					+ I18n.format(configManager.getAutoToolSilkTouchMode().getTranslationKey()))));
 	}
 
 }

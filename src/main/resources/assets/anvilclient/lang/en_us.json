@@ -12,6 +12,12 @@
 	"anvilclient.configGui.autoTool.toggle": "Toogle Auto Tool",
 	"anvilclient.configGui.autoToolMinDurability.title": "Min Durability",
 	"anvilclient.configGui.autoToolRevertTool.toggle": "Revert Back to old Slot",
+	"anvilclient.configGui.autoToolSilkTouchMode.title": "Silk Touch Mode",
+	"anvilclient.configGui.autoToolSilkTouchMode.dont_use": "Don't use",
+	"anvilclient.configGui.autoToolSilkTouchMode.prefer_not_to_use": "Prefer not to use",
+	"anvilclient.configGui.autoToolSilkTouchMode.doesnt_matter": "Doesn't matter",
+	"anvilclient.configGui.autoToolSilkTouchMode.prefer": "Prefer",
+	"anvilclient.configGui.autoToolSilkTouchMode.use_only": "Use only",
 	
 	
 	"anvilclient.key.openSettings": "Open Settings",
