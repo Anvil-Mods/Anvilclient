@@ -19,7 +19,7 @@ package anvilclient.anvilclient.gui.hud;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.Coordinates;
-import anvilclient.anvilclient.util.ConfigManager;
+import anvilclient.anvilclient.settings.ConfigManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.ChatScreen;

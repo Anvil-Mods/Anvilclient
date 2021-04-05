@@ -19,7 +19,7 @@ package anvilclient.anvilclient.gui.config;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.gui.util.ExtendedOptionsRowList;
-import anvilclient.anvilclient.util.ConfigManager;
+import anvilclient.anvilclient.settings.ConfigManager;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TranslationTextComponent;

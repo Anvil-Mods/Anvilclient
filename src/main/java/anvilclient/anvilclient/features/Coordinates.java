@@ -18,7 +18,7 @@ package anvilclient.anvilclient.features;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import anvilclient.anvilclient.util.ConfigManager;
+import anvilclient.anvilclient.settings.ConfigManager;
 import anvilclient.anvilclient.util.LocalPlayerHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

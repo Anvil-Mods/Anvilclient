@@ -17,7 +17,7 @@
 package anvilclient.anvilclient.features;
 
 import anvilclient.anvilclient.AnvilClient;
-import anvilclient.anvilclient.util.ConfigManager;
+import anvilclient.anvilclient.settings.ConfigManager;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;

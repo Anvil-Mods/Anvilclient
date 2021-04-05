@@ -19,6 +19,7 @@ package anvilclient.anvilclient.util;
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.Fullbright;
 import anvilclient.anvilclient.gui.config.MainConfigGui;
+import anvilclient.anvilclient.settings.ConfigManager;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

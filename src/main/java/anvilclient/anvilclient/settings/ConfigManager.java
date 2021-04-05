@@ -14,7 +14,7 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.settings;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

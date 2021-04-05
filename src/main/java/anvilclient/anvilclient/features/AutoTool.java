@@ -18,7 +18,7 @@ package anvilclient.anvilclient.features;
 
 import java.util.Comparator;
 
-import anvilclient.anvilclient.util.ConfigManager;
+import anvilclient.anvilclient.settings.ConfigManager;
 import anvilclient.anvilclient.util.ItemHelper;
 import anvilclient.anvilclient.util.LocalPlayerHelper;
 import anvilclient.anvilclient.util.WorldHelper;
