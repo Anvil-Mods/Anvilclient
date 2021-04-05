@@ -17,7 +17,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-version = '1.16.5-1.0.1.2'
+version = '1.16.5-1.0.2.0'
 group = 'anvilclient.anvilclient' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'anvilclient'
 
