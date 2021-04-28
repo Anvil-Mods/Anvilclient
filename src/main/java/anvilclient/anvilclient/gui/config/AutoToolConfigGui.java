@@ -17,6 +17,7 @@
 package anvilclient.anvilclient.gui.config;
 
 import anvilclient.anvilclient.features.AutoTool;
+import anvilclient.anvilclient.features.Features;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.BooleanOption;
@@ -37,29 +38,29 @@ public class AutoToolConfigGui extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		this.optionsRowList.addOption(new BooleanOption("anvilclient.configGui.autoTool.toggle",
-				unused -> configManager.getAutoTool(),
-				(unused, newValue) -> configManager.setAutoTool(newValue)));
+				unused -> Features.AUTO_TOOL.isEnabled(),
+				(unused, newValue) -> Features.AUTO_TOOL.setEnabled(newValue)));
 		this.optionsRowList.addOption(new SliderPercentageOption(
 				"anvilclient.configGui.autoToolMinDurability.title",
 		        0, Byte.MAX_VALUE, 1,
-		        unused -> (double) configManager.getAutoToolMinDurability(),
-		        (unused, newValue) -> configManager.setAutoToolMinDurability(newValue.intValue()),
+		        unused -> (double) Features.AUTO_TOOL.minDurability.getValue(),
+		        (unused, newValue) -> Features.AUTO_TOOL.minDurability.setValue(newValue.intValue()),
 		        (gs, option) -> new StringTextComponent(
 		                I18n.format("anvilclient.configGui.autoToolMinDurability.title")
 		                + ": "
-		                + configManager.getAutoToolMinDurability())));
+		                + Features.AUTO_TOOL.minDurability.getValue())));
 		this.optionsRowList.addOption(new BooleanOption("anvilclient.configGui.autoToolRevertTool.toggle",
-				unused -> configManager.getAutoToolRevertTool(),
-				(unused, newValue) -> configManager.setAutoToolRevertTool(newValue)));
+				unused -> Features.AUTO_TOOL.revertTool.getValue(),
+				(unused, newValue) -> Features.AUTO_TOOL.revertTool.setValue(newValue)));
 		this.optionsRowList.addOption(new IteratableOption("anvilclient.configGui.autoToolSilkTouchMode.title",
 				(unused, newValue) -> 
-					configManager.setAutoToolSilkTouchMode(AutoTool.SilkTouchMode.values()[
-						(configManager.getAutoToolSilkTouchMode().ordinal() + newValue)
+					Features.AUTO_TOOL.silkTouchMode.setValue(AutoTool.SilkTouchMode.values()[
+						(Features.AUTO_TOOL.silkTouchMode.getValue().ordinal() + newValue)
 							% AutoTool.SilkTouchMode.values().length]),
 				(unused, option) -> new StringTextComponent(
 					I18n.format("anvilclient.configGui.autoToolSilkTouchMode.title")
 					+ ": "
-					+ I18n.format(configManager.getAutoToolSilkTouchMode().getTranslationKey()))));
+					+ I18n.format(Features.AUTO_TOOL.silkTouchMode.getValue().getTranslationKey()))));
 	}
 
 }

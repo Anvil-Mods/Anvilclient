@@ -18,7 +18,7 @@ package anvilclient.anvilclient.gui.hud;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import anvilclient.anvilclient.features.Coordinates;
+import anvilclient.anvilclient.features.Features;
 import anvilclient.anvilclient.settings.ConfigManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -37,21 +37,19 @@ public class Hud extends AbstractGui {
 
 	private final Minecraft mc;
 
-	private final ConfigManager configManager;
-	
 	private int width;
 	private int height;
 
 	private Hud() {
 		this.mc = Minecraft.getInstance();
-		this.configManager = ConfigManager.getInstance();
+		ConfigManager.getInstance();
 		this.matrixStack = new MatrixStack();
 		updateScaledWidthAndHeight();
 	}
 
 	public void render(RenderGameOverlayEvent.Post event) {
 		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
-			Coordinates.render(configManager, width, height, matrixStack, mc);
+			Features.COORDINATES.render(width, height, matrixStack, mc);
 		}
 	}
 

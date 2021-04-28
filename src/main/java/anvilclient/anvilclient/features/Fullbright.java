@@ -17,27 +17,62 @@
 package anvilclient.anvilclient.features;
 
 import anvilclient.anvilclient.AnvilClient;
-import anvilclient.anvilclient.settings.ConfigManager;
+import anvilclient.anvilclient.settings.DoubleSetting;
+import anvilclient.anvilclient.settings.Setting;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
 
-public class Fullbright {
+public class Fullbright extends KeyboundFeature {
 	
-	private static GameSettings gameSettings = Minecraft.getInstance().gameSettings;
+	private GameSettings gameSettings = Minecraft.getInstance().gameSettings;
 	
-	private static boolean vanillaGammaInitialized = true;
+	private boolean vanillaGammaInitialized = true;
 	
-	public static void update() {
-		if (ConfigManager.getInstance().getFullbright()) {
+	@Setting
+	public DoubleSetting fullbrightLevel = new DoubleSetting("fullbrightLevel", "", 12.0, 0.0, 12.0);
+	
+	@Setting
+	public DoubleSetting vanillaGamma = new DoubleSetting("vanillaGamma", "", 1.0, 0.0, 1.0);
+	
+	public void update() {
+		if (isEnabled()) {
 			if (!vanillaGammaInitialized && AbstractOption.GAMMA.get(gameSettings) <= 1.0) {
-				ConfigManager.getInstance().setVanillaGamma(AbstractOption.GAMMA.get(gameSettings));
+				vanillaGamma.setValue(AbstractOption.GAMMA.get(gameSettings));
 			}
-			AbstractOption.GAMMA.set(gameSettings, ConfigManager.getInstance().getFullbrightLevel());
-		} else if (!ConfigManager.getInstance().getFullbright()){
-			AbstractOption.GAMMA.set(gameSettings, ConfigManager.getInstance().getVanillaGamma());
+			AbstractOption.GAMMA.set(gameSettings, fullbrightLevel.getValue());
+		} else if (!isEnabled()){
+			AbstractOption.GAMMA.set(gameSettings, vanillaGamma.getValue());
 			AnvilClient.LOGGER.info("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
 			vanillaGammaInitialized = false;
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "fullbright";
+	}
+	
+	@Override
+	public void toggleEnabled() {
+		super.toggleEnabled();
+		this.update();
+	}
+	
+	@Override
+	public void setEnabled(Boolean newEnabled) {
+		super.setEnabled(newEnabled);
+		this.update();
+	}
+	
+	@Override
+	public void enable() {
+		this.update();
+	}
+	
+	@Override
+	public void disable() {
+		super.disable();
+		this.update();
 	}
 }

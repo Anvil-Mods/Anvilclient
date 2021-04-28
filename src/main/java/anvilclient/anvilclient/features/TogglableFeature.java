@@ -14,23 +14,34 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.features;
 
-import anvilclient.anvilclient.AnvilClient;
-import anvilclient.anvilclient.gui.config.MainConfigGui;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import anvilclient.anvilclient.settings.BooleanSetting;
+import anvilclient.anvilclient.settings.Setting;
 
-@Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
-public class KeyInputHandler{
+public abstract class TogglableFeature extends Feature {
 	
-	@SubscribeEvent
-    public static void onKeyInput(KeyInputEvent event) {
-        if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(new MainConfigGui());
-        }
-    }
+	@Setting
+	public BooleanSetting enabled = new BooleanSetting(getName() + ".enabled", "", false);
+	
+	public void setEnabled(Boolean newEnabled) {
+		this.enabled.setValue(newEnabled);
+	}
+	
+	public Boolean isEnabled() {
+		return this.enabled.getValue();
+	}
+	
+	public void toggleEnabled() {
+		this.enabled.toggle();
+	}
+	
+	public void enable() {
+		this.enabled.enable();
+	}
+	
+	public void disable() {
+		this.enabled.disable();
+	}
+
 }

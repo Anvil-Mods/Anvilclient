@@ -94,6 +94,5 @@ public abstract class ConfigScreen extends Screen {
 	
 	@Override
 	public void onClose() {
-		ConfigManager.getInstance().save();
 	}
 }

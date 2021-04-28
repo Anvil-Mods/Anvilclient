@@ -14,23 +14,41 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.settings;
 
-import anvilclient.anvilclient.AnvilClient;
-import anvilclient.anvilclient.gui.config.MainConfigGui;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+public abstract class NumberSetting<T extends Number> extends AbstractSetting<T> {
 
-@Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
-public class KeyInputHandler{
+	protected NumberSetting(String name, String description, T defaultValue, T minValue, T maxValue) {
+		super(name, description, defaultValue, minValue, maxValue);
+	}
 	
-	@SubscribeEvent
-    public static void onKeyInput(KeyInputEvent event) {
-        if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(new MainConfigGui());
-        }
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setValue(Number newValue) {
+		super.setValue((T) newValue);
+	}
+
+	public byte getByteValue() {
+		return (Byte) this.getValue();
+	}
+
+	public short getShortValue() {
+		return (Short) this.getValue();
+	}
+
+	public int getIntValue() {
+		return (Integer) this.getValue();
+	}
+
+	public long getLongValue() {
+		return (Long) this.getValue();
+	}
+
+	public float getFloatValue() {
+		return (Float) this.getValue();
+	}
+
+	public double getDoubleValue() {
+		return (Double) this.getValue();
+	}
 }

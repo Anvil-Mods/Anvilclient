@@ -16,6 +16,7 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.config;
 
+import anvilclient.anvilclient.features.Features;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.BooleanOption;
 
@@ -33,8 +34,8 @@ public class CoordinatesConfigGui extends ConfigScreen {
 	protected void addOptions() {
 		this.optionsRowList.addOption(new BooleanOption(
                 "anvilclient.configGui.coordinates.toggle",
-                unused -> configManager.getCoordinates(),
-                (unused, newValue) -> configManager.setCoordinates(newValue)
+                unused -> Features.COORDINATES.isEnabled(),
+                (unused, newValue) -> Features.COORDINATES.setEnabled(newValue)
         ));
 	}
 }
