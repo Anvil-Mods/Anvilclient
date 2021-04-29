@@ -43,6 +43,7 @@ public abstract class AbstractSetting<T> implements ISetting<T> {
 	@Override
 	public void setValue(T newValue) {
 		this.value = newValue;
+		ConfigManager.getInstance().setProperty(name, valueToString());
 	}
 	
 	@Override

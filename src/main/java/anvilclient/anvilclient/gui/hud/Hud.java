@@ -19,7 +19,6 @@ package anvilclient.anvilclient.gui.hud;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.Features;
-import anvilclient.anvilclient.settings.ConfigManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -42,7 +41,6 @@ public class Hud extends AbstractGui {
 
 	private Hud() {
 		this.mc = Minecraft.getInstance();
-		ConfigManager.getInstance();
 		this.matrixStack = new MatrixStack();
 		updateScaledWidthAndHeight();
 	}

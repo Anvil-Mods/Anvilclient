@@ -20,26 +20,16 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import anvilclient.anvilclient.features.Feature;
+import java.util.List;
 
 public class SettingRegister {
 	
-	private static final SettingRegister INSTANCE = new SettingRegister();
-
-	public static SettingRegister getInstance() {
-		return INSTANCE;
-	}
+	public static final ArrayList<AbstractSetting<?>> SETTING_LIST = new ArrayList<>();
 	
-	private ArrayList<AbstractSetting<?>> settingList;
-	
-	private SettingRegister() {
-	}
-	
-	public boolean register(Field setting, Feature feature) {
-		if (setting.getType() == AbstractSetting.class && setting.getAnnotation(Setting.class) != null && feature.getClass().isAssignableFrom(AbstractSetting.class)) {
+	public static boolean register(Field setting, Object object) {
+		if (AbstractSetting.class.isAssignableFrom(setting.getType()) && setting.isAnnotationPresent(Setting.class)) {
 			try {
-				return settingList.add((AbstractSetting<?>) setting.get(feature));
+				return SETTING_LIST.add((AbstractSetting<?>) setting.get(object));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 				return false;
@@ -49,16 +39,20 @@ public class SettingRegister {
 		}
 	}
 	
-	public void registerClass(Feature feature) {
-		Arrays.stream(feature.getClass().getFields())
+	public static void registerClass(Object object) {
+		Arrays.stream(object.getClass().getFields())
 			.filter(field -> !Modifier.isStatic(field.getModifiers()))
-			.forEach(field -> register(field, feature));
+			.forEach(field -> register(field, object));
 	}
 	
-	public void registerStaticClass(Class<AbstractSetting<?>> clazz) {
+	public static void registerStaticClass(Class<Object> clazz) {
 		Arrays.stream(clazz.getFields())
 			.filter(field -> Modifier.isStatic(field.getModifiers()))
 			.forEach(field -> register(field, null));
+	}
+	
+	public static void registerClasses(List<?> objects) {
+		objects.forEach(SettingRegister::registerClass);
 	}
 
 }

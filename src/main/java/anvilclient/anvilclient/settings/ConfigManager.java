@@ -16,7 +16,18 @@
  *******************************************************************************/
 package anvilclient.anvilclient.settings;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Properties;
+
+import anvilclient.anvilclient.AnvilClient;
+
 public class ConfigManager {
+
 	private static final ConfigManager INSTANCE = new ConfigManager();
 
 	public static ConfigManager getInstance() {
@@ -24,6 +35,55 @@ public class ConfigManager {
 	}
 
 	private ConfigManager() {
-		
+	}
+
+	private Properties properties = new Properties();
+
+	private File configFile = new File(
+			Paths.get("").toAbsolutePath().toString() + File.separator + "config" + File.separator + "anvilclient.cfg");
+
+	public void loadProperties() {
+		load();
+		for (AbstractSetting<?> setting : SettingRegister.SETTING_LIST) {
+			if (properties.containsKey(setting.getName())) {
+				setting.loadValue(properties.getProperty(setting.getName()));
+			} else {
+				properties.setProperty(setting.getName(), setting.valueToString());
+			}
+		}
+		save();
+	}
+
+	private void load() {
+		try {
+			FileReader reader = new FileReader(configFile);
+			properties.load(reader);
+			reader.close();
+		} catch (FileNotFoundException e) {
+			AnvilClient.LOGGER.warn("Config file not found.");
+		} catch (IOException e) {
+			AnvilClient.LOGGER.error("Error loading config file.");
+			AnvilClient.LOGGER.catching(e);
+		}
+	}
+
+	public void save() {
+		try {
+			FileWriter writer = new FileWriter(configFile);
+			properties.store(writer, "host settings");
+			writer.close();
+		} catch (IOException e) {
+			AnvilClient.LOGGER.error("Error saving config.");
+			AnvilClient.LOGGER.catching(e);
+		}
+	}
+
+	public void setPropertyWithoutSaving(String key, String value) {
+		properties.setProperty(key, value);
+	}
+
+	public void setProperty(String key, String value) {
+		properties.setProperty(key, value);
+		save();
 	}
 }

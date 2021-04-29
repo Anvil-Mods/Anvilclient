@@ -23,6 +23,8 @@ import org.apache.logging.log4j.Logger;
 
 import anvilclient.anvilclient.features.Features;
 import anvilclient.anvilclient.gui.config.MainConfigGui;
+import anvilclient.anvilclient.settings.ConfigManager;
+import anvilclient.anvilclient.settings.SettingRegister;
 import anvilclient.anvilclient.util.EventManager;
 import anvilclient.anvilclient.util.Keybinds;
 import net.minecraftforge.common.MinecraftForge;
@@ -66,6 +68,8 @@ public class AnvilClient
     	Keybinds.register();
     	EventManager.getInstance().registerOnEventBus();
     	Features.register();
+    	SettingRegister.registerClasses(Features.FEATURE_LIST);
+    	ConfigManager.getInstance().loadProperties();
     }
 
     @SubscribeEvent
