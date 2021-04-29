@@ -70,6 +70,7 @@ public class AnvilClient
     	Features.register();
     	SettingRegister.registerClasses(Features.FEATURE_LIST);
     	ConfigManager.getInstance().loadProperties();
+    	ConfigManager.getInstance().cleanupConfig();
     }
 
     @SubscribeEvent

@@ -22,6 +22,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 
 import anvilclient.anvilclient.AnvilClient;
@@ -84,6 +86,16 @@ public class ConfigManager {
 
 	public void setProperty(String key, String value) {
 		properties.setProperty(key, value);
+		save();
+	}
+	
+	public void cleanupConfig() {
+		Object[] settings = SettingRegister.SETTING_LIST.stream().map(AbstractSetting::getName).toArray();
+		for (Object key : Collections.list(this.properties.keys())) {
+			if (!Arrays.stream(settings).anyMatch(key::equals)) {
+				properties.remove(key);
+			}
+		}
 		save();
 	}
 }
