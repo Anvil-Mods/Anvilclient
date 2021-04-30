@@ -67,6 +67,7 @@ public class Fullbright extends KeyboundFeature {
 	
 	@Override
 	public void enable() {
+		super.enable();
 		this.update();
 	}
 	
