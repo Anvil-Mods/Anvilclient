@@ -24,12 +24,12 @@ import java.util.List;
 
 public class SettingRegister {
 	
-	public static final ArrayList<AbstractSetting<?>> SETTING_LIST = new ArrayList<>();
+	public static final ArrayList<ISetting<?>> SETTING_LIST = new ArrayList<>();
 	
 	public static boolean register(Field setting, Object object) {
-		if (AbstractSetting.class.isAssignableFrom(setting.getType()) && setting.isAnnotationPresent(Setting.class)) {
+		if (ISetting.class.isAssignableFrom(setting.getType()) && setting.isAnnotationPresent(Setting.class)) {
 			try {
-				return SETTING_LIST.add((AbstractSetting<?>) setting.get(object));
+				return SETTING_LIST.add((ISetting<?>) setting.get(object));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 				return false;

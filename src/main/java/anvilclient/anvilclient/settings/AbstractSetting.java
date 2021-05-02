@@ -51,30 +51,32 @@ public abstract class AbstractSetting<T> implements ISetting<T> {
 		return this.value;
 	}
 	
+	@Override
 	public String getName() {
 		return name;
 	}
 	
+	@Override
 	public String getDescription() {
 		return description;
 	}
-	
+
+	@Override
 	public T getDefaultValue() {
 		return defaultValue;
 	}
-	
+
+	@Override
 	public T getMinValue() {
 		return minValue;
 	}
-	
+
+	@Override
 	public T getMaxValue() {
 		return maxValue;
 	}
 	
-	public abstract String valueToString();
-	
-	public abstract T stringToValue(String string);
-	
+	@Override
 	public void loadValue(String string) {
 		try {
 			this.value = this.stringToValue(string);

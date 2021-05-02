@@ -18,7 +18,23 @@ package anvilclient.anvilclient.settings;
 
 public interface ISetting<T> {
 
-	public T getValue();
+	T getValue();
 	
-	public void setValue(T newValue);
+	T getDefaultValue();
+	
+	public T getMinValue();
+	
+	public T getMaxValue();
+	
+	void setValue(T newValue);
+	
+	String getName();
+	
+	String getDescription();
+	
+	String valueToString();
+	
+	T stringToValue(String string);
+	
+	void loadValue(String string);
 }

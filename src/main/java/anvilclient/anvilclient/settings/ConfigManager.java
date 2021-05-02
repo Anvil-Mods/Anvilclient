@@ -46,7 +46,7 @@ public class ConfigManager {
 
 	public void loadProperties() {
 		load();
-		for (AbstractSetting<?> setting : SettingRegister.SETTING_LIST) {
+		for (ISetting<?> setting : SettingRegister.SETTING_LIST) {
 			if (properties.containsKey(setting.getName())) {
 				setting.loadValue(properties.getProperty(setting.getName()));
 			} else {
@@ -90,7 +90,7 @@ public class ConfigManager {
 	}
 	
 	public void cleanupConfig() {
-		Object[] settings = SettingRegister.SETTING_LIST.stream().map(AbstractSetting::getName).toArray();
+		Object[] settings = SettingRegister.SETTING_LIST.stream().map(ISetting::getName).toArray();
 		for (Object key : Collections.list(this.properties.keys())) {
 			if (!Arrays.stream(settings).anyMatch(key::equals)) {
 				properties.remove(key);
