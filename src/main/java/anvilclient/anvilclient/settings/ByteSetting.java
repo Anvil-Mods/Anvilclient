@@ -18,8 +18,8 @@ package anvilclient.anvilclient.settings;
 
 public class ByteSetting extends NumberSetting<Byte> {
 
-	public ByteSetting(String name, String description, Byte defaultValue, Byte minValue, Byte maxValue) {
-		super(name, description, defaultValue, minValue, maxValue);
+	public ByteSetting(String name, String description, Byte defaultValue, Byte minValue, Byte maxValue, float stepSizeIn) {
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
 	}
 
 	@Override

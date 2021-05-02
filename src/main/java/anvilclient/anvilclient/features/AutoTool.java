@@ -42,7 +42,7 @@ public class AutoTool extends KeyboundFeature {
 	private Slot originalTool;
 	
 	@Setting
-	public IntegerSetting minDurability = new IntegerSetting(getName() + ".minDurability", "", 5, 0, (int) Byte.MAX_VALUE);
+	public IntegerSetting minDurability = new IntegerSetting(getName() + ".minDurability", "", 5, 0, (int) Byte.MAX_VALUE, 1.0F);
 	
 	@Setting
 	public BooleanSetting revertTool = new BooleanSetting(getName() + ".revertTool", "", true);

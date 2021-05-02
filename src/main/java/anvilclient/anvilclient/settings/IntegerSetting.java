@@ -19,8 +19,8 @@ package anvilclient.anvilclient.settings;
 public class IntegerSetting extends NumberSetting<Integer> {
 
 	public IntegerSetting(String name, String description, Integer defaultValue, Integer minValue,
-			Integer maxValue) {
-		super(name, description, defaultValue, minValue, maxValue);
+			Integer maxValue, float stepSizeIn) {
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
 	}
 
 	@Override

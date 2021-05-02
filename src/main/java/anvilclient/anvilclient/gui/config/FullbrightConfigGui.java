@@ -42,7 +42,7 @@ public class FullbrightConfigGui extends ConfigScreen {
         ));
 		this.optionsRowList.addOption(new SliderPercentageOption(
 				"anvilclient.configGui.fullbrightLevel.title",
-		        0.0, 12.0, (float) 0.1,
+		        0.0, 12.0, 0.1F,
 		        unused -> Features.FULLBRIGHT.fullbrightLevel.getValue(),
 		        (unused, newValue) -> Features.FULLBRIGHT.fullbrightLevel.setValue(newValue.doubleValue()),
 		        (gs, option) -> new StringTextComponent(

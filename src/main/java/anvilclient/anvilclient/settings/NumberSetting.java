@@ -17,9 +17,12 @@
 package anvilclient.anvilclient.settings;
 
 public abstract class NumberSetting<T extends Number> extends AbstractSetting<T> {
+	
+	protected float stepSize;
 
-	protected NumberSetting(String name, String description, T defaultValue, T minValue, T maxValue) {
+	protected NumberSetting(String name, String description, T defaultValue, T minValue, T maxValue, float stepSizeIn) {
 		super(name, description, defaultValue, minValue, maxValue);
+		this.stepSize = stepSizeIn;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -50,5 +53,9 @@ public abstract class NumberSetting<T extends Number> extends AbstractSetting<T>
 
 	public double getDoubleValue() {
 		return (Double) this.getValue();
+	}
+	
+	public float getStepSize() {
+		return stepSize;
 	}
 }

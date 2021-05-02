@@ -18,8 +18,8 @@ package anvilclient.anvilclient.settings;
 
 public class DoubleSetting extends NumberSetting<Double> {
 
-	public DoubleSetting(String name, String description, Double defaultValue, Double minValue, Double maxValue) {
-		super(name, description, defaultValue, minValue, maxValue);
+	public DoubleSetting(String name, String description, Double defaultValue, Double minValue, Double maxValue, float stepSizeIn) {
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
 	}
 
 	@Override

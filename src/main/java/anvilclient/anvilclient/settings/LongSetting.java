@@ -18,8 +18,8 @@ package anvilclient.anvilclient.settings;
 
 public class LongSetting extends NumberSetting<Long> {
 
-	public LongSetting(String name, String description, Long defaultValue, Long minValue, Long maxValue) {
-		super(name, description, defaultValue, minValue, maxValue);
+	public LongSetting(String name, String description, Long defaultValue, Long minValue, Long maxValue, float stepSizeIn) {
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ package anvilclient.anvilclient.features;
 
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.settings.DoubleSetting;
+import anvilclient.anvilclient.settings.IgnoreAsOption;
 import anvilclient.anvilclient.settings.Setting;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.GameSettings;
@@ -30,10 +31,11 @@ public class Fullbright extends KeyboundFeature {
 	private boolean vanillaGammaInitialized = true;
 	
 	@Setting
-	public DoubleSetting fullbrightLevel = new DoubleSetting("fullbrightLevel", "", 12.0, 0.0, 12.0);
+	public DoubleSetting fullbrightLevel = new DoubleSetting(getName() + ".fullbrightLevel", "", 12.0, 0.0, 12.0, 0.1F);
 	
 	@Setting
-	public DoubleSetting vanillaGamma = new DoubleSetting("vanillaGamma", "", 1.0, 0.0, 1.0);
+	@IgnoreAsOption
+	public DoubleSetting vanillaGamma = new DoubleSetting(getName() + ".vanillaGamma", "", 1.0, 0.0, 1.0, 0.01F);
 	
 	public void update() {
 		if (isEnabled()) {

@@ -18,8 +18,8 @@ package anvilclient.anvilclient.settings;
 
 public class ShortSetting extends NumberSetting<Short> {
 
-	public ShortSetting(String name, String description, Short defaultValue, Short minValue, Short maxValue) {
-		super(name, description, defaultValue, minValue, maxValue);
+	public ShortSetting(String name, String description, Short defaultValue, Short minValue, Short maxValue, float stepSizeIn) {
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
 	}
 
 	@Override
