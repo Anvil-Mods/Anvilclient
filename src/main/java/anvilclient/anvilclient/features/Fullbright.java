@@ -25,6 +25,16 @@ import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
 
 public class Fullbright extends KeyboundFeature {
+
+	@Override
+	public String getName() {
+		return "fullbright";
+	}
+	
+	@Override
+	public FeatureCategory getCategory() {
+		return FeatureCategory.GRAPHIC;
+	}
 	
 	private GameSettings gameSettings = Minecraft.getInstance().gameSettings;
 	
@@ -48,11 +58,6 @@ public class Fullbright extends KeyboundFeature {
 			AnvilClient.LOGGER.info("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
 			vanillaGammaInitialized = false;
 		}
-	}
-
-	@Override
-	public String getName() {
-		return "fullbright";
 	}
 	
 	@Override

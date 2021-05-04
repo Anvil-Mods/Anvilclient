@@ -24,6 +24,16 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 
 public class Coordinates extends KeyboundFeature {
+
+	@Override
+	public String getName() {
+		return "coordinates";
+	}
+	
+	@Override
+	public FeatureCategory getCategory() {
+		return FeatureCategory.INFO;
+	}
 	
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
@@ -40,10 +50,5 @@ public class Coordinates extends KeyboundFeature {
 			currentHeight += LINE_HEIGHT + 1;
 			AbstractGui.drawString(matrixStack, mc.fontRenderer, "Z: " + player.getPosZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 		}
-	}
-
-	@Override
-	public String getName() {
-		return "coordinates";
 	}
 }

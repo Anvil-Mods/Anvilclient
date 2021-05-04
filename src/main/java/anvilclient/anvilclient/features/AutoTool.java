@@ -37,6 +37,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AutoTool extends KeyboundFeature {
+
+	@Override
+	public String getName() {
+		return "autotool";
+	}
+	
+	@Override
+	public FeatureCategory getCategory() {
+		return FeatureCategory.BUILDING;
+	}
 	
 	private boolean isOriginalTool = true;
 	private Slot originalTool;
@@ -144,11 +154,6 @@ public class AutoTool extends KeyboundFeature {
 				isOriginalTool = true;
 			}
 		}
-	}
-
-	@Override
-	public String getName() {
-		return "autotool";
 	}
 	
 	@SubscribeEvent
