@@ -1,11 +1,11 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net/' }
-		maven { url='https://repo.spongepowered.org/maven' }
+	maven { url='https://repo.spongepowered.org/maven' }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3+', changing: true
-		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+	classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
