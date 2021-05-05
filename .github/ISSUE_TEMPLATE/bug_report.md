@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: bug
+labels: bug, new
 assignees: ''
 
 ---
@@ -23,8 +23,10 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
+**System Info:**
  - Version [e.g. 1.16.5-1.0.0.1]
+ - OS [e.g. Windows 10]
+ - Java Version [e.g. 1.8.0_271]
 
 **Additional context**
 Add any other context about the problem here.
