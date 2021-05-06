@@ -21,7 +21,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import anvilclient.anvilclient.features.Features;
 import anvilclient.anvilclient.gui.config.MainConfigGui;
+import anvilclient.anvilclient.settings.ConfigManager;
+import anvilclient.anvilclient.settings.SettingRegister;
 import anvilclient.anvilclient.util.EventManager;
 import anvilclient.anvilclient.util.Keybinds;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,6 +43,7 @@ public class AnvilClient
 {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "anvilclient";
+    public static final String KEY_CATEGORY = "anvilclient.key.categories.anvilclient";
 
     public AnvilClient() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -63,6 +67,10 @@ public class AnvilClient
     {
     	Keybinds.register();
     	EventManager.getInstance().registerOnEventBus();
+    	Features.register();
+    	SettingRegister.registerClasses(Features.FEATURE_LIST);
+    	ConfigManager.getInstance().loadProperties();
+    	ConfigManager.getInstance().cleanupConfig();
     }
 
     @SubscribeEvent

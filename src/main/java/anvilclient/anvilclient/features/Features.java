@@ -14,28 +14,37 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.gui.config;
+package anvilclient.anvilclient.features;
 
-import anvilclient.anvilclient.features.Features;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.settings.BooleanOption;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CoordinatesConfigGui extends ConfigScreen {
-
-	public CoordinatesConfigGui(Screen parentScreen) {
-		super("anvilclient.configGui.coordinates.title", parentScreen);
+public class Features {
+	
+	public static final AutoTool AUTO_TOOL = new AutoTool();
+	public static final Coordinates COORDINATES = new Coordinates();
+	public static final Fullbright FULLBRIGHT = new Fullbright();
+	
+	public static final List<Feature> FEATURE_LIST = new ArrayList<>();
+	
+	static {
+		for (Field featureField : Features.class.getDeclaredFields()) {
+			if (Modifier.isStatic(featureField.getModifiers()) && Feature.class.isAssignableFrom(featureField.getType())) {
+				try {
+					FEATURE_LIST.add((Feature) featureField.get(null));
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
-	public CoordinatesConfigGui() {
-		super("anvilclient.configGui.coordinates.title");
+	public static void register() {
+		for (Feature feature : FEATURE_LIST) {
+			feature.register();
+		}
 	}
-	
-	@Override
-	protected void addOptions() {
-		this.optionsRowList.addOption(new BooleanOption(
-                "anvilclient.configGui.coordinates.toggle",
-                unused -> Features.COORDINATES.isEnabled(),
-                (unused, newValue) -> Features.COORDINATES.setEnabled(newValue)
-        ));
-	}
+
 }

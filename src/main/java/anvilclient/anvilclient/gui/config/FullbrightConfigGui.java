@@ -16,6 +16,7 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.config;
 
+import anvilclient.anvilclient.features.Features;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.BooleanOption;
@@ -36,14 +37,14 @@ public class FullbrightConfigGui extends ConfigScreen {
 	protected void addOptions() {
 		this.optionsRowList.addOption(new BooleanOption(
                 "anvilclient.configGui.fullbright.toggle",
-                unused -> configManager.getFullbright(),
-                (unused, newValue) -> configManager.setFullbright(newValue)
+                unused -> Features.FULLBRIGHT.isEnabled(),
+                (unused, newValue) -> Features.FULLBRIGHT.setEnabled(newValue)
         ));
 		this.optionsRowList.addOption(new SliderPercentageOption(
 				"anvilclient.configGui.fullbrightLevel.title",
-		        0.0, 12.0, (float) 0.1,
-		        unused -> configManager.getFullbrightLevel(),
-		        (unused, newValue) -> configManager.setFullbrightLevel(newValue.doubleValue()),
+		        0.0, 12.0, 0.1F,
+		        unused -> Features.FULLBRIGHT.fullbrightLevel.getValue(),
+		        (unused, newValue) -> Features.FULLBRIGHT.fullbrightLevel.setValue(newValue.doubleValue()),
 		        (gs, option) -> new StringTextComponent(
 		                I18n.format("anvilclient.configGui.fullbrightLevel.title")
 		                + ": "

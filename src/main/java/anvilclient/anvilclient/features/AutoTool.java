@@ -18,7 +18,12 @@ package anvilclient.anvilclient.features;
 
 import java.util.Comparator;
 
-import anvilclient.anvilclient.settings.ConfigManager;
+import anvilclient.anvilclient.event.PlayerDamageBlockEvent;
+import anvilclient.anvilclient.event.PlayerResetBreakingBlockEvent;
+import anvilclient.anvilclient.settings.BooleanSetting;
+import anvilclient.anvilclient.settings.EnumSetting;
+import anvilclient.anvilclient.settings.IntegerSetting;
+import anvilclient.anvilclient.settings.Setting;
 import anvilclient.anvilclient.util.ItemHelper;
 import anvilclient.anvilclient.util.LocalPlayerHelper;
 import anvilclient.anvilclient.util.WorldHelper;
@@ -29,25 +34,44 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class AutoTool {
+public class AutoTool extends KeyboundFeature {
 
-	private static boolean isOriginalTool = true;
-	private static Slot originalTool;
+	@Override
+	public String getName() {
+		return "autotool";
+	}
+	
+	@Override
+	public FeatureCategory getCategory() {
+		return FeatureCategory.BUILDING;
+	}
+	
+	private boolean isOriginalTool = true;
+	private Slot originalTool;
+	
+	@Setting
+	public IntegerSetting minDurability = new IntegerSetting(getName() + ".minDurability", "", 5, 0, (int) Byte.MAX_VALUE, 1.0F);
+	
+	@Setting
+	public BooleanSetting revertTool = new BooleanSetting(getName() + ".revertTool", "", true);
+	
+	@Setting
+	public EnumSetting<AutoTool.SilkTouchMode> silkTouchMode = new EnumSetting<AutoTool.SilkTouchMode>(getName() + ".silkTouchMode", "", AutoTool.SilkTouchMode.DOESNT_MATTER);
 
-	private static boolean isDurabilityGood(ItemStack tool) {
-		ConfigManager configManager = ConfigManager.getInstance();
-		return configManager.getAutoToolMinDurability() < 1 || ItemHelper.isUnbreakable(tool)
-				|| ItemHelper.getDurability(tool) >= configManager.getAutoToolMinDurability();
+	private boolean isDurabilityGood(ItemStack tool) {
+		return minDurability.getValue() < 1 || ItemHelper.isUnbreakable(tool)
+				|| ItemHelper.getDurability(tool) >= minDurability.getValue();
 	}
 
-	private static boolean isDurabilityGood(Slot slot) {
+	private boolean isDurabilityGood(Slot slot) {
 		return isDurabilityGood(slot.getStack());
 	}
 	
-	private static boolean filterSilkTouchMode(ItemStack tool) {
+	private boolean filterSilkTouchMode(ItemStack tool) {
 		int level = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
-		switch (ConfigManager.getInstance().getAutoToolSilkTouchMode()) {
+		switch (silkTouchMode.getValue()) {
 			case DONT_USE:
 				if (level >=1) {
 					return false;
@@ -66,13 +90,13 @@ public class AutoTool {
 		}
 	}
 	
-	private static boolean filterSilkTouchMode(Slot slot) {
+	private boolean filterSilkTouchMode(Slot slot) {
 		return filterSilkTouchMode(slot.getStack());
 	}
 	
-	private static int getSilkTouchEnchantmentLevel(ItemStack tool) {
+	private int getSilkTouchEnchantmentLevel(ItemStack tool) {
 		int level = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
-		switch (ConfigManager.getInstance().getAutoToolSilkTouchMode()) {
+		switch (silkTouchMode.getValue()) {
 		case DONT_USE: case PREFER_NOT_TO_USE:
 			return level * -1;
 
@@ -87,23 +111,23 @@ public class AutoTool {
 		}
 	}
 	
-	private static int getFortuneEnchantmentLevel(ItemStack tool) {
+	private int getFortuneEnchantmentLevel(ItemStack tool) {
 		return EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, tool);
 	}
 
-	private static Slot getBestTool(BlockPos blockPos) {
+	private Slot getBestTool(BlockPos blockPos) {
 		ClientPlayerEntity localPlayer = LocalPlayerHelper.getLocalPlayer();
 		if (!WorldHelper.canPlaceBlocksAt(localPlayer, blockPos)
 				&& !WorldHelper.getWorld(localPlayer).isAirBlock(blockPos)) {
 			return LocalPlayerHelper
 					.getHotbarSlots(localPlayer).stream()
-					.filter(AutoTool::isDurabilityGood)
-					.filter(AutoTool::filterSilkTouchMode)
+					.filter(this::isDurabilityGood)
+					.filter(this::filterSilkTouchMode)
 					.max(Comparator
 						.comparing(Slot::getStack, Comparator
 							.<ItemStack>comparingDouble(tool -> ItemHelper.getDiggingSpeedAt(localPlayer, tool, blockPos))
-							.thenComparingInt(AutoTool::getSilkTouchEnchantmentLevel)
-							.thenComparingInt(AutoTool::getFortuneEnchantmentLevel)
+							.thenComparingInt(this::getSilkTouchEnchantmentLevel)
+							.thenComparingInt(this::getFortuneEnchantmentLevel)
 							.thenComparing(ItemHelper::isUnbreakable))
 						.thenComparing(slot -> slot == LocalPlayerHelper.getSelectedSlot(localPlayer)))
 					.orElse(LocalPlayerHelper.getSelectedSlot(localPlayer));
@@ -111,8 +135,8 @@ public class AutoTool {
 		return LocalPlayerHelper.getSelectedSlot(localPlayer);
 	}
 
-	public static void selectBestTool(BlockPos blockPos) {
-		if (ConfigManager.getInstance().getAutoTool() && Minecraft.getInstance().playerController.gameIsSurvivalOrAdventure()) {
+	public void selectBestTool(BlockPos blockPos) {
+		if (isEnabled() && Minecraft.getInstance().playerController.gameIsSurvivalOrAdventure()) {
 			Slot bestTool = getBestTool(blockPos);
 			ClientPlayerEntity localPlayer = LocalPlayerHelper.getLocalPlayer();
 			if (isOriginalTool) {
@@ -123,8 +147,8 @@ public class AutoTool {
 		}
 	}
 
-	public static void resetTool() {
-		if (ConfigManager.getInstance().getAutoToolRevertTool()) {
+	public void resetTool() {
+		if (revertTool.getValue()) {
 			if (!isOriginalTool) {
 				LocalPlayerHelper.setSelectedSlot(LocalPlayerHelper.getLocalPlayer(), originalTool);
 				isOriginalTool = true;
@@ -132,7 +156,17 @@ public class AutoTool {
 		}
 	}
 	
-	public static enum SilkTouchMode {
+	@SubscribeEvent
+	public void onPlayerDamageBlock(PlayerDamageBlockEvent event) {
+		this.selectBestTool(event.getBlockPos());
+	}
+	
+	@SubscribeEvent
+	public void onPlayerResetBreakingBlock(PlayerResetBreakingBlockEvent event) {
+		this.resetTool();
+	}
+
+	public enum SilkTouchMode {
 		DONT_USE("anvilclient.configGui.autoToolSilkTouchMode.dont_use"),
 		PREFER_NOT_TO_USE("anvilclient.configGui.autoToolSilkTouchMode.prefer_not_to_use"),
 		DOESNT_MATTER("anvilclient.configGui.autoToolSilkTouchMode.doesnt_matter"),
