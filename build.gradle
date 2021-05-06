@@ -1,12 +1,12 @@
 buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net/' }
-	maven { url='https://repo.spongepowered.org/maven' }
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3+', changing: true
-	classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
+	repositories {
+		maven { url = 'https://maven.minecraftforge.net/' }
+		maven { url='https://repo.spongepowered.org/maven' }
+	}
+	dependencies {
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4+', changing: true
+		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+	}
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -21,106 +21,106 @@ version = '1.16.5-1.1.0.0'
 group = 'anvilclient.anvilclient'
 archivesBaseName = 'anvilclient'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    // The mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   Snapshot are built nightly.
-    // stable_#            Stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20210309-1.16.5'
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+	// The mappings can be changed at any time, and must be in the following format.
+	// snapshot_YYYYMMDD   Snapshot are built nightly.
+	// stable_#            Stables are built at the discretion of the MCP team.
+	// Use non-default mappings at your own risk. they may not always work.
+	// Simply re-run your setup task after changing the mappings to update your workspace.
+	mappings channel: 'snapshot', version: '20210309-1.16.5'
+	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+	
+	// accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
-    runs {
-        client {
-            workingDirectory project.file('run')
+	// Default run configurations.
+	// These can be tweaked, removed, or duplicated as needed.
+	runs {
+		client {
+			workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'mixin.env.disableRefMap', 'true'
+			// Recommended logging data for a userdev environment
+			property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+			property 'mixin.env.disableRefMap', 'true'
 
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=anvilclient.mixins.json"
+			// Recommended logging level for the console
+			property 'forge.logging.console.level', 'debug'
+			arg "-mixin.config=anvilclient.mixins.json"
 
-            mods {
-                anvilclient {
-                    source sourceSets.main
-                }
-            }
-        }
+			mods {
+				anvilclient {
+					source sourceSets.main
+				}
+			}
+		}
 
-        server {
-            workingDirectory project.file('run')
+		server {
+			workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'mixin.env.disableRefMap', 'true'
+			// Recommended logging data for a userdev environment
+			property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+			property 'mixin.env.disableRefMap', 'true'
 
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=anvilclient.mixins.json"
+			// Recommended logging level for the console
+			property 'forge.logging.console.level', 'debug'
+			arg "-mixin.config=anvilclient.mixins.json"
 
-            mods {
-                anvilclient {
-                    source sourceSets.main
-                }
-            }
-        }
+			mods {
+				anvilclient {
+					source sourceSets.main
+				}
+			}
+		}
 
-        data {
-            workingDirectory project.file('run')
+		data {
+			workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'mixin.env.disableRefMap', 'true'
+			// Recommended logging data for a userdev environment
+			property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+			property 'mixin.env.disableRefMap', 'true'
 
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=anvilclient.mixins.json"
+			// Recommended logging level for the console
+			property 'forge.logging.console.level', 'debug'
+			arg "-mixin.config=anvilclient.mixins.json"
 
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'anvilclient', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+			// Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+			args '--mod', 'anvilclient', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
-            mods {
-                anvilclient {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
+			mods {
+				anvilclient {
+					source sourceSets.main
+				}
+			}
+		}
+	}
 }
 
 // Include resources generated by data generators.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.46'
+	minecraft 'net.minecraftforge:forge:1.16.5-36.1.16'
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+	annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
-    manifest {
-        attributes([
-            "Specification-Title": "anvilclient",
-            "Specification-Vendor": "anvilclient",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" : "anvilclient",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "anvilclient.mixins.json"
-        ])
-    }
+	manifest {
+		attributes([
+			"Specification-Title": "anvilclient",
+			"Specification-Vendor": "anvilclient",
+			"Specification-Version": "1", // We are version 1 of ourselves
+			"Implementation-Title": project.name,
+			"Implementation-Version": "${version}",
+			"Implementation-Vendor" : "anvilclient",
+			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			"MixinConfigs": "anvilclient.mixins.json"
+		])
+	}
 }
 
 // Example configuration to allow publishing using the maven-publish task
@@ -130,26 +130,26 @@ jar.finalizedBy('reobfJar')
 //publish.dependsOn('reobfJar')
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
-    }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
+	publications {
+		mavenJava(MavenPublication) {
+			artifact jar
+		}
+	}
+	repositories {
+		maven {
+			url "file:///${project.projectDir}/mcmodsrepo"
+		}
+	}
 }
 
 mixin {
-       add sourceSets.main, "anvilclient.refmap.json"
+		add sourceSets.main, "anvilclient.refmap.json"
 }
 
 if (System.getProperty("idea.sync.active") == "true") {
-    afterEvaluate {
-        tasks.withType(JavaCompile).all {
-            it.options.annotationProcessorPath = files()
-        }
-    }
+	afterEvaluate {
+		tasks.withType(JavaCompile).all {
+			it.options.annotationProcessorPath = files()
+		}
+	}
 }
