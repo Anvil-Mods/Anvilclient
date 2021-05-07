@@ -1,6 +1,8 @@
 # Anvilclient
 A Minecraft Mod for Forge that is designed to provide useful features to you but not to cause harm to others.
 
+![Logo](https://github.com/Anvilclient/Anvilclient/blob/master/src/main/resources/anvilclient.png)
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
 [![Issues][issues-closed-shield]][issues-closed-url]
