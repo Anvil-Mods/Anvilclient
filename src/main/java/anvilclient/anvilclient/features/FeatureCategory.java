@@ -14,22 +14,38 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.features;
 
-import anvilclient.anvilclient.AnvilClient;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import anvilclient.anvilclient.settings.SettingSuitableEnum;
+import net.minecraft.util.text.TranslationTextComponent;
 
-@Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
-public class KeyInputHandler{
+public enum FeatureCategory implements SettingSuitableEnum{
+	GRAPHIC,
+	INFO,
+	BUILDING;
 	
-	@SubscribeEvent
-    public static void onKeyInput(KeyInputEvent event) {
-        if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(AnvilClient.getMainConfigGui(null));
-        }
-    }
+	private final String translationKey;
+	
+	private final TranslationTextComponent translationTextComponent;
+	
+	private FeatureCategory() {
+		this.translationKey = "anvilclient.featureCategory." + this.toString().toLowerCase();
+		this.translationTextComponent = new TranslationTextComponent(translationKey);
+	}
+	
+	@Override
+	public String getTranslationKey() {
+		return translationKey;
+	}
+
+	@Override
+	public TranslationTextComponent getTranslationTextComponent() {
+		return translationTextComponent;
+	}
+	
+	@Override
+	public String getTranslatedName() {
+		return translationTextComponent.getString();
+	}
+
 }

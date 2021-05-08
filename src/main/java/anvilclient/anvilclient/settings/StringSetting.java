@@ -14,27 +14,37 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.gui.config;
+package anvilclient.anvilclient.settings;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.settings.BooleanOption;
+public class StringSetting extends AbstractSetting<String> implements CharSequence {
 
-public class CoordinatesConfigGui extends ConfigScreen {
-
-	public CoordinatesConfigGui(Screen parentScreen) {
-		super("anvilclient.configGui.coordinates.title", parentScreen);
+	public StringSetting(String name, String description, String defaultValue, String minValue, String maxValue) {
+		super(name, description, defaultValue, minValue, maxValue);
 	}
-	
-	public CoordinatesConfigGui() {
-		super("anvilclient.configGui.coordinates.title");
-	}
-	
+
 	@Override
-	protected void addOptions() {
-		this.optionsRowList.addOption(new BooleanOption(
-                "anvilclient.configGui.coordinates.toggle",
-                unused -> configManager.getCoordinates(),
-                (unused, newValue) -> configManager.setCoordinates(newValue)
-        ));
+	public int length() {
+		return getValue().length();
 	}
+
+	@Override
+	public char charAt(int index) {
+		return getValue().charAt(index);
+	}
+
+	@Override
+	public CharSequence subSequence(int start, int end) {
+		return getValue().subSequence(start, end);
+	}
+
+	@Override
+	public String valueToString() {
+		return this.value;
+	}
+
+	@Override
+	public String stringToValue(String string) {
+		return string;
+	}
+
 }

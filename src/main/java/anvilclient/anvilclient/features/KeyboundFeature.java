@@ -14,44 +14,35 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.features;
 
-import anvilclient.anvilclient.gui.hud.Hud;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
+import org.lwjgl.glfw.GLFW;
+
+import anvilclient.anvilclient.AnvilClient;
+import anvilclient.anvilclient.settings.Setting;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.util.InputMappings;
+import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-public class EventManager {
-
-	private static final EventManager INSTANCE = new EventManager();
-
-	public static EventManager getInstance() {
-		return INSTANCE;
-	}
+public abstract class KeyboundFeature extends TogglableFeature {
 	
-	public static final IEventBus FORGE_EVENT_BUS = MinecraftForge.EVENT_BUS;
-	
-	private final Hud hud;
-	
-	private EventManager() {
-		this.hud = Hud.getInstance();
-	}
-	
-	public void registerOnEventBus() {
-        MinecraftForge.EVENT_BUS.register(this);
-	}
+	@Setting
+	protected KeyBinding toggleKeybind = new KeyBinding("anvilclient.feature." + getName() + ".toggle", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
 	
 	@SubscribeEvent
-	public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
-        hud.render(event);
-    }
-	
-	@SubscribeEvent
-	public void onGuiClose(GuiOpenEvent event) {
-		if (event.getGui() == null) {
-			hud.updateScaledWidthAndHeight();
+	public void onKeyInput(KeyInputEvent event) {
+		if (toggleKeybind.isPressed()) {
+			toggleEnabled();
 		}
 	}
+	
+	@Override
+	public void register() {
+		super.register();
+		ClientRegistry.registerKeyBinding(toggleKeybind);
+	}
+
 }

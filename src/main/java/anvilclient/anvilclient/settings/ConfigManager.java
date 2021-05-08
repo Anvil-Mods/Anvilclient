@@ -16,157 +16,86 @@
  *******************************************************************************/
 package anvilclient.anvilclient.settings;
 
-import java.nio.file.Path;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Paths;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Properties;
 
 import anvilclient.anvilclient.AnvilClient;
-import anvilclient.anvilclient.features.AutoTool;
-import anvilclient.anvilclient.features.Fullbright;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.EnumValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ConfigManager {
-	private static final ConfigManager INSTANCE;
+
+	private static final ConfigManager INSTANCE = new ConfigManager();
 
 	public static ConfigManager getInstance() {
 		return INSTANCE;
 	}
 
-	private static final ForgeConfigSpec SPEC;
-
-	private static final Path CONFIG_PATH = Paths.get("config", AnvilClient.MOD_ID + ".toml");
-
-	static {
-		Pair<ConfigManager, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ConfigManager::new);
-		INSTANCE = specPair.getLeft();
-		SPEC = specPair.getRight();
-		CommentedFileConfig config = CommentedFileConfig.builder(CONFIG_PATH).sync().autoreload()
-				.writingMode(WritingMode.REPLACE).build();
-		config.load();
-		config.save();
-		SPEC.setConfig(config);
+	private ConfigManager() {
 	}
 
-	private ConfigManager(ForgeConfigSpec.Builder configSpecBuilder) {
+	private Properties properties = new Properties();
 
-		fullbright = configSpecBuilder.define("fullbright", false);
-		fullbrightLevel = configSpecBuilder.defineInRange("fullbrightLevel", 12.0, 0.0, 12.0);
-		vanillaGamma = configSpecBuilder.defineInRange("vanillaGamma", 1.0, 0.0, 1.0);
+	private File configFile = new File(
+			Paths.get("").toAbsolutePath().toString() + File.separator + "config" + File.separator + "anvilclient.cfg");
 
-		coordinates = configSpecBuilder.define("coordinates", false);
-		
-		autoTool = configSpecBuilder.define("autoTool", false);
-		autoToolMinDurability = configSpecBuilder.defineInRange("autoToolMinDurability", 5, 0, Byte.MAX_VALUE);
-		autoToolRevertTool = configSpecBuilder.define("autoToolRevertTool", true);
-		autoToolSilkTouchMode = configSpecBuilder.defineEnum("autoToolSilkTouchMode", AutoTool.SilkTouchMode.DOESNT_MATTER);
+	public void loadProperties() {
+		load();
+		for (ISetting<?> setting : SettingRegister.SETTING_LIST) {
+			if (properties.containsKey(setting.getName())) {
+				setting.loadValue(properties.getProperty(setting.getName()));
+			} else {
+				properties.setProperty(setting.getName(), setting.valueToString());
+			}
+		}
+		save();
+	}
+
+	private void load() {
+		try {
+			FileReader reader = new FileReader(configFile);
+			properties.load(reader);
+			reader.close();
+		} catch (FileNotFoundException e) {
+			AnvilClient.LOGGER.warn("Config file not found.");
+		} catch (IOException e) {
+			AnvilClient.LOGGER.error("Error loading config file.");
+			AnvilClient.LOGGER.catching(e);
+		}
 	}
 
 	public void save() {
-		SPEC.save();
-		Fullbright.update();
+		try {
+			FileWriter writer = new FileWriter(configFile);
+			properties.store(writer, "host settings");
+			writer.close();
+		} catch (IOException e) {
+			AnvilClient.LOGGER.error("Error saving config.");
+			AnvilClient.LOGGER.catching(e);
+		}
 	}
 
-	private final BooleanValue fullbright;
-
-	public boolean getFullbright() {
-		return fullbright.get();
+	public void setPropertyWithoutSaving(String key, String value) {
+		properties.setProperty(key, value);
 	}
 
-	public void setFullbright(boolean newValue) {
-		fullbright.set(newValue);
-	}
-
-	public void toggleFullbright() {
-		fullbright.set(!fullbright.get());
-	}
-
-	private final DoubleValue fullbrightLevel;
-
-	public Double getFullbrightLevel() {
-		return fullbrightLevel.get();
-	}
-
-	public void setFullbrightLevel(Double newValue) {
-		fullbrightLevel.set(newValue);
-	}
-
-	private final DoubleValue vanillaGamma;
-
-	public double getVanillaGamma() {
-		return vanillaGamma.get();
-	}
-
-	public void setVanillaGamma(double newValue) {
-		vanillaGamma.set(newValue);
-	}
-
-	private final BooleanValue coordinates;
-
-	public boolean getCoordinates() {
-		return coordinates.get();
-	}
-
-	public void setCoordinates(boolean newValue) {
-		coordinates.set(newValue);
+	public void setProperty(String key, String value) {
+		properties.setProperty(key, value);
+		save();
 	}
 	
-	public void toggleCoordinates() {
-		coordinates.set(!coordinates.get());
-	}
-	
-	private final BooleanValue autoTool;
-	
-	public boolean getAutoTool() {
-		return autoTool.get();
-	}
-	
-	public void setAutoTool(boolean newValue) {
-		autoTool.set(newValue);
-	}
-	
-	public void toggleAutoTool() {
-		autoTool.set(!autoTool.get());
-	}
-	
-	private final IntValue autoToolMinDurability;
-	
-	public int getAutoToolMinDurability() {
-		return autoToolMinDurability.get();
-	}
-
-	public void setAutoToolMinDurability(int newValue) {
-		autoToolMinDurability.set(newValue);
-	}
-	
-	private final BooleanValue autoToolRevertTool;
-	
-	public boolean getAutoToolRevertTool() {
-		return autoToolRevertTool.get();
-	}
-
-	public void setAutoToolRevertTool(boolean newValue) {
-		autoToolRevertTool.set(newValue);
-	}
-
-	public void toggleAutoToolRevertTool() {
-		autoToolRevertTool.set(!autoToolRevertTool.get());
-	}
-	
-	private final EnumValue<AutoTool.SilkTouchMode> autoToolSilkTouchMode;
-	
-	public AutoTool.SilkTouchMode getAutoToolSilkTouchMode() {
-		return autoToolSilkTouchMode.get();
-	}
-	
-	public void setAutoToolSilkTouchMode(AutoTool.SilkTouchMode newValue) {
-		autoToolSilkTouchMode.set(newValue);
+	public void cleanupConfig() {
+		Object[] settings = SettingRegister.SETTING_LIST.stream().map(ISetting::getName).toArray();
+		for (Object key : Collections.list(this.properties.keys())) {
+			if (!Arrays.stream(settings).anyMatch(key::equals)) {
+				properties.remove(key);
+			}
+		}
+		save();
 	}
 }

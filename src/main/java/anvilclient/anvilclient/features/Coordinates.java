@@ -18,19 +18,28 @@ package anvilclient.anvilclient.features;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import anvilclient.anvilclient.settings.ConfigManager;
 import anvilclient.anvilclient.util.LocalPlayerHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 
-public class Coordinates {
+public class Coordinates extends KeyboundFeature {
 
+	@Override
+	public String getName() {
+		return "coordinates";
+	}
+	
+	@Override
+	public FeatureCategory getCategory() {
+		return FeatureCategory.INFO;
+	}
+	
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
-	public static void render(ConfigManager configManager, int width, int height, MatrixStack matrixStack, Minecraft mc) {
-		if (configManager.getCoordinates()) {
+	public void render(int width, int height, MatrixStack matrixStack, Minecraft mc) {
+		if (isEnabled()) {
 			int currentHeight = 0;
 			ClientPlayerEntity player = LocalPlayerHelper.getLocalPlayer();
 			int coordinatesX = (int) (width * 0.75);

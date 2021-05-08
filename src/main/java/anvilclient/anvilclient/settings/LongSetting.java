@@ -14,22 +14,27 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.settings;
 
-import anvilclient.anvilclient.AnvilClient;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+public class LongSetting extends NumberSetting<Long> {
 
-@Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
-public class KeyInputHandler{
+	public LongSetting(String name, String description, Long defaultValue, Long minValue, Long maxValue, float stepSizeIn) {
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, 0);
+	}
 	
-	@SubscribeEvent
-    public static void onKeyInput(KeyInputEvent event) {
-        if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(AnvilClient.getMainConfigGui(null));
-        }
-    }
+	@Override
+	public void setValue(Number newValue) {
+		this.value = newValue.longValue();
+	}
+
+	@Override
+	public String valueToString() {
+		return Long.toString(this.value);
+	}
+
+	@Override
+	public Long stringToValue(String string) {
+		return Long.parseLong(string);
+	}
+
 }

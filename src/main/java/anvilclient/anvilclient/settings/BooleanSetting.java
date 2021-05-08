@@ -14,22 +14,33 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.settings;
 
-import anvilclient.anvilclient.AnvilClient;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+public class BooleanSetting extends AbstractSetting<Boolean> {
 
-@Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
-public class KeyInputHandler{
+	public BooleanSetting(String name, String description, Boolean defaultValue) {
+		super(name, description, defaultValue, null, null);
+	}
 	
-	@SubscribeEvent
-    public static void onKeyInput(KeyInputEvent event) {
-        if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(AnvilClient.getMainConfigGui(null));
-        }
-    }
+	public void toggle() {
+		setValue(!getValue());
+	}
+	
+	public void enable() {
+		setValue(true);
+	}
+	
+	public void disable() {
+		setValue(false);
+	}
+
+	@Override
+	public String valueToString() {
+		return Boolean.toString(this.value);
+	}
+
+	@Override
+	public Boolean stringToValue(String string) {
+		return Boolean.parseBoolean(string);
+	}
 }

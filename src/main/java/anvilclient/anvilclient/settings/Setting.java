@@ -14,22 +14,16 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.settings;
 
-import anvilclient.anvilclient.AnvilClient;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
-public class KeyInputHandler{
-	
-	@SubscribeEvent
-    public static void onKeyInput(KeyInputEvent event) {
-        if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(AnvilClient.getMainConfigGui(null));
-        }
-    }
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+@Retention(RUNTIME)
+@Target(FIELD)
+public @interface Setting {
+
 }
