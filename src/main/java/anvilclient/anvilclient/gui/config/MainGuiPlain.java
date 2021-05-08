@@ -29,7 +29,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class MainGuiPlain extends ConfigScreen {
 
 	public MainGuiPlain(Screen parentScreen) {
-		super("anvilclient.configGui.main", parentScreen);
+		super("anvilclient", parentScreen);
 	}
 
 	@Override

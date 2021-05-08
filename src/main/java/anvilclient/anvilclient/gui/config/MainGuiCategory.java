@@ -26,7 +26,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class MainGuiCategory extends ConfigScreen {
 
 	public MainGuiCategory(Screen parentScreen) {
-		super("anvilclient.configGui.main", parentScreen);
+		super("anvilclient", parentScreen);
 	}
 
 	@Override
