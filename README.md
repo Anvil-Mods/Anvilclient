@@ -8,8 +8,9 @@ A Minecraft Mod for Forge that is designed to provide useful features to you but
 [![Issues][issues-closed-shield]][issues-closed-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![MIT License][license-shield]][license-url]
-[![Java CI with Gradle][java-ci-shield]][java-ci-url]
+[![License][license-shield]][license-url]
+[![Build][java-ci-shield]][java-ci-url]
+[![Dev Build][dev-java-ci-shield]][dev-java-ci-url]
 
 ## About The Project
 
@@ -82,5 +83,7 @@ Discord: https://discord.gg/R48C2srnx3
 [issues-closed-url]: https://github.com/Anvilclient/Anvilclient/issues?q=is%3Aissue+is%3Aclosed
 [license-shield]: https://img.shields.io/github/license/Anvilclient/Anvilclient?style=for-the-badge
 [license-url]: https://github.com/Anvilclient/Anvilclient/blob/master/LICENSE.txt
-[java-ci-shield]: https://img.shields.io/github/workflow/status/Anvilclient/Anvilclient/Java%20CI%20with%20Gradle?style=for-the-badge
-[java-ci-url]: https://github.com/Anvilclient/Anvilclient/actions/workflows/gradle.yml
+[java-ci-shield]: https://img.shields.io/github/workflow/status/Anvilclient/Anvilclient/Java%20CI%20with%20Gradle/master?style=for-the-badge
+[java-ci-url]: https://github.com/Anvilclient/Anvilclient/tree/master
+[dev-java-ci-shield]: https://img.shields.io/github/workflow/status/Anvilclient/Anvilclient/Java%20CI%20with%20Gradle/dev?label=DEV%20BUILD&style=for-the-badge
+[dev-java-ci-url]: https://github.com/Anvilclient/Anvilclient/tree/dev
