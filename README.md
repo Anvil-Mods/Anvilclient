@@ -1,6 +1,8 @@
 # Anvilclient
 A Minecraft Mod for Forge that is designed to provide useful features to you but not to cause harm to others.
 
+![Logo](https://github.com/Anvilclient/Anvilclient/blob/master/src/main/resources/anvilclient.png)
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
 [![Issues][issues-closed-shield]][issues-closed-url]
@@ -22,7 +24,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
--Java 1.8.0_271 or newer Java 8 (Java 9+ may work but is not supported)
+-Java 1.8.0_271 or newer Java 8 (Java 9+ or older Java 8 versions may work but are not supported)
 
 -You also need to have Gradle installed properly.
 For more information on how to do that see [this](https://gradle.org/install/)
