@@ -1,23 +1,30 @@
 {
-	"anvilclient.mainConfigGui.title": "Anvilclient",
+	"anvilclient": "Anvilclient",
 	
-	"anvilclient.configGui.fullbright.title": "Fullbright",
-	"anvilclient.configGui.fullbright.toggle": "Toggle Fullbright",
-	"anvilclient.configGui.fullbrightLevel.title": "Fullbrightlevel",
+	"anvilclient.configGui.sortType.plain": "Sort Type: Plain",
+	"anvilclient.configGui.sortType.category": "Sort Type: Category",
 	
-	"anvilclient.configGui.coordinates.title": "Coordinates",
-	"anvilclient.configGui.coordinates.toggle": "Show Coordinates",
+	"anvilclient.featureCategory.graphic": "Graphic",
+	"anvilclient.featureCategory.info": "Info",
+	"anvilclient.featureCategory.building": "Building",
 	
-	"anvilclient.configGui.autoTool.title": "Auto Tool",
-	"anvilclient.configGui.autoTool.toggle": "Toogle Auto Tool",
-	"anvilclient.configGui.autoToolMinDurability.title": "Min Durability",
-	"anvilclient.configGui.autoToolRevertTool.toggle": "Revert Back to old Slot",
-	"anvilclient.configGui.autoToolSilkTouchMode.title": "Silk Touch Mode",
-	"anvilclient.configGui.autoToolSilkTouchMode.dont_use": "Don't use",
-	"anvilclient.configGui.autoToolSilkTouchMode.prefer_not_to_use": "Prefer not to use",
-	"anvilclient.configGui.autoToolSilkTouchMode.doesnt_matter": "Doesn't matter",
-	"anvilclient.configGui.autoToolSilkTouchMode.prefer": "Prefer",
-	"anvilclient.configGui.autoToolSilkTouchMode.use_only": "Use only",
+	"anvilclient.feature.fullbright": "Fullbright",
+	"anvilclient.feature.fullbright.toggle": "Toggle Fullbright",
+	"anvilclient.feature.fullbright.level": "Fullbrightlevel",
+	
+	"anvilclient.feature.coordinates": "Coordinates",
+	"anvilclient.feature.coordinates.toggle": "Show Coordinates",
+	
+	"anvilclient.feature.autoTool": "Auto Tool",
+	"anvilclient.feature.autoTool.toggle": "Toogle Auto Tool",
+	"anvilclient.feature.autoTool.minDurability": "Min Durability",
+	"anvilclient.feature.autoTool.revertTool": "Revert Back to old Slot",
+	"anvilclient.feature.autoTool.silkTouchMode": "Silk Touch Mode",
+	"anvilclient.feature.autoTool.silkTouchMode.dont_use": "Don't use",
+	"anvilclient.feature.autoTool.silkTouchMode.prefer_not_to_use": "Prefer not to use",
+	"anvilclient.feature.autoTool.silkTouchMode.doesnt_matter": "Doesn't matter",
+	"anvilclient.feature.autoTool.silkTouchMode.prefer": "Prefer",
+	"anvilclient.feature.autoTool.silkTouchMode.use_only": "Use only",
 	
 	
 	"anvilclient.key.openSettings": "Open Settings",
