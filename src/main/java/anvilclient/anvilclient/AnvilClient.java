@@ -22,11 +22,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import anvilclient.anvilclient.features.Features;
-import anvilclient.anvilclient.gui.config.MainConfigGui;
+import anvilclient.anvilclient.gui.config.ConfigScreen;
+import anvilclient.anvilclient.gui.config.MainGuiCategory;
+import anvilclient.anvilclient.gui.config.MainGuiPlain;
 import anvilclient.anvilclient.settings.ConfigManager;
 import anvilclient.anvilclient.settings.SettingRegister;
 import anvilclient.anvilclient.util.EventManager;
 import anvilclient.anvilclient.util.Keybinds;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
@@ -39,43 +42,48 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 
 @Mod(AnvilClient.MOD_ID)
-public class AnvilClient
-{
-    public static final Logger LOGGER = LogManager.getLogger();
-    public static final String MOD_ID = "anvilclient";
-    public static final String KEY_CATEGORY = "anvilclient.key.categories.anvilclient";
+public class AnvilClient {
+	public static final Logger LOGGER = LogManager.getLogger();
+	public static final String MOD_ID = "anvilclient";
+	public static final String KEY_CATEGORY = "anvilclient.key.categories.anvilclient";
 
-    public AnvilClient() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-        
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-        
-        ModLoadingContext.get().registerExtensionPoint(
-                ExtensionPoint.CONFIGGUIFACTORY,
-                () -> (mc, screen) -> new MainConfigGui(screen)
-        );
+	public AnvilClient() {
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+		
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 
-        MinecraftForge.EVENT_BUS.register(this);
-    }
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
+				() -> (mc, screen) -> getMainConfigGui(screen));
+		
+		MinecraftForge.EVENT_BUS.register(this);
+	}
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-    }
+	public static ConfigScreen getMainConfigGui(Screen parentScreen) {
+		switch (ConfigScreen.sortType.getValue()) {
+		case PLAIN:
+			return new MainGuiPlain(parentScreen);
+		case CATEGORY:
+		default:
+			return new MainGuiCategory(parentScreen);
+		}
+	}
 
-    private void doClientStuff(final FMLClientSetupEvent event)
-    {
-    	Keybinds.register();
-    	EventManager.getInstance().registerOnEventBus();
-    	Features.register();
-    	SettingRegister.registerClasses(Features.FEATURE_LIST);
-    	ConfigManager.getInstance().loadProperties();
-    	ConfigManager.getInstance().cleanupConfig();
-    }
+	private void setup(final FMLCommonSetupEvent event) {
+	}
 
-    @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event)
-    {
-    }
-    
+	private void doClientStuff(final FMLClientSetupEvent event) {
+		Keybinds.register();
+		EventManager.getInstance().registerOnEventBus();
+		Features.register();
+		SettingRegister.registerClasses(Features.FEATURE_LIST);
+		SettingRegister.registerStaticClass(ConfigScreen.class);
+		ConfigManager.getInstance().loadProperties();
+		ConfigManager.getInstance().cleanupConfig();
+	}
+
+	@SubscribeEvent
+	public void onServerStarting(FMLServerStartingEvent event) {
+	}
+
 }

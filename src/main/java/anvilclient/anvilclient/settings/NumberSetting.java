@@ -19,10 +19,12 @@ package anvilclient.anvilclient.settings;
 public abstract class NumberSetting<T extends Number> extends AbstractSetting<T> {
 	
 	protected float stepSize;
+	protected int decimalCount;
 
-	protected NumberSetting(String name, String description, T defaultValue, T minValue, T maxValue, float stepSizeIn) {
+	protected NumberSetting(String name, String description, T defaultValue, T minValue, T maxValue, float stepSizeIn, int decimalCountIn) {
 		super(name, description, defaultValue, minValue, maxValue);
 		this.stepSize = stepSizeIn;
+		this.decimalCount = decimalCountIn;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -32,30 +34,34 @@ public abstract class NumberSetting<T extends Number> extends AbstractSetting<T>
 	}
 
 	public byte getByteValue() {
-		return (Byte) this.getValue();
+		return value.byteValue();
 	}
 
 	public short getShortValue() {
-		return (Short) this.getValue();
+		return value.shortValue();
 	}
 
 	public int getIntValue() {
-		return (Integer) this.getValue();
+		return value.intValue();
 	}
 
 	public long getLongValue() {
-		return (Long) this.getValue();
+		return value.longValue();
 	}
 
 	public float getFloatValue() {
-		return (Float) this.getValue();
+		return value.floatValue();
 	}
 
 	public double getDoubleValue() {
-		return (Double) this.getValue();
+		return value.doubleValue();
 	}
 	
 	public float getStepSize() {
 		return stepSize;
+	}
+	
+	public int getDecimalCount() {
+		return decimalCount;
 	}
 }

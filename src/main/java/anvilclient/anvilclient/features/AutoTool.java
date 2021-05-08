@@ -24,6 +24,7 @@ import anvilclient.anvilclient.settings.BooleanSetting;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IntegerSetting;
 import anvilclient.anvilclient.settings.Setting;
+import anvilclient.anvilclient.settings.SettingSuitableEnum;
 import anvilclient.anvilclient.util.ItemHelper;
 import anvilclient.anvilclient.util.LocalPlayerHelper;
 import anvilclient.anvilclient.util.WorldHelper;
@@ -34,6 +35,8 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AutoTool extends KeyboundFeature {
@@ -166,7 +169,7 @@ public class AutoTool extends KeyboundFeature {
 		this.resetTool();
 	}
 
-	public enum SilkTouchMode {
+	public enum SilkTouchMode implements SettingSuitableEnum {
 		DONT_USE("anvilclient.configGui.autoToolSilkTouchMode.dont_use"),
 		PREFER_NOT_TO_USE("anvilclient.configGui.autoToolSilkTouchMode.prefer_not_to_use"),
 		DOESNT_MATTER("anvilclient.configGui.autoToolSilkTouchMode.doesnt_matter"),
@@ -175,12 +178,21 @@ public class AutoTool extends KeyboundFeature {
 		
 		private final String translationKey;
 		
+		private final ITextComponent translationTextComponent;
+		
 		private SilkTouchMode(String translationKey) {
 			this.translationKey = translationKey;
+			this.translationTextComponent = new TranslationTextComponent(translationKey);
 		}
 		
+		@Override
 		public String getTranslationKey() {
 			return translationKey;
+		}
+
+		@Override
+		public ITextComponent getTranslationTextComponent() {
+			return translationTextComponent;
 		}
 	}
 }

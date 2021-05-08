@@ -18,8 +18,13 @@ package anvilclient.anvilclient.settings;
 
 public class FloatSetting extends NumberSetting<Float> {
 
-	public FloatSetting(String name, String description, Float defaultValue, Float minValue, Float maxValue, float stepSizeIn) {
-		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
+	public FloatSetting(String name, String description, Float defaultValue, Float minValue, Float maxValue, float stepSizeIn, int decimalCountIn) {
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, decimalCountIn);
+	}
+	
+	@Override
+	public void setValue(Number newValue) {
+		this.value = newValue.floatValue();
 	}
 
 	@Override

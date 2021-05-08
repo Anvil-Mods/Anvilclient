@@ -19,7 +19,12 @@ package anvilclient.anvilclient.settings;
 public class ShortSetting extends NumberSetting<Short> {
 
 	public ShortSetting(String name, String description, Short defaultValue, Short minValue, Short maxValue, float stepSizeIn) {
-		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, 0);
+	}
+	
+	@Override
+	public void setValue(Number newValue) {
+		this.value = newValue.shortValue();
 	}
 
 	@Override

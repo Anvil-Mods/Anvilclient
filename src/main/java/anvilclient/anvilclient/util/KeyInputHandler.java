@@ -17,7 +17,6 @@
 package anvilclient.anvilclient.util;
 
 import anvilclient.anvilclient.AnvilClient;
-import anvilclient.anvilclient.gui.config.MainConfigGui;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,7 +29,7 @@ public class KeyInputHandler{
 	@SubscribeEvent
     public static void onKeyInput(KeyInputEvent event) {
         if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(new MainConfigGui());
+            Minecraft.getInstance().displayGuiScreen(AnvilClient.getMainConfigGui(null));
         }
     }
 }

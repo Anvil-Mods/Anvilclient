@@ -14,28 +14,18 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.gui.config;
+package anvilclient.anvilclient.settings;
 
-import anvilclient.anvilclient.features.Features;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.settings.BooleanOption;
+import net.minecraft.util.text.ITextComponent;
 
-public class CoordinatesConfigGui extends ConfigScreen {
-
-	public CoordinatesConfigGui(Screen parentScreen) {
-		super("anvilclient.configGui.coordinates.title", parentScreen);
-	}
+public interface SettingSuitableEnum {
 	
-	public CoordinatesConfigGui() {
-		super("anvilclient.configGui.coordinates.title");
-	}
+	String getTranslationKey();
 	
-	@Override
-	protected void addOptions() {
-		this.optionsRowList.addOption(new BooleanOption(
-                "anvilclient.configGui.coordinates.toggle",
-                unused -> Features.COORDINATES.isEnabled(),
-                (unused, newValue) -> Features.COORDINATES.setEnabled(newValue)
-        ));
+	ITextComponent getTranslationTextComponent();
+	
+	default String getTranslatedName() {
+		return getTranslationTextComponent().getString();
 	}
+
 }

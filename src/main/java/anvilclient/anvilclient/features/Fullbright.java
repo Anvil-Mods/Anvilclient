@@ -41,11 +41,11 @@ public class Fullbright extends KeyboundFeature {
 	private boolean vanillaGammaInitialized = true;
 	
 	@Setting
-	public DoubleSetting fullbrightLevel = new DoubleSetting(getName() + ".fullbrightLevel", "", 12.0, 0.0, 12.0, 0.1F);
+	public DoubleSetting fullbrightLevel = new DoubleSetting(getName() + ".fullbrightLevel", "", 12.0, 0.0, 12.0, 0.1F, 1);
 	
 	@Setting
 	@IgnoreAsOption
-	public DoubleSetting vanillaGamma = new DoubleSetting(getName() + ".vanillaGamma", "", 1.0, 0.0, 1.0, 0.01F);
+	public DoubleSetting vanillaGamma = new DoubleSetting(getName() + ".vanillaGamma", "", 1.0, 0.0, 1.0, 0.01F, 2);
 	
 	public void update() {
 		if (isEnabled()) {

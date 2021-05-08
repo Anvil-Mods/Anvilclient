@@ -20,7 +20,12 @@ public class IntegerSetting extends NumberSetting<Integer> {
 
 	public IntegerSetting(String name, String description, Integer defaultValue, Integer minValue,
 			Integer maxValue, float stepSizeIn) {
-		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, 0);
+	}
+	
+	@Override
+	public void setValue(Number newValue) {
+		this.value = newValue.intValue();
 	}
 
 	@Override

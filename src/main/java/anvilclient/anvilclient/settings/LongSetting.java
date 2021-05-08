@@ -19,7 +19,12 @@ package anvilclient.anvilclient.settings;
 public class LongSetting extends NumberSetting<Long> {
 
 	public LongSetting(String name, String description, Long defaultValue, Long minValue, Long maxValue, float stepSizeIn) {
-		super(name, description, defaultValue, minValue, maxValue, stepSizeIn);
+		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, 0);
+	}
+	
+	@Override
+	public void setValue(Number newValue) {
+		this.value = newValue.longValue();
 	}
 
 	@Override

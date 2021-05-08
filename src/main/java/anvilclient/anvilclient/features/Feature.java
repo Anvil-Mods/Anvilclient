@@ -21,6 +21,8 @@ import anvilclient.anvilclient.util.EventManager;
 public abstract class Feature {
 	
 	public abstract String getName();
+	
+	public abstract FeatureCategory getCategory();
 
 	public void register() {
 		EventManager.FORGE_EVENT_BUS.register(this);

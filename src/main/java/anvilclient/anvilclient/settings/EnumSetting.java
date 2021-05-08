@@ -16,10 +16,15 @@
  *******************************************************************************/
 package anvilclient.anvilclient.settings;
 
-public class EnumSetting<T extends Enum<T>> extends AbstractSetting<T> {
+public class EnumSetting<T extends Enum<T> & SettingSuitableEnum> extends AbstractSetting<T> {
 
 	public EnumSetting(String name, String description, T defaultValue) {
 		super(name, description, defaultValue, null, null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void setValue(Enum<T> newValue) {
+		super.setValue((T) newValue);
 	}
 
 	@Override

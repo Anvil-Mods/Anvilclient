@@ -19,6 +19,7 @@ package anvilclient.anvilclient.features;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Features {
@@ -29,6 +30,8 @@ public class Features {
 	
 	public static final List<Feature> FEATURE_LIST = new ArrayList<>();
 	
+	public static final HashMap<FeatureCategory, List<Feature>> FEATURE_LIST_BY_CATEGORY = new HashMap<>();
+	
 	static {
 		for (Field featureField : Features.class.getDeclaredFields()) {
 			if (Modifier.isStatic(featureField.getModifiers()) && Feature.class.isAssignableFrom(featureField.getType())) {
@@ -38,6 +41,18 @@ public class Features {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	static {
+		for (FeatureCategory featureCategory : FeatureCategory.values()) {
+			List<Feature> featureList = new ArrayList<>();
+			for (Feature feature : FEATURE_LIST) {
+				if (feature.getCategory() == featureCategory) {
+					featureList.add(feature);
+				}
+			}
+			FEATURE_LIST_BY_CATEGORY.put(featureCategory, featureList);
 		}
 	}
 	
