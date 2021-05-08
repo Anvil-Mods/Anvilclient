@@ -170,18 +170,18 @@ public class AutoTool extends KeyboundFeature {
 	}
 
 	public enum SilkTouchMode implements SettingSuitableEnum {
-		DONT_USE("anvilclient.configGui.autoToolSilkTouchMode.dont_use"),
-		PREFER_NOT_TO_USE("anvilclient.configGui.autoToolSilkTouchMode.prefer_not_to_use"),
-		DOESNT_MATTER("anvilclient.configGui.autoToolSilkTouchMode.doesnt_matter"),
-		PREFER("anvilclient.configGui.autoToolSilkTouchMode.prefer"),
-		USE_ONLY("anvilclient.configGui.autoToolSilkTouchMode.use_only");
+		DONT_USE,
+		PREFER_NOT_TO_USE,
+		DOESNT_MATTER,
+		PREFER,
+		USE_ONLY;
 		
 		private final String translationKey;
 		
 		private final ITextComponent translationTextComponent;
 		
-		private SilkTouchMode(String translationKey) {
-			this.translationKey = translationKey;
+		private SilkTouchMode() {
+			this.translationKey = "anvilclient.configGui.autoTool.silkTouchMode." + this.toString().toLowerCase();
 			this.translationTextComponent = new TranslationTextComponent(translationKey);
 		}
 		
