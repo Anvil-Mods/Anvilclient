@@ -32,7 +32,7 @@ public class FeatureGui extends ConfigScreen {
 	private final Feature feature;
 
 	public FeatureGui(Feature feature, Screen parentScreen) {
-		super("anvilclient.feature." + feature.getName() + "title", parentScreen);
+		super("anvilclient.feature." + feature.getName(), parentScreen);
 		this.feature = feature;
 	}
 

@@ -43,7 +43,7 @@ public class AutoTool extends KeyboundFeature {
 
 	@Override
 	public String getName() {
-		return "autotool";
+		return "autoTool";
 	}
 	
 	@Override
@@ -181,7 +181,7 @@ public class AutoTool extends KeyboundFeature {
 		private final ITextComponent translationTextComponent;
 		
 		private SilkTouchMode() {
-			this.translationKey = "anvilclient.configGui.autoTool.silkTouchMode." + this.toString().toLowerCase();
+			this.translationKey = "anvilclient.feature.autoTool.silkTouchMode." + this.toString().toLowerCase();
 			this.translationTextComponent = new TranslationTextComponent(translationKey);
 		}
 		
