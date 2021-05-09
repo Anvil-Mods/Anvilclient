@@ -34,7 +34,7 @@ jobs:
         body: ${{ github.event.inputs.changelog }}
         draft: true
         target_commitish: 'master'
-        files: './build/libs/anvilclient${{ github.event.inputs.version }}.jar'
+        files: './build/libs/anvilclient-${{ github.event.inputs.version }}.jar'
         fail_on_unmatched_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
