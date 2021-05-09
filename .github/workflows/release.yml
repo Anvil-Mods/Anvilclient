@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+      changelog:
+        description: 'Changelog'     
+        required: true
+        
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: master'#
+    - name: Set up JDK 8
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew build
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        tag_name: ${{ github.event.inputs.version }}
+        body: ${{ github.event.inputs.changelog }}
+        draft: true
+        target_commitish: 'master'
+        files: './build/libs/anvilclient${{ github.event.inputs.version }}.jar'
+        fail_on_unmatched_files: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
