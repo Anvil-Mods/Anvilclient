@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import anvilclient.anvilclient.features.building.AutoTool;
+import anvilclient.anvilclient.features.graphic.Fullbright;
+import anvilclient.anvilclient.features.info.Coordinates;
+
 public class Features {
 	
 	public static final AutoTool AUTO_TOOL = new AutoTool();

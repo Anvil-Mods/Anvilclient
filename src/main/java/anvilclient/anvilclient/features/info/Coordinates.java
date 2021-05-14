@@ -14,10 +14,12 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.features;
+package anvilclient.anvilclient.features.info;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import anvilclient.anvilclient.features.FeatureCategory;
+import anvilclient.anvilclient.features.KeyboundFeature;
 import anvilclient.anvilclient.util.LocalPlayerHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

@@ -14,9 +14,11 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.features;
+package anvilclient.anvilclient.features.graphic;
 
 import anvilclient.anvilclient.AnvilClient;
+import anvilclient.anvilclient.features.FeatureCategory;
+import anvilclient.anvilclient.features.KeyboundFeature;
 import anvilclient.anvilclient.settings.DoubleSetting;
 import anvilclient.anvilclient.settings.IgnoreAsOption;
 import anvilclient.anvilclient.settings.Setting;

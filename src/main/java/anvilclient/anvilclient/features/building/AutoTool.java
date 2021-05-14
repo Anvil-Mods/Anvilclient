@@ -14,12 +14,14 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.features;
+package anvilclient.anvilclient.features.building;
 
 import java.util.Comparator;
 
 import anvilclient.anvilclient.event.PlayerDamageBlockEvent;
 import anvilclient.anvilclient.event.PlayerResetBreakingBlockEvent;
+import anvilclient.anvilclient.features.FeatureCategory;
+import anvilclient.anvilclient.features.KeyboundFeature;
 import anvilclient.anvilclient.settings.BooleanSetting;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IntegerSetting;
