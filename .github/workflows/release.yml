@@ -79,3 +79,9 @@ jobs:
         fail_on_unmatched_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+    - name: Delete Artifacts
+      uses: GeekyEggo/delete-artifact@v1.0.0
+        with:
+          name: |
+            changelog
+            release
