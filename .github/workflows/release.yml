@@ -9,23 +9,8 @@ on:
       changelog:
         description: 'Changelog'     
         required: true
-        
-jobs:
-  setup:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: master
-    - name: Set up JDK 8
-      uses: actions/setup-java@v2
-      with:
-        java-version: '8'
-        distribution: 'adopt'
-        
+jobs:        
   changelog:
-    needs: [setup]
     runs-on: ubuntu-latest
     
     steps:
@@ -40,10 +25,17 @@ jobs:
         author: false
   
   build:
-    needs: [setup]
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: master
+    - name: Set up JDK 8
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'adopt'
     - uses: actions/checkout@v2
       with:
         ref: master
