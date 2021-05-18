@@ -60,6 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v2
     - name: get changelog
       uses: actions/download-artifact@v2
       with:
