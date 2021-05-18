@@ -70,13 +70,11 @@ jobs:
       with:
         name: build
     - name: Release
-      uses: softprops/action-gh-release@v0.1.5
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ github.event.inputs.version }}
-        name: ${{ github.event.inputs.version }}
         body_path: './CHANGLOG.md'
         draft: true
-        target_commitish: 'master'
         files: './anvilclient-${{ github.event.inputs.version }}.jar'
         fail_on_unmatched_files: true
       env:
