@@ -65,7 +65,7 @@ jobs:
       with:
         name: changelog
     - name: get build
-      uses: actions/cache@v2
+      uses: actions/download-artifact@v2
       with:
         name: build
     - name: Release
