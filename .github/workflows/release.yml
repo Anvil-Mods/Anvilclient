@@ -32,10 +32,10 @@ jobs:
         filterByMilestone: false
         author: false
     - name: Cache changelog
-      uses: actions/cache@v2
+      uses: actions/upload-artifact@v2
       with:
         path: './CHANGELOG.md'
-        key: changelog
+        name: changelog
   
   build:
     needs: [setup]
@@ -50,10 +50,10 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
     - name: Cache build
-      uses: actions/cache@v2
+      uses: actions/upload-artifact@v2
       with:
         path: './build/libs/anvilclient-${{ github.event.inputs.version }}.jar'
-        key: build
+        name: build
         
   release:
     needs: [changelog, build]
@@ -61,15 +61,13 @@ jobs:
     
     steps:
     - name: get changelog
-      uses: actions/cache@v2
+      uses: actions/download-artifact@v2
       with:
-        path: './CHANGELOG.md'
-        key: changelog
+        name: changelog
     - name: get build
       uses: actions/cache@v2
       with:
-        path: './anvilclient-${{ github.event.inputs.version }}.jar'
-        key: build
+        name: build
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
