@@ -70,9 +70,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ github.event.inputs.version }}
-        body_path: './CHANGLOG.md'
+        body_path: '/home/runner/work/Anvilclient/Anvilclient/CHANGLOG.md'
         draft: true
-        files: './anvilclient-${{ github.event.inputs.version }}.jar'
+        files: '/home/runner/work/Anvilclient/Anvilclient/anvilclient-${{ github.event.inputs.version }}.jar'
         fail_on_unmatched_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
