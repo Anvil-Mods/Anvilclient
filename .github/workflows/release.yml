@@ -6,9 +6,6 @@ on:
       version:
         description: 'Version'
         required: true
-      changelog:
-        description: 'Changelog'     
-        required: true
         
 jobs:
   setup:
@@ -61,11 +58,10 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ github.event.inputs.version }}
-        body: ${{ github.event.inputs.changelog }}
+        body-path: CHANGLOG.md
         draft: true
         target_commitish: 'master'
         files: './build/libs/anvilclient-${{ github.event.inputs.version }}.jar'
         fail_on_unmatched_files: true
-        body-path: CHANGLOG.md
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
