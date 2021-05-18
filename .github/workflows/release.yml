@@ -11,9 +11,9 @@ on:
         required: true
         
 jobs:
-  build_and_release:
+  setup:
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v2
       with:
@@ -23,10 +23,37 @@ jobs:
       with:
         java-version: '8'
         distribution: 'adopt'
+        
+  changelog:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Generate changelog
+      uses: heinrichreimer/action-github-changelog-generator@v2.2
+      with:
+        token: ${{ secrets.WORKFLOW_TOKEN }}
+        configureSections: '{"bugs":{"prefix":"**Bugfixes:**","labels":["bug"]}, "enhancements":{"prefix":"**Enhancements:**","labels":["enhancement"]}}'
+        issuesWoLabels: false
+        prWoLabels: false
+        filterByMilestone: false
+        author: false
+  
+  build:
+    needs: [setup]
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+        
+  release:
+    needs: [setup, changelog, build]
+    runs-on: ubuntu-latest
+    
+    steps:
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -36,5 +63,6 @@ jobs:
         target_commitish: 'master'
         files: './build/libs/anvilclient-${{ github.event.inputs.version }}.jar'
         fail_on_unmatched_files: true
+        body-path: CHANGLOG.md
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
