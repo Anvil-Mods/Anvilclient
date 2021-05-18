@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: master
     - name: Set up JDK 8
       uses: actions/setup-java@v2
       with:
@@ -22,7 +19,6 @@ jobs:
         distribution: 'adopt'
         
   changelog:
-    needs: [setup]
     runs-on: ubuntu-latest
     
     steps:
@@ -35,6 +31,11 @@ jobs:
         prWoLabels: false
         filterByMilestone: false
         author: false
+    - name: Cache changelog
+      uses: actions/cache@v2
+      with:
+        path: './CHANGELOG.md'
+        key: changelog
   
   build:
     needs: [setup]
@@ -48,20 +49,35 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Cache build
+      uses: actions/cache@v2
+      with:
+        path: './build/libs/anvilclient-${{ github.event.inputs.version }}.jar'
+        key: build
         
   release:
-    needs: [setup, changelog, build]
+    needs: [changelog, build]
     runs-on: ubuntu-latest
     
     steps:
+    - name: get changelog
+      uses: actions/cache@v2
+      with:
+        path: './CHANGELOG.md'
+        key: changelog
+    - name: get build
+      uses: actions/cache@v2
+      with:
+        path: './anvilclient-${{ github.event.inputs.version }}.jar'
+        key: build
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ github.event.inputs.version }}
-        body-path: CHANGLOG.md
+        body-path: './CHANGLOG.md'
         draft: true
         target_commitish: 'master'
-        files: './build/libs/anvilclient-${{ github.event.inputs.version }}.jar'
+        files: './anvilclient-${{ github.event.inputs.version }}.jar'
         fail_on_unmatched_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
