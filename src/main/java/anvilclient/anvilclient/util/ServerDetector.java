@@ -18,6 +18,8 @@ package anvilclient.anvilclient.util;
 
 import java.util.Arrays;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
@@ -82,13 +84,14 @@ public class ServerDetector {
 		UNKNOWN,
 		HYPIXEL("hypixel.net");
 
+		@Nullable
 		public final String DOMAIN;
 
 		private Server(String domain) {
 			this.DOMAIN = domain;
 		}
 
-		Server() {
+		private Server() {
 			this.DOMAIN = null;
 		}
 	}

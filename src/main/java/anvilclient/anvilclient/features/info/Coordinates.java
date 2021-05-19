@@ -20,7 +20,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.KeyboundFeature;
-import anvilclient.anvilclient.util.LocalPlayerHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
@@ -40,10 +39,9 @@ public class Coordinates extends KeyboundFeature {
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
-	public void render(int width, int height, MatrixStack matrixStack, Minecraft mc) {
+	public void render(int width, int height, MatrixStack matrixStack, Minecraft mc, ClientPlayerEntity player) {
 		if (isEnabled()) {
 			int currentHeight = 0;
-			ClientPlayerEntity player = LocalPlayerHelper.getLocalPlayer();
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.75);
 			AbstractGui.drawString(matrixStack, mc.fontRenderer, "X: " + player.getPosX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);

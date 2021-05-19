@@ -42,6 +42,16 @@ public class Utils {
 	public static float trimFloat(float value, int decimalCount) {
 		return (float) trimDouble(value, decimalCount);
 	}
+	
+	public static final String formatTime(long secs) {
+		String formattedTime;
+	    if (secs / 3600 >= 1) {
+			formattedTime = String.format("%02d:%02d:%02d", secs / 3600, (secs % 3600) / 60, secs % 60);
+		} else {
+			formattedTime = String.format("%02d:%02d", (secs % 3600) / 60, secs % 60);
+		}
+		return formattedTime;
+	}
 
 	@SuppressWarnings("unchecked")
 	public static AbstractOption getOptionForSetting(ISetting<?> setting) {

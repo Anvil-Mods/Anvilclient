@@ -20,6 +20,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.Features;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -46,8 +47,10 @@ public class Hud extends AbstractGui {
 	}
 
 	public void render(RenderGameOverlayEvent.Post event) {
-		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
-			Features.COORDINATES.render(width, height, matrixStack, mc);
+		ClientPlayerEntity player = mc.player;
+		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR && player != null) {
+			Features.COORDINATES.render(width, height, matrixStack, mc, player);
+			Features.BEDWARS_INFO.render(width, height, matrixStack, mc, player);
 		}
 	}
 

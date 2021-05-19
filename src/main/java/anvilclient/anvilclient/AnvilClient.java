@@ -29,6 +29,7 @@ import anvilclient.anvilclient.settings.ConfigManager;
 import anvilclient.anvilclient.settings.SettingRegister;
 import anvilclient.anvilclient.util.EventManager;
 import anvilclient.anvilclient.util.Keybinds;
+import anvilclient.anvilclient.util.ServerDetector;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -75,6 +76,7 @@ public class AnvilClient {
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		Keybinds.register();
 		EventManager.getInstance().registerOnEventBus();
+		EventManager.FORGE_EVENT_BUS.register(ServerDetector.getInstance());
 		Features.register();
 		SettingRegister.registerClasses(Features.FEATURE_LIST);
 		SettingRegister.registerStaticClass(ConfigScreen.class);

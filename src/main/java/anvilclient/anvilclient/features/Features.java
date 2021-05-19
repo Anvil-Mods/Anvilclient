@@ -24,6 +24,7 @@ import java.util.List;
 
 import anvilclient.anvilclient.features.building.AutoTool;
 import anvilclient.anvilclient.features.graphic.Fullbright;
+import anvilclient.anvilclient.features.info.BedwarsInfo;
 import anvilclient.anvilclient.features.info.Coordinates;
 
 public class Features {
@@ -31,6 +32,7 @@ public class Features {
 	public static final AutoTool AUTO_TOOL = new AutoTool();
 	public static final Coordinates COORDINATES = new Coordinates();
 	public static final Fullbright FULLBRIGHT = new Fullbright();
+	public static final BedwarsInfo BEDWARS_INFO = new BedwarsInfo();
 	
 	public static final List<Feature> FEATURE_LIST = new ArrayList<>();
 	
