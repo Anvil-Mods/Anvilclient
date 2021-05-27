@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+        
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Set up JDK 8
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+        
+  changelog:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Generate changelog
+      uses: heinrichreimer/action-github-changelog-generator@v2.2
+      with:
+        token: ${{ secrets.WORKFLOW_TOKEN }}
+        configureSections: '{"bugs":{"prefix":"**Bugfixes:**","labels":["bug"]}, "enhancements":{"prefix":"**Enhancements:**","labels":["enhancement"]}}'
+        issuesWoLabels: false
+        prWoLabels: false
+        filterByMilestone: false
+        author: false
+        unreleasedOnly: true
+        unreleasedLabel: 'New&nbsp;Stuff'
+    - name: Cache changelog
+      uses: actions/upload-artifact@v2
+      with:
+        path: './CHANGELOG.md'
+        name: changelog
+  
+  build:
+    needs: [setup]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew build
+    - name: Cache build
+      uses: actions/upload-artifact@v2
+      with:
+        path: './build/libs/anvilclient-${{ github.event.inputs.version }}.jar'
+        name: build
+        
+  release:
+    needs: [changelog, build]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: get changelog
+      uses: actions/download-artifact@v2
+      with:
+        name: changelog
+    - name: get build
+      uses: actions/download-artifact@v2
+      with:
+        name: build
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.event.inputs.version }}
+        body_path: './CHANGELOG.md'
+        draft: true
+        files: './anvilclient-${{ github.event.inputs.version }}.jar'
+        fail_on_unmatched_files: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+    - name: Delete Artifacts
+      uses: GeekyEggo/delete-artifact@v1.0.0
+      with:
+        name: |
+          changelog
+          build
