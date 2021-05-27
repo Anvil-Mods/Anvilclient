@@ -88,7 +88,7 @@ public class BedwarsInfo extends KeyboundFeature {
 			syncTime();
 			if (gameStartTime != 0) {
 				for (Stages stage : Stages.values()) {
-					long millis = stage.getMillisTo(elapsedTime);
+					long millis = stage.getMillisTo(elapsedTime) + 1000L;
 					if (millis >= 0) {
 						AbstractGui.drawString(matrixStack, mc.fontRenderer,
 								stage.getName() + ": " + Utils.formatTimeMillis(millis), coordinatesX,
