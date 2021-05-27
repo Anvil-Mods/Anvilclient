@@ -73,7 +73,10 @@ public class TextComponents {
 		}
 
 		return stringbuilder.toString();
-
+	}
+	
+	public static String removeFormattingCodes(String string) {
+		return string.replaceAll("§.", "");
 	}
 
 }

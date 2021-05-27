@@ -57,7 +57,7 @@ public class Fullbright extends KeyboundFeature {
 			AbstractOption.GAMMA.set(gameSettings, fullbrightLevel.getValue());
 		} else if (!isEnabled()){
 			AbstractOption.GAMMA.set(gameSettings, vanillaGamma.getValue());
-			AnvilClient.LOGGER.info("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
+			AnvilClient.LOGGER.debug("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
 			vanillaGammaInitialized = false;
 		}
 	}

@@ -17,12 +17,14 @@
 package anvilclient.anvilclient.features.info;
 
 import java.time.Instant;
+import java.util.Arrays;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.KeyboundFeature;
 import anvilclient.anvilclient.gui.util.Utils;
+import anvilclient.anvilclient.util.ScoreboardReader;
 import anvilclient.anvilclient.util.ServerDetector;
 import anvilclient.anvilclient.util.ServerDetector.Server;
 import anvilclient.anvilclient.util.TextComponents;
@@ -30,8 +32,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.DownloadTerrainScreen;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,7 +55,7 @@ public class BedwarsInfo extends KeyboundFeature {
 
 	private boolean inBedWars = false;
 
-	private long gameStartTime = Instant.now().getEpochSecond();
+	private long gameStartTime = Instant.now().toEpochMilli();
 
 	@SubscribeEvent
 	public void update(GuiOpenEvent event) {
@@ -80,16 +81,17 @@ public class BedwarsInfo extends KeyboundFeature {
 
 	public void render(int width, int height, MatrixStack matrixStack, Minecraft mc, ClientPlayerEntity player) {
 		if (isEnabled() && inBedWars) {
-			long elapsedTime = Instant.now().getEpochSecond() - gameStartTime;
+			long elapsedTime = Instant.now().toEpochMilli() - gameStartTime;
 			int currentHeight = 0;
 			int coordinatesX = (int) (width * 0.01);
 			int coordinatesY = (int) (height * 0.25);
+			syncTime();
 			if (gameStartTime != 0) {
 				for (Stages stage : Stages.values()) {
-					long secs = stage.getSecsTo(elapsedTime);
-					if (secs >= 0) {
+					long millis = stage.getMillisTo(elapsedTime);
+					if (millis >= 0) {
 						AbstractGui.drawString(matrixStack, mc.fontRenderer,
-								stage.getName() + ": " + Utils.formatTime(secs), coordinatesX,
+								stage.getName() + ": " + Utils.formatTimeMillis(millis), coordinatesX,
 								coordinatesY + currentHeight, TEXT_COLOR);
 						currentHeight += LINE_HEIGHT + 1;
 					}
@@ -98,18 +100,28 @@ public class BedwarsInfo extends KeyboundFeature {
 		}
 	}
 
+	private boolean syncTime() {
+		for (Stages stage : Stages.values()) {
+			ITextComponent textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName());
+			if (textComponent != null) {
+				String stageTime = TextComponents.removeFormattingCodes(textComponent.getString());
+				int[] times = Arrays.stream(stageTime.trim().replace(stage.getName() + " in ", "").split(":"))
+						.mapToInt(Integer::parseInt).toArray();
+				int secs = times[0] * 60 + times[1];
+				this.gameStartTime = Instant.now().toEpochMilli() - (stage.getMillis() - secs * 1000);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void onGameStart() {
 		inBedWars = true;
-		gameStartTime = Instant.now().getEpochSecond();
+		gameStartTime = Instant.now().toEpochMilli();
 	}
 
 	private void onGameRejoin() {
-		if (gameStartTime == 0) {
-			inBedWars = true;
-		} else {
-			Minecraft.getInstance().player.sendMessage(
-					new TranslationTextComponent("anvilclient.feature.bedwarsInfo.leftWhileInGame"), Util.DUMMY_UUID);
-		}
+		onGameStart();
 	}
 
 	private void onGameLeave() {
@@ -121,16 +133,20 @@ public class BedwarsInfo extends KeyboundFeature {
 		EMERALD3(24 * 60, "Emerald III"), BED_GONE(30 * 60, "Bed Gone"), SUDDEN_DEATH(40 * 60, "Sudden Death"),
 		GAME_OVER(50 * 60, "Game Over");
 
-		private final long SECS;
+		private final long MILLIS;
 		private final String NAME;
 
 		private Stages(long secs, String name) {
-			this.SECS = secs;
+			this.MILLIS = secs * 1000L;
 			this.NAME = name;
 		}
 
-		public long getSecsTo(long elapsedTime) {
-			return this.SECS - elapsedTime;
+		public long getMillis() {
+			return MILLIS;
+		}
+
+		public long getMillisTo(long elapsedTime) {
+			return this.MILLIS - elapsedTime;
 		}
 
 		public String getName() {
