@@ -20,9 +20,9 @@ import java.util.List;
 
 import anvilclient.anvilclient.features.Feature;
 import anvilclient.anvilclient.features.TogglableFeature;
-import anvilclient.anvilclient.gui.util.Utils;
 import anvilclient.anvilclient.settings.ISetting;
 import anvilclient.anvilclient.settings.SettingRegister;
+import anvilclient.anvilclient.util.utils.SettingUtils;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.BooleanOption;
@@ -48,7 +48,7 @@ public class FeatureGui extends ConfigScreen {
 		
 		for (ISetting<?> setting : settingList.stream().filter((setting) -> !setting.getName().contains(".enabled"))
 				.toArray(ISetting<?>[]::new)) {
-			AbstractOption option = Utils.getOptionForSetting(setting);
+			AbstractOption option = SettingUtils.getOptionForSetting(setting);
 			if (option != null) {
 				this.optionsRowList.addOption(option);
 			}

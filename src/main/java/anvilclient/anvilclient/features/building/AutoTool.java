@@ -27,9 +27,9 @@ import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IntegerSetting;
 import anvilclient.anvilclient.settings.Setting;
 import anvilclient.anvilclient.settings.SettingSuitableEnum;
-import anvilclient.anvilclient.util.ItemHelper;
-import anvilclient.anvilclient.util.LocalPlayerHelper;
-import anvilclient.anvilclient.util.WorldHelper;
+import anvilclient.anvilclient.util.utils.ItemUtils;
+import anvilclient.anvilclient.util.utils.LocalPlayerUtils;
+import anvilclient.anvilclient.util.utils.WorldUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -66,8 +66,8 @@ public class AutoTool extends KeyboundFeature {
 	public EnumSetting<AutoTool.SilkTouchMode> silkTouchMode = new EnumSetting<AutoTool.SilkTouchMode>(getName() + ".silkTouchMode", "", AutoTool.SilkTouchMode.DOESNT_MATTER);
 
 	private boolean isDurabilityGood(ItemStack tool) {
-		return minDurability.getValue() < 1 || ItemHelper.isUnbreakable(tool)
-				|| ItemHelper.getDurability(tool) >= minDurability.getValue();
+		return minDurability.getValue() < 1 || ItemUtils.isUnbreakable(tool)
+				|| ItemUtils.getDurability(tool) >= minDurability.getValue();
 	}
 
 	private boolean isDurabilityGood(Slot slot) {
@@ -121,33 +121,33 @@ public class AutoTool extends KeyboundFeature {
 	}
 
 	private Slot getBestTool(BlockPos blockPos) {
-		ClientPlayerEntity localPlayer = LocalPlayerHelper.getLocalPlayer();
-		if (!WorldHelper.canPlaceBlocksAt(localPlayer, blockPos)
-				&& !WorldHelper.getWorld(localPlayer).isAirBlock(blockPos)) {
-			return LocalPlayerHelper
+		ClientPlayerEntity localPlayer = LocalPlayerUtils.getLocalPlayer();
+		if (!WorldUtils.canPlaceBlocksAt(localPlayer, blockPos)
+				&& !WorldUtils.getWorld(localPlayer).isAirBlock(blockPos)) {
+			return LocalPlayerUtils
 					.getHotbarSlots(localPlayer).stream()
 					.filter(this::isDurabilityGood)
 					.filter(this::filterSilkTouchMode)
 					.max(Comparator
 						.comparing(Slot::getStack, Comparator
-							.<ItemStack>comparingDouble(tool -> ItemHelper.getDiggingSpeedAt(localPlayer, tool, blockPos))
+							.<ItemStack>comparingDouble(tool -> ItemUtils.getDiggingSpeedAt(localPlayer, tool, blockPos))
 							.thenComparingInt(this::getSilkTouchEnchantmentLevel)
 							.thenComparingInt(this::getFortuneEnchantmentLevel)
-							.thenComparing(ItemHelper::isUnbreakable))
-						.thenComparing(slot -> slot == LocalPlayerHelper.getSelectedSlot(localPlayer)))
-					.orElse(LocalPlayerHelper.getSelectedSlot(localPlayer));
+							.thenComparing(ItemUtils::isUnbreakable))
+						.thenComparing(slot -> slot == LocalPlayerUtils.getSelectedSlot(localPlayer)))
+					.orElse(LocalPlayerUtils.getSelectedSlot(localPlayer));
 		}
-		return LocalPlayerHelper.getSelectedSlot(localPlayer);
+		return LocalPlayerUtils.getSelectedSlot(localPlayer);
 	}
 
 	public void selectBestTool(BlockPos blockPos) {
 		if (isEnabled() && Minecraft.getInstance().playerController.gameIsSurvivalOrAdventure()) {
 			Slot bestTool = getBestTool(blockPos);
-			ClientPlayerEntity localPlayer = LocalPlayerHelper.getLocalPlayer();
+			ClientPlayerEntity localPlayer = LocalPlayerUtils.getLocalPlayer();
 			if (isOriginalTool) {
-				originalTool = LocalPlayerHelper.getSelectedSlot(localPlayer);
+				originalTool = LocalPlayerUtils.getSelectedSlot(localPlayer);
 			}
-			LocalPlayerHelper.setSelectedSlot(localPlayer, bestTool);
+			LocalPlayerUtils.setSelectedSlot(localPlayer, bestTool);
 			isOriginalTool = false;
 		}
 	}
@@ -155,7 +155,7 @@ public class AutoTool extends KeyboundFeature {
 	public void resetTool() {
 		if (revertTool.getValue()) {
 			if (!isOriginalTool) {
-				LocalPlayerHelper.setSelectedSlot(LocalPlayerHelper.getLocalPlayer(), originalTool);
+				LocalPlayerUtils.setSelectedSlot(LocalPlayerUtils.getLocalPlayer(), originalTool);
 				isOriginalTool = true;
 			}
 		}

@@ -24,11 +24,11 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.KeyboundFeature;
-import anvilclient.anvilclient.gui.util.Utils;
 import anvilclient.anvilclient.util.ScoreboardReader;
 import anvilclient.anvilclient.util.ServerDetector;
 import anvilclient.anvilclient.util.ServerDetector.Server;
-import anvilclient.anvilclient.util.TextComponents;
+import anvilclient.anvilclient.util.utils.TextUtils;
+import anvilclient.anvilclient.util.utils.TimeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
@@ -68,7 +68,7 @@ public class BedwarsInfo extends KeyboundFeature {
 	@SubscribeEvent
 	public void update(ClientChatReceivedEvent event) {
 		if (ServerDetector.getInstance().getCurrentServer() == Server.HYPIXEL && !inBedWars) {
-			String message = TextComponents.getFormattedText(event.getMessage());
+			String message = TextUtils.getFormattedText(event.getMessage());
 			if (message.contains(START_TEXT)) {
 				onGameStart();
 			} else if (message.contains(REJOIN_TEXT)) {
@@ -92,7 +92,7 @@ public class BedwarsInfo extends KeyboundFeature {
 					long millis = stage.getMillisTo(elapsedTime) + 1000L;
 					if (millis >= 0) {
 						AbstractGui.drawString(matrixStack, mc.fontRenderer,
-								stage.getName() + ": " + Utils.formatTimeMillis(millis), coordinatesX,
+								stage.getName() + ": " + TimeUtils.formatTimeMillis(millis), coordinatesX,
 								coordinatesY + currentHeight, TEXT_COLOR);
 						currentHeight += LINE_HEIGHT + 1;
 					}
@@ -106,7 +106,7 @@ public class BedwarsInfo extends KeyboundFeature {
 			ITextComponent textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName() + " in ");
 			try {
 				if (textComponent != null) {
-					String stageTime = TextComponents.removeFormattingCodes(textComponent.getString());
+					String stageTime = TextUtils.removeFormattingCodes(textComponent.getString());
 					int[] times = Arrays.stream(stageTime.trim().replace(stage.getName() + " in ", "").split(":"))
 							.mapToInt(Integer::parseInt).toArray();
 					int secs = times[0] * 60 + times[1];

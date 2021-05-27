@@ -14,10 +14,11 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.gui.util;
+package anvilclient.anvilclient.util.utils;
 
 import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.gui.config.FeatureGui;
+import anvilclient.anvilclient.gui.util.ClickOption;
 import anvilclient.anvilclient.settings.BooleanSetting;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.ISetting;
@@ -32,29 +33,9 @@ import net.minecraft.client.settings.IteratableOption;
 import net.minecraft.client.settings.SliderPercentageOption;
 import net.minecraft.util.text.StringTextComponent;
 
-public class Utils {
-
-	public static double trimDouble(double value, int decimalCount) {
-		double factor = Math.pow(10, decimalCount);
-		return ((double) ((int) (value * factor))) / factor;
-	}
-
-	public static float trimFloat(float value, int decimalCount) {
-		return (float) trimDouble(value, decimalCount);
-	}
+public class SettingUtils {
 	
-	public static String formatTimeSecs(long secs) {
-		String formattedTime;
-	    if (secs / 3600 >= 1) {
-			formattedTime = String.format("%02d:%02d:%02d", secs / 3600, (secs % 3600) / 60, secs % 60);
-		} else {
-			formattedTime = String.format("%02d:%02d", (secs % 3600) / 60, secs % 60);
-		}
-		return formattedTime;
-	}
-	
-	public static String formatTimeMillis(long millis) {
-		return formatTimeSecs(millis / 1000L);
+	private SettingUtils() {
 	}
 
 	@SuppressWarnings("unchecked")
@@ -82,7 +63,7 @@ public class Utils {
 					(unused, newValue) -> numberSetting.setValue(newValue),
 					(unused, unused2) -> new StringTextComponent(
 							I18n.format(translationKey) + ": "
-									+ trimDouble(numberSetting.getDoubleValue(), numberSetting.getDecimalCount())));
+									+ MathUtils.trimDouble(numberSetting.getDoubleValue(), numberSetting.getDecimalCount())));
 		} else {
 			option = null;
 		}

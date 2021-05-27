@@ -14,7 +14,7 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.util.utils;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -26,7 +26,10 @@ import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.BlockPos;
 
-public class ItemHelper {
+public class ItemUtils {
+	
+	private ItemUtils() {
+	}
 	
 	public static int getDurability(ItemStack item) {
 		return item.isDamageable() ? item.getMaxDamage() - item.getDamage() : 0;

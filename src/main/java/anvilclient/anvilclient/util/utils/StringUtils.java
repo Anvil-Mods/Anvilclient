@@ -14,12 +14,14 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.util.utils;
 
 import java.util.ArrayList;
 
 public class StringUtils {
-
+	
+	private StringUtils() {
+	}
 	
 	//Splits a given String into lines with n max Characters and returns the resulting lines as String[]
 	public static String[] lineSplit(String string, int charLimit) {

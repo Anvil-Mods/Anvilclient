@@ -14,7 +14,7 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.util.utils;
 
 import java.util.Arrays;
 
@@ -23,9 +23,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 
-public class TextComponents {
+public class TextUtils {
 
-	private TextComponents() {
+	private TextUtils() {
 	}
 
 	public static String getFormattedText(ITextComponent textComponent) {

@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import anvilclient.anvilclient.util.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -68,7 +69,7 @@ public class ScoreboardReader {
 
 	public static ITextComponent getFirstScoreContaining(String string) {
 		for (ITextComponent textComponent : getLines().values()) {
-			if (TextComponents.removeFormattingCodes(textComponent.getString()).contains(string)) {
+			if (TextUtils.removeFormattingCodes(textComponent.getString()).contains(string)) {
 				return textComponent;
 			}
 		}
