@@ -26,6 +26,9 @@
 	"anvilclient.feature.autoTool.silkTouchMode.prefer": "Prefer",
 	"anvilclient.feature.autoTool.silkTouchMode.use_only": "Use only",
 	
+	"anvilclient.feature.bedwarsInfo": "Bedwars Info",
+	"anvilclient.feature.bedwarsInfo.toggle": "Toggle Bedwars Info",
+	
 	
 	"anvilclient.key.openSettings": "Open Settings",
 	"anvilclient.key.categories.anvilclient": "Anvilclient"
