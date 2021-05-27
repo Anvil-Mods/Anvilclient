@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.KeyboundFeature;
 import anvilclient.anvilclient.gui.util.Utils;
@@ -102,14 +103,18 @@ public class BedwarsInfo extends KeyboundFeature {
 
 	private boolean syncTime() {
 		for (Stages stage : Stages.values()) {
-			ITextComponent textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName());
-			if (textComponent != null) {
-				String stageTime = TextComponents.removeFormattingCodes(textComponent.getString());
-				int[] times = Arrays.stream(stageTime.trim().replace(stage.getName() + " in ", "").split(":"))
-						.mapToInt(Integer::parseInt).toArray();
-				int secs = times[0] * 60 + times[1];
-				this.gameStartTime = Instant.now().toEpochMilli() - (stage.getMillis() - secs * 1000);
-				return true;
+			ITextComponent textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName() + " in ");
+			try {
+				if (textComponent != null) {
+					String stageTime = TextComponents.removeFormattingCodes(textComponent.getString());
+					int[] times = Arrays.stream(stageTime.trim().replace(stage.getName() + " in ", "").split(":"))
+							.mapToInt(Integer::parseInt).toArray();
+					int secs = times[0] * 60 + times[1];
+					this.gameStartTime = Instant.now().toEpochMilli() - (stage.getMillis() - secs * 1000);
+					return true;
+				} 
+			} catch (NumberFormatException e) {
+				AnvilClient.LOGGER.catching(e);
 			}
 		}
 		return false;
