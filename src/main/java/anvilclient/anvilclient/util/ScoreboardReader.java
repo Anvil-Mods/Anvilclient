@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import anvilclient.anvilclient.AnvilClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
