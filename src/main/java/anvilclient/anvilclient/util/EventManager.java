@@ -40,7 +40,8 @@ public class EventManager {
 	}
 	
 	public void registerOnEventBus() {
-        MinecraftForge.EVENT_BUS.register(this);
+        FORGE_EVENT_BUS.register(this);
+        FORGE_EVENT_BUS.register(KeyInputHandler.class);
 	}
 	
 	@SubscribeEvent

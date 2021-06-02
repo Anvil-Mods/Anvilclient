@@ -38,7 +38,7 @@ public class Features {
 	
 	public static final HashMap<FeatureCategory, List<Feature>> FEATURE_LIST_BY_CATEGORY = new HashMap<>();
 	
-	static {
+	public static void init() {
 		for (Field featureField : Features.class.getDeclaredFields()) {
 			if (Modifier.isStatic(featureField.getModifiers()) && Feature.class.isAssignableFrom(featureField.getType())) {
 				try {
@@ -48,9 +48,7 @@ public class Features {
 				}
 			}
 		}
-	}
-	
-	static {
+		
 		for (FeatureCategory featureCategory : FeatureCategory.values()) {
 			List<Feature> featureList = new ArrayList<>();
 			for (Feature feature : FEATURE_LIST) {
