@@ -18,7 +18,7 @@ public class ScreenUtils {
 	}
 	
 	public static void registerForgeConfig() {
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
 				() -> (mc, screen) -> getMainConfigGui(screen)));
 	}
 
