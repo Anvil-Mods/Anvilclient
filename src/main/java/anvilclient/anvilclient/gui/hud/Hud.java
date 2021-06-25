@@ -51,6 +51,7 @@ public class Hud extends AbstractGui {
 		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR && player != null) {
 			Features.COORDINATES.render(width, height, matrixStack, mc, player);
 			Features.BEDWARS_INFO.render(width, height, matrixStack, mc, player);
+			Features.FPS_DISPLAY.render(width, height, matrixStack, mc);
 		}
 	}
 
