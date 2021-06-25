@@ -66,7 +66,7 @@ public class AnvilClient {
 		EventManager.FORGE_EVENT_BUS.register(ServerDetector.getInstance());
 		Features.init();
 		Features.register();
-		SettingRegister.registerClasses(Features.FEATURE_LIST);
+		SettingRegister.registerFeatures();
 		SettingRegister.registerStaticClass(anvilclient.anvilclient.gui.config.ConfigScreen.class);
 		ConfigManager.getInstance().loadProperties();
 		ConfigManager.getInstance().cleanupConfig();

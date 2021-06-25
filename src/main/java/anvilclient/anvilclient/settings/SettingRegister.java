@@ -32,7 +32,8 @@ public class SettingRegister {
 
 	public static final HashMap<Feature, List<ISetting<?>>> SETTING_LIST_FOR_OPTIONS = new HashMap<>();
 
-	static {
+	public static void registerFeatures() {
+		registerClasses(Features.FEATURE_LIST);
 		for (Feature feature : Features.FEATURE_LIST) {
 			List<ISetting<?>> settingList = new ArrayList<>();
 			for (Field setting : feature.getClass().getFields()) {
