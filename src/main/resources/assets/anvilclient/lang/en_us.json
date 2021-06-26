@@ -29,6 +29,10 @@
 	"anvilclient.feature.bedwarsInfo": "Bedwars Info",
 	"anvilclient.feature.bedwarsInfo.toggle": "Toggle Bedwars Info",
 	
+	"anvilclient.feature.fpsDisplay": "FPS Display",
+	"anvilclient.feature.fpsDisplay.toggle": "Toggle FPS Display",
+	
+	
 	
 	"anvilclient.key.openSettings": "Open Settings",
 	"anvilclient.key.categories.anvilclient": "Anvilclient"
