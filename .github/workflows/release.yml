@@ -33,7 +33,7 @@ jobs:
         author: false
         unreleasedOnly: true
         unreleasedLabel: 'New&nbsp;Stuff'
-        excludeLabels: 'duplicate,question,invalid,wontfix,only&nbsp;on&nbsp;dev'
+        excludeLabels: 'duplicate,question,invalid,wontfix,only_on_dev'
     - name: Cache changelog
       uses: actions/upload-artifact@v2
       with:
