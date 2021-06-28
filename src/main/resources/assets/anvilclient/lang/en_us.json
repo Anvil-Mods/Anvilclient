@@ -32,6 +32,10 @@
 	"anvilclient.feature.fpsDisplay": "FPS Display",
 	"anvilclient.feature.fpsDisplay.toggle": "Toggle FPS Display",
 	
+	"anvilclient.feature.cpsDisplay": "CPS Display",
+	"anvilclient.feature.cpsDisplay.toggle": "Toggle CPS Display",
+	"anvilclient.feature.cpsDisplay.mouseButton": "Mouse Button",
+	"anvilclient.feature.cpsDisplay.measuringSpan": "Measuring span in seconds",
 	
 	
 	"anvilclient.key.openSettings": "Open Settings",

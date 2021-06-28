@@ -25,6 +25,7 @@ import java.util.List;
 import anvilclient.anvilclient.features.building.AutoTool;
 import anvilclient.anvilclient.features.graphic.Fullbright;
 import anvilclient.anvilclient.features.info.BedwarsInfo;
+import anvilclient.anvilclient.features.info.CPSDisplay;
 import anvilclient.anvilclient.features.info.Coordinates;
 import anvilclient.anvilclient.features.info.FPSDisplay;
 
@@ -35,6 +36,7 @@ public class Features {
 	public static final Fullbright FULLBRIGHT = new Fullbright();
 	public static final BedwarsInfo BEDWARS_INFO = new BedwarsInfo();
 	public static final FPSDisplay FPS_DISPLAY = new FPSDisplay();
+	public static final CPSDisplay CPS_DISPLAY = new CPSDisplay();
 	
 	public static final List<Feature> FEATURE_LIST = new ArrayList<>();
 	

@@ -52,6 +52,7 @@ public class Hud extends AbstractGui {
 			Features.COORDINATES.render(width, height, matrixStack, mc, player);
 			Features.BEDWARS_INFO.render(width, height, matrixStack, mc, player);
 			Features.FPS_DISPLAY.render(width, height, matrixStack, mc);
+			Features.CPS_DISPLAY.render(width, height, matrixStack, mc);
 		}
 	}
 
