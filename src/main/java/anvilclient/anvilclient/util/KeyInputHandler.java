@@ -16,20 +16,17 @@
  *******************************************************************************/
 package anvilclient.anvilclient.util;
 
-import anvilclient.anvilclient.AnvilClient;
+import anvilclient.anvilclient.util.utils.ScreenUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@Mod.EventBusSubscriber(modid = AnvilClient.MOD_ID, bus = Bus.FORGE)
 public class KeyInputHandler{
 	
 	@SubscribeEvent
     public static void onKeyInput(KeyInputEvent event) {
         if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(AnvilClient.getMainConfigGui(null));
+            Minecraft.getInstance().displayGuiScreen(ScreenUtils.getMainConfigGui(null));
         }
     }
 }

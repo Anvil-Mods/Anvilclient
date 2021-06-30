@@ -22,17 +22,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import anvilclient.anvilclient.features.building.AutoTool;
+import anvilclient.anvilclient.features.graphic.Fullbright;
+import anvilclient.anvilclient.features.info.BedwarsInfo;
+import anvilclient.anvilclient.features.info.CPSDisplay;
+import anvilclient.anvilclient.features.info.Coordinates;
+import anvilclient.anvilclient.features.info.FPSDisplay;
+
 public class Features {
 	
 	public static final AutoTool AUTO_TOOL = new AutoTool();
 	public static final Coordinates COORDINATES = new Coordinates();
 	public static final Fullbright FULLBRIGHT = new Fullbright();
+	public static final BedwarsInfo BEDWARS_INFO = new BedwarsInfo();
+	public static final FPSDisplay FPS_DISPLAY = new FPSDisplay();
+	public static final CPSDisplay CPS_DISPLAY = new CPSDisplay();
 	
 	public static final List<Feature> FEATURE_LIST = new ArrayList<>();
 	
 	public static final HashMap<FeatureCategory, List<Feature>> FEATURE_LIST_BY_CATEGORY = new HashMap<>();
 	
-	static {
+	public static void init() {
 		for (Field featureField : Features.class.getDeclaredFields()) {
 			if (Modifier.isStatic(featureField.getModifiers()) && Feature.class.isAssignableFrom(featureField.getType())) {
 				try {
@@ -42,9 +52,7 @@ public class Features {
 				}
 			}
 		}
-	}
-	
-	static {
+		
 		for (FeatureCategory featureCategory : FeatureCategory.values()) {
 			List<Feature> featureList = new ArrayList<>();
 			for (Feature feature : FEATURE_LIST) {

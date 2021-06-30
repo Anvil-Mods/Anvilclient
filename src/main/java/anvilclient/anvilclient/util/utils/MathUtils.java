@@ -14,25 +14,37 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.util.utils;
 
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.BlockPos;
+import java.util.Random;
 
-public class WorldHelper {
+import net.minecraft.util.math.MathHelper;
 
-	public static ClientWorld getWorld(ClientPlayerEntity localPlayer) {
-		return localPlayer == null ? null : localPlayer.worldClient;
+public class MathUtils {
+	
+	private MathUtils() {
 	}
 
-	public static ClientWorld getWorld() {
-		return getWorld(LocalPlayerHelper.getLocalPlayer());
+	private static Random randomGenerator = new Random();
+	
+	public static int randInt(int min, int max) {
+		int number = randomGenerator.nextInt((max-min)+1);
+		return normalizeInt(number, 0, max-min, min, max, false);
+	}
+	
+	public static int normalizeInt(int value, int minold, int maxold, int min, int max, boolean clamp) {
+		if (clamp) {
+			value = MathHelper.clamp(value, minold, maxold);
+		}
+		return (max-min)/(maxold-minold)*(value-minold)+min;
+	}
+	
+	public static double trimDouble(double value, int decimalCount) {
+		double factor = Math.pow(10, decimalCount);
+		return ((double) ((int) (value * factor))) / factor;
 	}
 
-	public static boolean canPlaceBlocksAt(ClientPlayerEntity localPlayer, BlockPos blockPos) {
-		ClientWorld world = getWorld(localPlayer);
-		return world.getBlockState(blockPos).getShape(world, blockPos).isEmpty();
+	public static float trimFloat(float value, int decimalCount) {
+		return (float) trimDouble(value, decimalCount);
 	}
-
 }

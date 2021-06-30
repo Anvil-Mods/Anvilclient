@@ -14,7 +14,7 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.util.utils;
 
 import java.util.List;
 
@@ -25,7 +25,10 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
-public class LocalPlayerHelper {
+public class LocalPlayerUtils {
+	
+	private LocalPlayerUtils() {
+	}
 
 	public static ClientPlayerEntity getLocalPlayer() {
 		return Minecraft.getInstance().player;

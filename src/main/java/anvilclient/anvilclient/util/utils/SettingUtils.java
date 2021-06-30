@@ -14,10 +14,11 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.gui.util;
+package anvilclient.anvilclient.util.utils;
 
 import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.gui.config.FeatureGui;
+import anvilclient.anvilclient.gui.util.ClickOption;
 import anvilclient.anvilclient.settings.BooleanSetting;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.ISetting;
@@ -32,15 +33,9 @@ import net.minecraft.client.settings.IteratableOption;
 import net.minecraft.client.settings.SliderPercentageOption;
 import net.minecraft.util.text.StringTextComponent;
 
-public class Utils {
-
-	public static double trimDouble(double value, int decimalCount) {
-		double factor = Math.pow(10, decimalCount);
-		return ((double) ((int) (value * factor))) / factor;
-	}
-
-	public static float trimFloat(float value, int decimalCount) {
-		return (float) trimDouble(value, decimalCount);
+public class SettingUtils {
+	
+	private SettingUtils() {
 	}
 
 	@SuppressWarnings("unchecked")
@@ -68,7 +63,7 @@ public class Utils {
 					(unused, newValue) -> numberSetting.setValue(newValue),
 					(unused, unused2) -> new StringTextComponent(
 							I18n.format(translationKey) + ": "
-									+ trimDouble(numberSetting.getDoubleValue(), numberSetting.getDecimalCount())));
+									+ MathUtils.trimDouble(numberSetting.getDoubleValue(), numberSetting.getDecimalCount())));
 		} else {
 			option = null;
 		}

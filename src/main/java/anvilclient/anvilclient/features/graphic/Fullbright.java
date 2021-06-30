@@ -14,9 +14,11 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.features;
+package anvilclient.anvilclient.features.graphic;
 
 import anvilclient.anvilclient.AnvilClient;
+import anvilclient.anvilclient.features.FeatureCategory;
+import anvilclient.anvilclient.features.KeyboundFeature;
 import anvilclient.anvilclient.settings.DoubleSetting;
 import anvilclient.anvilclient.settings.IgnoreAsOption;
 import anvilclient.anvilclient.settings.Setting;
@@ -55,7 +57,7 @@ public class Fullbright extends KeyboundFeature {
 			AbstractOption.GAMMA.set(gameSettings, fullbrightLevel.getValue());
 		} else if (!isEnabled()){
 			AbstractOption.GAMMA.set(gameSettings, vanillaGamma.getValue());
-			AnvilClient.LOGGER.info("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
+			AnvilClient.LOGGER.debug("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
 			vanillaGammaInitialized = false;
 		}
 	}

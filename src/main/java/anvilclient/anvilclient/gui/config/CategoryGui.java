@@ -23,7 +23,7 @@ import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.Features;
 import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.gui.util.ClickOption;
-import anvilclient.anvilclient.gui.util.Utils;
+import anvilclient.anvilclient.util.utils.SettingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -43,7 +43,7 @@ public class CategoryGui extends ConfigScreen {
 		for (Feature feature : featureList) {
 			if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
 				this.optionsRowList
-						.addOptions(Utils.getOptionListForTogglableFeature((TogglableFeature) feature, this));
+						.addOptions(SettingUtils.getOptionListForTogglableFeature((TogglableFeature) feature, this));
 			} else {
 				this.optionsRowList.addOption(new ClickOption("anvilclient.feature." + feature.getName(),
 						button -> Minecraft.getInstance().displayGuiScreen(new FeatureGui(feature, this))));

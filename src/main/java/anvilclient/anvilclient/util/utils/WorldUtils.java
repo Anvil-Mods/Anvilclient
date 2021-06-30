@@ -14,25 +14,28 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.util;
+package anvilclient.anvilclient.util.utils;
 
-import java.util.Random;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.math.BlockPos;
 
-import net.minecraft.util.math.MathHelper;
-
-public class MathUtils {
-
-	private static Random randomGenerator = new Random();
+public class WorldUtils {
 	
-	public static int randInt(int min, int max) {
-		int number = randomGenerator.nextInt((max-min)+1);
-		return normalizeInt(number, 0, max-min, min, max, false);
+	private WorldUtils() {
 	}
-	
-	public static int normalizeInt(int value, int minold, int maxold, int min, int max, boolean clamp) {
-		if (clamp) {
-			value = MathHelper.clamp(value, minold, maxold);
-		}
-		return (max-min)/(maxold-minold)*(value-minold)+min;
+
+	public static ClientWorld getWorld(ClientPlayerEntity localPlayer) {
+		return localPlayer == null ? null : localPlayer.worldClient;
 	}
+
+	public static ClientWorld getWorld() {
+		return getWorld(LocalPlayerUtils.getLocalPlayer());
+	}
+
+	public static boolean canPlaceBlocksAt(ClientPlayerEntity localPlayer, BlockPos blockPos) {
+		ClientWorld world = getWorld(localPlayer);
+		return world.getBlockState(blockPos).getShape(world, blockPos).isEmpty();
+	}
+
 }

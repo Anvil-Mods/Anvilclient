@@ -22,16 +22,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import anvilclient.anvilclient.features.Features;
-import anvilclient.anvilclient.gui.config.ConfigScreen;
-import anvilclient.anvilclient.gui.config.MainGuiCategory;
-import anvilclient.anvilclient.gui.config.MainGuiPlain;
 import anvilclient.anvilclient.settings.ConfigManager;
 import anvilclient.anvilclient.settings.SettingRegister;
 import anvilclient.anvilclient.util.EventManager;
 import anvilclient.anvilclient.util.Keybinds;
-import net.minecraft.client.gui.screen.Screen;
+import anvilclient.anvilclient.util.ServerDetector;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -52,21 +51,10 @@ public class AnvilClient {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 		
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
-				() -> (mc, screen) -> getMainConfigGui(screen));
+		
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> anvilclient.anvilclient.util.utils.ScreenUtils.registerForgeConfig());
 		
 		MinecraftForge.EVENT_BUS.register(this);
-	}
-
-	public static ConfigScreen getMainConfigGui(Screen parentScreen) {
-		switch (ConfigScreen.sortType.getValue()) {
-		case PLAIN:
-			return new MainGuiPlain(parentScreen);
-		case CATEGORY:
-		default:
-			return new MainGuiCategory(parentScreen);
-		}
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
@@ -75,9 +63,11 @@ public class AnvilClient {
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		Keybinds.register();
 		EventManager.getInstance().registerOnEventBus();
+		EventManager.FORGE_EVENT_BUS.register(ServerDetector.getInstance());
+		Features.init();
 		Features.register();
-		SettingRegister.registerClasses(Features.FEATURE_LIST);
-		SettingRegister.registerStaticClass(ConfigScreen.class);
+		SettingRegister.registerFeatures();
+		SettingRegister.registerStaticClass(anvilclient.anvilclient.gui.config.ConfigScreen.class);
 		ConfigManager.getInstance().loadProperties();
 		ConfigManager.getInstance().cleanupConfig();
 	}
