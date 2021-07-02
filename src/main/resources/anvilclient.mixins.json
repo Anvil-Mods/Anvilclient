@@ -6,7 +6,8 @@
 	"mixins": [
 	],
 	"client": [
-		"MixinPlayerController"
+		"MixinPlayerController",
+		"IMixinMinecraft"
 	],
 	"injectors": {
     	"defaultRequire": 1
