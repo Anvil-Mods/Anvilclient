@@ -30,7 +30,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public abstract class KeyboundFeature extends Feature {
 	
 	@Setting
-	protected KeyBinding keybind = new KeyBinding("anvilclient.feature." + getName() + ".key", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
+	protected KeyBinding keybind = new KeyBinding("anvilclient.feature." + getName() + ".toggle", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
 	
 	public abstract void onKey(KeyInputEvent event);
 	
