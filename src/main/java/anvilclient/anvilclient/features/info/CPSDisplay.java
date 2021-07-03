@@ -9,7 +9,7 @@ import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.FeatureCategory;
-import anvilclient.anvilclient.features.KeyboundFeature;
+import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IntegerSetting;
 import anvilclient.anvilclient.settings.Setting;
@@ -22,7 +22,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class CPSDisplay extends KeyboundFeature {
+public class CPSDisplay extends TogglableFeature {
 	
 	@Override
 	public String getName() {

@@ -19,12 +19,12 @@ package anvilclient.anvilclient.features.info;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.FeatureCategory;
-import anvilclient.anvilclient.features.KeyboundFeature;
+import anvilclient.anvilclient.features.TogglableFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 
-public class Coordinates extends KeyboundFeature {
+public class Coordinates extends TogglableFeature {
 
 	@Override
 	public String getName() {

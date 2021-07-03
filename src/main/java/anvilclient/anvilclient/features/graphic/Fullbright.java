@@ -18,7 +18,7 @@ package anvilclient.anvilclient.features.graphic;
 
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
-import anvilclient.anvilclient.features.KeyboundFeature;
+import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.settings.DoubleSetting;
 import anvilclient.anvilclient.settings.IgnoreAsOption;
 import anvilclient.anvilclient.settings.Setting;
@@ -26,7 +26,7 @@ import net.minecraft.client.AbstractOption;
 import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
 
-public class Fullbright extends KeyboundFeature {
+public class Fullbright extends TogglableFeature {
 
 	@Override
 	public String getName() {

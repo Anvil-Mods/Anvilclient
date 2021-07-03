@@ -21,7 +21,7 @@ import java.util.Comparator;
 import anvilclient.anvilclient.event.PlayerDamageBlockEvent;
 import anvilclient.anvilclient.event.PlayerResetBreakingBlockEvent;
 import anvilclient.anvilclient.features.FeatureCategory;
-import anvilclient.anvilclient.features.KeyboundFeature;
+import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.settings.BooleanSetting;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IntegerSetting;
@@ -41,7 +41,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class AutoTool extends KeyboundFeature {
+public class AutoTool extends TogglableFeature {
 
 	@Override
 	public String getName() {

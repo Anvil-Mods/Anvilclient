@@ -4,12 +4,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
-import anvilclient.anvilclient.features.KeyboundFeature;
+import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.mixin.IMixinMinecraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 
-public class FPSDisplay extends KeyboundFeature {
+public class FPSDisplay extends TogglableFeature {
 
 	@Override
 	public String getName() {

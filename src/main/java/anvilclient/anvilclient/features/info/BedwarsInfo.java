@@ -23,7 +23,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
-import anvilclient.anvilclient.features.KeyboundFeature;
+import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.util.ScoreboardReader;
 import anvilclient.anvilclient.util.ServerDetector;
 import anvilclient.anvilclient.util.ServerDetector.Server;
@@ -38,7 +38,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class BedwarsInfo extends KeyboundFeature {
+public class BedwarsInfo extends TogglableFeature {
 
 	@Override
 	public String getName() {
