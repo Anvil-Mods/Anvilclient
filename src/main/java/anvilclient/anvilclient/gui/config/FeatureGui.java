@@ -41,7 +41,7 @@ public class FeatureGui extends ConfigScreen {
 		List<ISetting<?>> settingList = SettingRegister.SETTING_LIST_FOR_OPTIONS.get(feature);
 		
 		if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
-			this.optionsRowList.addOption(new BooleanOption("anvilclient.feature." + feature.getName() + ".toggle",
+			this.optionsRowList.addBig(new BooleanOption("anvilclient.feature." + feature.getName() + ".toggle",
 					unused -> ((TogglableFeature) feature).isEnabled(),
 					(unused, newValue) -> ((TogglableFeature) feature).setEnabled(newValue)));
 		}
@@ -50,7 +50,7 @@ public class FeatureGui extends ConfigScreen {
 				.toArray(ISetting<?>[]::new)) {
 			AbstractOption option = SettingUtils.getOptionForSetting(setting);
 			if (option != null) {
-				this.optionsRowList.addOption(option);
+				this.optionsRowList.addBig(option);
 			}
 		}
 	}

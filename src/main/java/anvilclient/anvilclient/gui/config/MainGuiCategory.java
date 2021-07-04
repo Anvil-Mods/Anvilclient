@@ -32,8 +32,8 @@ public class MainGuiCategory extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		for (FeatureCategory category : FeatureCategory.values()) {
-			this.optionsRowList.addOption(new ClickOption(category.getTranslationKey(),
-					button -> Minecraft.getInstance().displayGuiScreen(new CategoryGui(category, this))));
+			this.optionsRowList.addBig(new ClickOption(category.getTranslationKey(),
+					button -> Minecraft.getInstance().setScreen(new CategoryGui(category, this))));
 		}
 	}
 
@@ -44,12 +44,12 @@ public class MainGuiCategory extends ConfigScreen {
 				button -> this.changeScreen()));
 		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
 				this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT,
-				new TranslationTextComponent("gui.done"), button -> this.closeScreen()));
+				new TranslationTextComponent("gui.done"), button -> this.onClose()));
 	}
 
 	private void changeScreen() {
 		ConfigScreen.sortType.setValue(SortType.PLAIN);
-		this.minecraft.displayGuiScreen(new MainGuiPlain(this.parentScreen));
+		this.minecraft.setScreen(new MainGuiPlain(this.parentScreen));
 	}
 
 }

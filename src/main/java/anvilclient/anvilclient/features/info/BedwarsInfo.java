@@ -91,7 +91,7 @@ public class BedwarsInfo extends TogglableFeature {
 				for (Stages stage : Stages.values()) {
 					long millis = stage.getMillisTo(elapsedTime) + 1000L;
 					if (millis >= 0) {
-						AbstractGui.drawString(matrixStack, mc.fontRenderer,
+						AbstractGui.drawString(matrixStack, mc.font,
 								stage.getName() + ": " + TimeUtils.formatTimeMillis(millis), coordinatesX,
 								coordinatesY + currentHeight, TEXT_COLOR);
 						currentHeight += LINE_HEIGHT + 1;

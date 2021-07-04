@@ -32,29 +32,29 @@ public class ItemUtils {
 	}
 	
 	public static int getDurability(ItemStack item) {
-		return item.isDamageable() ? item.getMaxDamage() - item.getDamage() : 0;
+		return item.isDamageableItem() ? item.getMaxDamage() - item.getDamageValue() : 0;
 	}
 	
 	public static boolean isUnbreakable(ItemStack item) {
-		return item.isEmpty() || !item.isDamageable();
+		return item.isEmpty() || !item.isDamageableItem();
 	}
 
 	public static double getDiggingSpeed(PlayerEntity player, ItemStack tool, BlockState blockState) {
 		float destroySpeed = tool.getDestroySpeed(blockState);
 		if (destroySpeed > 1.0F) {
-			int efficiencyLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, tool);
+			int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, tool);
 			if (efficiencyLevel > 0 && !tool.isEmpty()) {
 				destroySpeed += (float) (efficiencyLevel * efficiencyLevel + 1);
 			}
 		}
 
-		if (EffectUtils.hasMiningSpeedup(player)) {
-			destroySpeed *= 1.0F + (float) (EffectUtils.getMiningSpeedup(player) + 1) * 0.2F;
+		if (EffectUtils.hasDigSpeed(player)) {
+			destroySpeed *= 1.0F + (float) (EffectUtils.getDigSpeedAmplification(player) + 1) * 0.2F;
 		}
 
-		if (player.isPotionActive(Effects.MINING_FATIGUE)) {
+		if (player.hasEffect(Effects.DIG_SLOWDOWN)) {
 			float f1;
-			switch (player.getActivePotionEffect(Effects.MINING_FATIGUE).getAmplifier()) {
+			switch (player.getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) {
 			case 0:
 				f1 = 0.3F;
 				break;
@@ -72,7 +72,7 @@ public class ItemUtils {
 			destroySpeed *= f1;
 		}
 
-		if (player.areEyesInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
+		if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
 			destroySpeed /= 5.0F;
 		}
 
@@ -84,7 +84,7 @@ public class ItemUtils {
 	}
 
 	public static double getDiggingSpeedAt(PlayerEntity player, ItemStack tool, BlockPos blockPos) {
-		return getDiggingSpeed(player, tool, player.world.getBlockState(blockPos));
+		return getDiggingSpeed(player, tool, player.level.getBlockState(blockPos));
 	}
 
 }

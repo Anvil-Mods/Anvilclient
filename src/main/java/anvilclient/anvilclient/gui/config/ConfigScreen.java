@@ -67,13 +67,13 @@ public abstract class ConfigScreen extends Screen {
 	
 	protected void addButtons() {
 		this.addButton(new Button((this.width - BUTTON_WIDTH) / 2, this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH,
-				BUTTON_HEIGHT, new TranslationTextComponent("gui.done"), button -> this.closeScreen()));
+				BUTTON_HEIGHT, new TranslationTextComponent("gui.done"), button -> this.onClose()));
 	}
 
 	protected abstract void addOptions();
 
 	public void showScreen(Screen screen) {
-		this.minecraft.displayGuiScreen(screen);
+		this.minecraft.setScreen(screen);
 	}
 
 	@Override
@@ -85,12 +85,12 @@ public abstract class ConfigScreen extends Screen {
 	}
 
 	@Override
-	public void closeScreen() {
-		this.minecraft.displayGuiScreen(parentScreen);
+	public void onClose() {
+		this.minecraft.setScreen(parentScreen);
 	}
 
 	@Override
-	public void onClose() {
+	public void removed() {
 	}
 	
 	@Setting

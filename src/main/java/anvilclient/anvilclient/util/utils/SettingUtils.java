@@ -52,8 +52,8 @@ public class SettingUtils {
 			option = new IteratableOption(translationKey, (unused, newValue) -> enumSetting.setValue(
 					enumSetting.getValue().getClass().getEnumConstants()[(enumSetting.getValue().ordinal() + newValue)
 							% enumSetting.getValue().getClass().getEnumConstants().length]),
-					(unused, unused2) -> new StringTextComponent(I18n.format("anvilclient.feature." + setting.getName())
-							+ ": " + I18n.format(((SettingSuitableEnum) setting.getValue()).getTranslationKey())));
+					(unused, unused2) -> new StringTextComponent(I18n.get("anvilclient.feature." + setting.getName())
+							+ ": " + I18n.get(((SettingSuitableEnum) setting.getValue()).getTranslationKey())));
 
 		} else if (NumberSetting.class.isAssignableFrom(setting.getClass())) {
 			NumberSetting<?> numberSetting = (NumberSetting<?>) setting;
@@ -62,7 +62,7 @@ public class SettingUtils {
 					(unused) -> numberSetting.getDoubleValue(),
 					(unused, newValue) -> numberSetting.setValue(newValue),
 					(unused, unused2) -> new StringTextComponent(
-							I18n.format(translationKey) + ": "
+							I18n.get(translationKey) + ": "
 									+ MathUtils.trimDouble(numberSetting.getDoubleValue(), numberSetting.getDecimalCount())));
 		} else {
 			option = null;
@@ -76,7 +76,7 @@ public class SettingUtils {
 				unused -> feature.isEnabled(),
 				(unused, newValue) -> feature.setEnabled(newValue));
 		options[1] = new ClickOption("anvilclient.feature." + feature.getName(),
-				button -> Minecraft.getInstance().displayGuiScreen(new FeatureGui(feature, screen)));
+				button -> Minecraft.getInstance().setScreen(new FeatureGui(feature, screen)));
 		return options;
 	}
 

@@ -57,12 +57,12 @@ public class Hud extends AbstractGui {
 	}
 
 	public void updateScaledWidthAndHeight() {
-		this.width = mc.getMainWindow().getScaledWidth();
-        this.height = mc.getMainWindow().getScaledHeight();
+		this.width = mc.getWindow().getGuiScaledWidth();
+        this.height = mc.getWindow().getGuiScaledHeight();
 	}
 
 	private boolean shouldRender() {
-		return !(mc.currentScreen instanceof ChatScreen) && !mc.gameSettings.showDebugInfo;
+		return !(mc.screen instanceof ChatScreen) && !mc.options.renderDebug;
 	}
 	
 }

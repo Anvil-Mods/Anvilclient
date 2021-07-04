@@ -42,16 +42,16 @@ public class ServerDetector {
 		if (event instanceof ClientPlayerNetworkEvent.LoggedInEvent) {
 			Minecraft mc = Minecraft.getInstance();
 			ClientPlayNetHandler clientplaynethandler = mc.getConnection();
-			if (clientplaynethandler != null && clientplaynethandler.getNetworkManager().isChannelOpen()) {
-				if (mc.getIntegratedServer() != null && !mc.getIntegratedServer().getPublic()) {
+			if (clientplaynethandler != null && clientplaynethandler.getConnection().isConnected()) {
+				if (mc.getSingleplayerServer() != null && !mc.getSingleplayerServer().isPublished()) {
 					this.currentServer = Server.SINGLEPLAYER;
 				} else if (mc.isConnectedToRealms()) {
 					this.currentServer = Server.REALMS;
-				} else if (mc.getIntegratedServer() == null
-						&& (mc.getCurrentServerData() == null || !mc.getCurrentServerData().isOnLAN())) {
-					ServerData currentServer = Minecraft.getInstance().getCurrentServerData();
+				} else if (mc.getSingleplayerServer() == null
+						&& (mc.getCurrentServer() == null || !mc.getCurrentServer().isLan())) {
+					ServerData currentServer = Minecraft.getInstance().getCurrentServer();
 					if (currentServer != null) {
-						String serverAddress = currentServer.serverIP.toLowerCase();
+						String serverAddress = currentServer.ip.toLowerCase();
 						this.currentServer = Arrays.stream(Server.values()).filter(server -> server.DOMAIN != null)
 								.filter(server -> serverAddress.contains(server.DOMAIN)).findFirst()
 								.orElse(Server.UNKNOWN);

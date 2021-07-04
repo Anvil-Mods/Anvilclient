@@ -71,11 +71,11 @@ public class AutoTool extends TogglableFeature {
 	}
 
 	private boolean isDurabilityGood(Slot slot) {
-		return isDurabilityGood(slot.getStack());
+		return isDurabilityGood(slot.getItem());
 	}
 	
 	private boolean filterSilkTouchMode(ItemStack tool) {
-		int level = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
+		int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
 		switch (silkTouchMode.getValue()) {
 			case DONT_USE:
 				if (level >=1) {
@@ -96,11 +96,11 @@ public class AutoTool extends TogglableFeature {
 	}
 	
 	private boolean filterSilkTouchMode(Slot slot) {
-		return filterSilkTouchMode(slot.getStack());
+		return filterSilkTouchMode(slot.getItem());
 	}
 	
 	private int getSilkTouchEnchantmentLevel(ItemStack tool) {
-		int level = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
+		int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
 		switch (silkTouchMode.getValue()) {
 		case DONT_USE: case PREFER_NOT_TO_USE:
 			return level * -1;
@@ -117,19 +117,19 @@ public class AutoTool extends TogglableFeature {
 	}
 	
 	private int getFortuneEnchantmentLevel(ItemStack tool) {
-		return EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, tool);
+		return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
 	}
 
 	private Slot getBestTool(BlockPos blockPos) {
 		ClientPlayerEntity localPlayer = LocalPlayerUtils.getLocalPlayer();
 		if (!WorldUtils.canPlaceBlocksAt(localPlayer, blockPos)
-				&& !WorldUtils.getWorld(localPlayer).isAirBlock(blockPos)) {
+				&& !WorldUtils.getWorld(localPlayer).isEmptyBlock(blockPos)) {
 			return LocalPlayerUtils
 					.getHotbarSlots(localPlayer).stream()
 					.filter(this::isDurabilityGood)
 					.filter(this::filterSilkTouchMode)
 					.max(Comparator
-						.comparing(Slot::getStack, Comparator
+						.comparing(Slot::getItem, Comparator
 							.<ItemStack>comparingDouble(tool -> ItemUtils.getDiggingSpeedAt(localPlayer, tool, blockPos))
 							.thenComparingInt(this::getSilkTouchEnchantmentLevel)
 							.thenComparingInt(this::getFortuneEnchantmentLevel)
@@ -141,7 +141,7 @@ public class AutoTool extends TogglableFeature {
 	}
 
 	public void selectBestTool(BlockPos blockPos) {
-		if (isEnabled() && Minecraft.getInstance().playerController.gameIsSurvivalOrAdventure()) {
+		if (isEnabled() && Minecraft.getInstance().gameMode.hasExperience()) {
 			Slot bestTool = getBestTool(blockPos);
 			ClientPlayerEntity localPlayer = LocalPlayerUtils.getLocalPlayer();
 			if (isOriginalTool) {

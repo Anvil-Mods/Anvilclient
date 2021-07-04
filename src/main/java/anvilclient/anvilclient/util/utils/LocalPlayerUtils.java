@@ -39,15 +39,15 @@ public class LocalPlayerUtils {
 	}
 
 	public static PlayerContainer getPlayerContainer(ClientPlayerEntity localPlayer) {
-		return localPlayer.container;
+		return localPlayer.inventoryMenu;
 	}
 	
 	public static int getHotbarSize() {
-		return PlayerInventory.getHotbarSize();
+		return PlayerInventory.getSelectionSize();
 	}
 
 	public static List<Slot> getSlots(ClientPlayerEntity localPlayer) {
-		return getPlayerContainer(localPlayer).inventorySlots;
+		return getPlayerContainer(localPlayer).slots;
 	}
 
 	public static List<Slot> getHotbarSlots(ClientPlayerEntity localPlayer) {
@@ -55,11 +55,11 @@ public class LocalPlayerUtils {
 	}
 
 	public static int getSelectedIndex(ClientPlayerEntity localPlayer) {
-		return getPlayerInventory(localPlayer).currentItem;
+		return getPlayerInventory(localPlayer).selected;
 	}
 
 	public static ItemStack getSelectedItem(ClientPlayerEntity localPlayer) {
-		return getPlayerInventory(localPlayer).getCurrentItem();
+		return getPlayerInventory(localPlayer).getSelected();
 	}
 
 	public static Slot getSelectedSlot(ClientPlayerEntity localPlayer) {
@@ -71,7 +71,7 @@ public class LocalPlayerUtils {
 		      throw new IllegalArgumentException("index must be between 0 and " + (getHotbarSize() - 1) + ", got " + index);
 		}
 		
-		getPlayerInventory(localPlayer).currentItem = index;
+		getPlayerInventory(localPlayer).selected = index;
 	}
 	
 	public static void setSelectedSlot(ClientPlayerEntity localPlayer, Slot slot) {

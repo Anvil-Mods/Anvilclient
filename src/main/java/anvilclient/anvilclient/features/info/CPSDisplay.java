@@ -58,7 +58,7 @@ public class CPSDisplay extends TogglableFeature {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25) + 11;
 			double cps = ((double)clicks.size())/((double)measuringSpan.getValue());
-			AbstractGui.drawString(matrixStack, mc.fontRenderer, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
+			AbstractGui.drawString(matrixStack, mc.font, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
 			long lgt = Instant.now().toEpochMilli() - 1000*measuringSpan.getValue();
 			List<Long> clicks2 = new ArrayList<>(clicks);
 			for (Long click : clicks2) {

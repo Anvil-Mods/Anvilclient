@@ -42,17 +42,17 @@ public class ScoreboardReader {
 
 	public static ScoreObjective getScoreObjective() {
 		Minecraft mc = Minecraft.getInstance();
-		Scoreboard scoreboard = mc.world.getScoreboard();
+		Scoreboard scoreboard = mc.level.getScoreboard();
 		ScoreObjective scoreobjective = null;
 		ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(mc.player.getScoreboardName());
 		if (scoreplayerteam != null) {
-			int j2 = scoreplayerteam.getColor().getColorIndex();
+			int j2 = scoreplayerteam.getColor().getId();
 			if (j2 >= 0) {
-				scoreobjective = scoreboard.getObjectiveInDisplaySlot(3 + j2);
+				scoreobjective = scoreboard.getDisplayObjective(3 + j2);
 			}
 		}
 
-		return scoreobjective != null ? scoreobjective : scoreboard.getObjectiveInDisplaySlot(1);
+		return scoreobjective != null ? scoreobjective : scoreboard.getDisplayObjective(1);
 	}
 
 	public static Scoreboard getScoreboard() {
@@ -64,7 +64,7 @@ public class ScoreboardReader {
 	}
 
 	public static Collection<Score> getSortedScores() {
-		return getScoreboard().getSortedScores(getScoreObjective());
+		return getScoreboard().getPlayerScores(getScoreObjective());
 	}
 
 	public static ITextComponent getFirstScoreContaining(String string) {
@@ -83,7 +83,7 @@ public class ScoreboardReader {
 	public static HashMap<Score, ITextComponent> getLines() {
 		Collection<Score> collection = getSortedScores();
 		List<Score> list = collection.stream().filter((score) -> {
-			return score.getPlayerName() != null && !score.getPlayerName().startsWith("#");
+			return score.getOwner() != null && !score.getOwner().startsWith("#");
 		}).collect(Collectors.toList());
 
 		if (list.size() > 15) {
@@ -95,9 +95,9 @@ public class ScoreboardReader {
 		HashMap<Score, ITextComponent> map = new HashMap<>();
 
 		for (Score score : collection) {
-			ScorePlayerTeam scoreplayerteam = getScoreboard().getPlayersTeam(score.getPlayerName());
-			ITextComponent itextcomponent = ScorePlayerTeam.func_237500_a_(scoreplayerteam,
-					new StringTextComponent(score.getPlayerName()));
+			ScorePlayerTeam scoreplayerteam = getScoreboard().getPlayersTeam(score.getOwner());
+			ITextComponent itextcomponent = ScorePlayerTeam.formatNameForTeam(scoreplayerteam,
+					new StringTextComponent(score.getOwner()));
 			map.put(score, itextcomponent);
 		}
 

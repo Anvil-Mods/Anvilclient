@@ -34,7 +34,7 @@ public class ClickOption extends AbstractOption implements Button.IPressable{
 	}
 
 	@Override
-	public Widget createWidget(GameSettings options, int xIn, int yIn, int widthIn) {
+	public Widget createButton(GameSettings options, int xIn, int yIn, int widthIn) {
 		return new Button(xIn, yIn, widthIn, 20, new TranslationTextComponent(translationKey), pressedAction);
 	}
 

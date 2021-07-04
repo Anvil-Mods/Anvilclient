@@ -38,7 +38,7 @@ public class Fullbright extends TogglableFeature {
 		return FeatureCategory.GRAPHIC;
 	}
 	
-	private GameSettings gameSettings = Minecraft.getInstance().gameSettings;
+	private GameSettings gameSettings = Minecraft.getInstance().options;
 	
 	private boolean vanillaGammaInitialized = true;
 	

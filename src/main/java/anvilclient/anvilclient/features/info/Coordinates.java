@@ -44,11 +44,11 @@ public class Coordinates extends TogglableFeature {
 			int currentHeight = 0;
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.75);
-			AbstractGui.drawString(matrixStack, mc.fontRenderer, "X: " + player.getPosX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			AbstractGui.drawString(matrixStack, mc.font, "X: " + player.getX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			AbstractGui.drawString(matrixStack, mc.fontRenderer, "Y: " + player.getPosY(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			AbstractGui.drawString(matrixStack, mc.font, "Y: " + player.getY(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			AbstractGui.drawString(matrixStack, mc.fontRenderer, "Z: " + player.getPosZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			AbstractGui.drawString(matrixStack, mc.font, "Z: " + player.getZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 		}
 	}
 }

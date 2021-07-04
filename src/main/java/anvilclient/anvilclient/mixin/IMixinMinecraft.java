@@ -8,6 +8,6 @@ import net.minecraft.client.Minecraft;
 @Mixin(Minecraft.class)
 public interface IMixinMinecraft {
 	
-	@Accessor(value="debugFPS")
+	@Accessor(value="fps")
 	int getFPS();
 }

@@ -47,7 +47,7 @@ public abstract class TogglableFeature extends KeyboundFeature {
 	
 	@Override
 	public void onKey(KeyInputEvent event) {
-		if (keybind.isPressed()) {
+		if (keybind.consumeClick()) {
 			toggleEnabled();
 		}
 	}

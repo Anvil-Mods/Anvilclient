@@ -30,7 +30,7 @@ public class FPSDisplay extends TogglableFeature {
 			int fps;
 			try {
 				fps = ((IMixinMinecraft) mc).getFPS();
-				AbstractGui.drawString(matrixStack, mc.fontRenderer, "FPS: " + fps, coordinatesX, coordinatesY,
+				AbstractGui.drawString(matrixStack, mc.font, "FPS: " + fps, coordinatesX, coordinatesY,
 						TEXT_COLOR);
 			} catch (IllegalArgumentException e) {
 				AnvilClient.LOGGER.catching(e);

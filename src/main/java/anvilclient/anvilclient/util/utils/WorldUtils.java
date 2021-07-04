@@ -26,7 +26,7 @@ public class WorldUtils {
 	}
 
 	public static ClientWorld getWorld(ClientPlayerEntity localPlayer) {
-		return localPlayer == null ? null : localPlayer.worldClient;
+		return localPlayer == null ? null : localPlayer.clientLevel;
 	}
 
 	public static ClientWorld getWorld() {
