@@ -30,6 +30,7 @@ public class LocalPlayerUtils {
 	private LocalPlayerUtils() {
 	}
 
+	@SuppressWarnings("resource")
 	public static ClientPlayerEntity getLocalPlayer() {
 		return Minecraft.getInstance().player;
 	}
