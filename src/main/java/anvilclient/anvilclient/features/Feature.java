@@ -27,5 +27,8 @@ public abstract class Feature {
 	public void register() {
 		EventManager.FORGE_EVENT_BUS.register(this);
 	}
+	
+	public void update() {
+	}
 
 }

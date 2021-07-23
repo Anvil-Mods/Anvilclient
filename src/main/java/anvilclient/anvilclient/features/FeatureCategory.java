@@ -22,7 +22,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 public enum FeatureCategory implements SettingSuitableEnum{
 	GRAPHIC,
 	INFO,
-	BUILDING;
+	BUILDING,
+	MISCELLANEOUS;
 	
 	private final String translationKey;
 	

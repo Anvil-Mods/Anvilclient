@@ -27,6 +27,7 @@ public abstract class TogglableFeature extends KeyboundFeature {
 	
 	public void setEnabled(Boolean newEnabled) {
 		this.enabled.setValue(newEnabled);
+		this.update();
 	}
 	
 	public Boolean isEnabled() {
@@ -35,14 +36,17 @@ public abstract class TogglableFeature extends KeyboundFeature {
 	
 	public void toggleEnabled() {
 		this.enabled.toggle();
+		this.update();
 	}
 	
 	public void enable() {
 		this.enabled.enable();
+		this.update();
 	}
 	
 	public void disable() {
 		this.enabled.disable();
+		this.update();
 	}
 	
 	@Override
