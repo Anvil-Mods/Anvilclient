@@ -42,20 +42,20 @@ public class SettingUtils {
 	public static AbstractOption getOptionForSetting(ISetting<?> setting) {
 		AbstractOption option;
 		String translationKey = "anvilclient.feature." + setting.getName();
-		if (BooleanSetting.class.isAssignableFrom(setting.getClass())) {
+		if (setting instanceof BooleanSetting) {
 			BooleanSetting booleanSetting = (BooleanSetting) setting;
 			option = new BooleanOption(translationKey, (unused) -> booleanSetting.getValue(),
 					(unused, newValue) -> booleanSetting.setValue(newValue));
 
-		} else if (EnumSetting.class.isAssignableFrom(setting.getClass())) {
-			EnumSetting<?> enumSetting = (EnumSetting<?>) setting;
+		} else if (setting instanceof EnumSetting<?>) {
+			EnumSetting<? extends Enum<?>> enumSetting = (EnumSetting<? extends Enum<?>>) setting;
 			option = new IteratableOption(translationKey, (unused, newValue) -> enumSetting.setValue(
 					enumSetting.getValue().getClass().getEnumConstants()[(enumSetting.getValue().ordinal() + newValue)
 							% enumSetting.getValue().getClass().getEnumConstants().length]),
 					(unused, unused2) -> new StringTextComponent(I18n.get("anvilclient.feature." + setting.getName())
 							+ ": " + I18n.get(((SettingSuitableEnum) setting.getValue()).getTranslationKey())));
 
-		} else if (NumberSetting.class.isAssignableFrom(setting.getClass())) {
+		} else if (setting instanceof NumberSetting<?>) {
 			NumberSetting<?> numberSetting = (NumberSetting<?>) setting;
 			option = new SliderPercentageOption(translationKey, numberSetting.getMinValue().doubleValue(),
 					numberSetting.getMaxValue().doubleValue(), numberSetting.getStepSize(),

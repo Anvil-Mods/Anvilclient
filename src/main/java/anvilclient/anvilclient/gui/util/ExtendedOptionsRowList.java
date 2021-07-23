@@ -29,7 +29,6 @@ public class ExtendedOptionsRowList extends OptionsRowList {
 
 	@Override
 	protected void renderBackground(MatrixStack p_230433_1_) {
-		// TODO Auto-generated method stub
 		super.renderBackground(p_230433_1_);
 	}
 }
