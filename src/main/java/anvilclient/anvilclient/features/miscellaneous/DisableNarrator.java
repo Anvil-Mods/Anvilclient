@@ -2,19 +2,18 @@ package anvilclient.anvilclient.features.miscellaneous;
 
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.TogglableFeature;
+import anvilclient.anvilclient.mixin.IMixinAbstractOption;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.settings.IteratableOption;
 import net.minecraft.client.settings.NarratorStatus;
 import net.minecraft.util.text.TranslationTextComponent;
-import anvilclient.anvilclient.mixin.IMixinAbstractOption;
 
 public class DisableNarrator extends TogglableFeature {
 
-	private String name = "disableNarrator";
-
 	@Override
 	public String getName() {
-		return name;
+		return "disableNarrator";
 	}
 
 	@Override
@@ -47,12 +46,21 @@ public class DisableNarrator extends TogglableFeature {
 						.callGenericValueLabel(new TranslationTextComponent("options.narrator.notavailable"));
 			});
 
+	@SuppressWarnings("resource")
 	@Override
 	public void update() {
 		if (this.isEnabled()) {
+			Minecraft.getInstance().options.narratorStatus = NarratorStatus.OFF;
+			NarratorChatListener.INSTANCE.clear();
 			IMixinAbstractOption.setNarrator(DUMMY_NARRATOR);
 		} else {
 			IMixinAbstractOption.setNarrator(NORMAL_NARRATOR);
+		}
+	}
+	
+	public void onStart() {
+		if (this.isEnabled()) {
+			IMixinAbstractOption.setNarrator(DUMMY_NARRATOR);
 		}
 	}
 
