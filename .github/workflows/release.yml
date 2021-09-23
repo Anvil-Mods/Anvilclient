@@ -25,7 +25,7 @@ jobs:
     - name: Generate changelog
       uses: heinrichreimer/action-github-changelog-generator@v2.2
       with:
-        token: ${{ secrets.WORKFLOW_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         configureSections: '{"bugs":{"prefix":"**Bugfixes:**","labels":["bug"]}, "enhancements":{"prefix":"**Enhancements:**","labels":["enhancement"]}}'
         issuesWoLabels: false
         prWoLabels: false
