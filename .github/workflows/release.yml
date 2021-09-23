@@ -31,7 +31,6 @@ jobs:
         name: changelog
   
   build:
-    needs: [setup]
     runs-on: ubuntu-latest
 
     steps:
