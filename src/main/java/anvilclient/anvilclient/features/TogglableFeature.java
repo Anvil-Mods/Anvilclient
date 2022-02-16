@@ -18,8 +18,9 @@ package anvilclient.anvilclient.features;
 
 import anvilclient.anvilclient.settings.BooleanSetting;
 import anvilclient.anvilclient.settings.Setting;
+import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 
-public abstract class TogglableFeature extends Feature {
+public abstract class TogglableFeature extends KeyboundFeature {
 	
 	@Setting
 	public BooleanSetting enabled = new BooleanSetting(getName() + ".enabled", "", false);
@@ -42,6 +43,13 @@ public abstract class TogglableFeature extends Feature {
 	
 	public void disable() {
 		this.enabled.disable();
+	}
+	
+	@Override
+	public void onKey(KeyInputEvent event) {
+		if (keybind.consumeClick()) {
+			toggleEnabled();
+		}
 	}
 
 }

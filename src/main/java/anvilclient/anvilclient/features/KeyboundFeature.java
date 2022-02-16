@@ -27,22 +27,22 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-public abstract class KeyboundFeature extends TogglableFeature {
+public abstract class KeyboundFeature extends Feature {
 	
 	@Setting
-	protected KeyBinding toggleKeybind = new KeyBinding("anvilclient.feature." + getName() + ".toggle", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
+	protected KeyBinding keybind = new KeyBinding("anvilclient.feature." + getName() + ".toggle", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
+	
+	public abstract void onKey(KeyInputEvent event);
 	
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event) {
-		if (toggleKeybind.isPressed()) {
-			toggleEnabled();
-		}
+		onKey(event);
 	}
 	
 	@Override
 	public void register() {
 		super.register();
-		ClientRegistry.registerKeyBinding(toggleKeybind);
+		ClientRegistry.registerKeyBinding(keybind);
 	}
 
 }

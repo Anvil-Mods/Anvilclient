@@ -25,8 +25,8 @@ public class KeyInputHandler{
 	
 	@SubscribeEvent
     public static void onKeyInput(KeyInputEvent event) {
-        if (Keybinds.openSettings.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(ScreenUtils.getMainConfigGui(null));
+        if (Keybinds.openSettings.consumeClick()) {
+            Minecraft.getInstance().setScreen(ScreenUtils.getMainConfigGui(null));
         }
     }
 }

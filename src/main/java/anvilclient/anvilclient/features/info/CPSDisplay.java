@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2021  Anvilclient and Contributors
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package anvilclient.anvilclient.features.info;
 
 import java.time.Instant;
@@ -9,7 +25,7 @@ import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import anvilclient.anvilclient.features.FeatureCategory;
-import anvilclient.anvilclient.features.KeyboundFeature;
+import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IntegerSetting;
 import anvilclient.anvilclient.settings.Setting;
@@ -22,7 +38,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class CPSDisplay extends KeyboundFeature {
+public class CPSDisplay extends TogglableFeature {
 	
 	@Override
 	public String getName() {
@@ -58,7 +74,7 @@ public class CPSDisplay extends KeyboundFeature {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25) + 11;
 			double cps = ((double)clicks.size())/((double)measuringSpan.getValue());
-			AbstractGui.drawString(matrixStack, mc.fontRenderer, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
+			AbstractGui.drawString(matrixStack, mc.font, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
 			long lgt = Instant.now().toEpochMilli() - 1000*measuringSpan.getValue();
 			List<Long> clicks2 = new ArrayList<>(clicks);
 			for (Long click : clicks2) {

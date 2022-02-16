@@ -48,27 +48,27 @@ public class TextUtils {
 		Color color = style.getColor();
 		if (color != null) {
 			stringbuilder.append(Arrays.stream(TextFormatting.values()).filter(TextFormatting::isColor)
-					.filter(formatting -> formatting.getColor() == color.getColor()).map(TextFormatting::toString)
+					.filter(formatting -> formatting.getColor() == color.getValue()).map(TextFormatting::toString)
 					.findFirst().orElse(""));
 		}
 
-		if (style.getBold()) {
+		if (style.isBold()) {
 			stringbuilder.append(TextFormatting.BOLD.toString());
 		}
 
-		if (style.getItalic()) {
+		if (style.isItalic()) {
 			stringbuilder.append(TextFormatting.ITALIC.toString());
 		}
 
-		if (style.getUnderlined()) {
+		if (style.isUnderlined()) {
 			stringbuilder.append(TextFormatting.UNDERLINE.toString());
 		}
 
-		if (style.getObfuscated()) {
+		if (style.isObfuscated()) {
 			stringbuilder.append(TextFormatting.OBFUSCATED.toString());
 		}
 
-		if (style.getStrikethrough()) {
+		if (style.isStrikethrough()) {
 			stringbuilder.append(TextFormatting.STRIKETHROUGH.toString());
 		}
 
@@ -76,7 +76,7 @@ public class TextUtils {
 	}
 	
 	public static String removeFormattingCodes(String string) {
-		return string.replaceAll("§.", "");
+		return string.replaceAll("\u00A7.", "");
 	}
 
 }

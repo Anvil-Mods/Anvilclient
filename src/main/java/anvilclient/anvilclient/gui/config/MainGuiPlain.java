@@ -37,10 +37,10 @@ public class MainGuiPlain extends ConfigScreen {
 		for (Feature feature : Features.FEATURE_LIST) {
 			if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
 				this.optionsRowList
-						.addOptions(SettingUtils.getOptionListForTogglableFeature((TogglableFeature) feature, this));
+						.addSmall(SettingUtils.getOptionListForTogglableFeature((TogglableFeature) feature, this));
 			} else {
-				this.optionsRowList.addOption(new ClickOption("anvilclient.feature." + feature.getName(),
-						button -> Minecraft.getInstance().displayGuiScreen(new FeatureGui(feature, this))));
+				this.optionsRowList.addBig(new ClickOption("anvilclient.feature." + feature.getName(),
+						button -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
 			}
 		}
 	}
@@ -52,12 +52,12 @@ public class MainGuiPlain extends ConfigScreen {
 				button -> this.changeScreen()));
 		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
 				this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT,
-				new TranslationTextComponent("gui.done"), button -> this.closeScreen()));
+				new TranslationTextComponent("gui.done"), button -> this.onClose()));
 	}
 
 	private void changeScreen() {
 		ConfigScreen.sortType.setValue(SortType.CATEGORY);
-		this.minecraft.displayGuiScreen(new MainGuiCategory(this.parentScreen));
+		this.minecraft.setScreen(new MainGuiCategory(this.parentScreen));
 	}
 
 }

@@ -31,13 +31,13 @@ import net.minecraft.util.math.BlockPos;
 
 @Mixin(PlayerController.class)
 public class MixinPlayerController {
-	@Inject(at = @At("HEAD"), method = "onPlayerDamageBlock(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;)Z")
-	private void onPlayerDamageBlock(BlockPos posBlock, Direction directionFacing, CallbackInfoReturnable<Boolean> callback) {
+	@Inject(at = @At("HEAD"), method = "continueDestroyBlock(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;)Z")
+	private void continueDestroyBlock(BlockPos posBlock, Direction directionFacing, CallbackInfoReturnable<Boolean> callback) {
 		EventManager.FORGE_EVENT_BUS.post(new PlayerDamageBlockEvent(posBlock, directionFacing));
 	}
 	
-	@Inject(at = @At("HEAD"), method = "resetBlockRemoving")
-	private void resetBlockRemoving(CallbackInfo callback) {
+	@Inject(at = @At("HEAD"), method = "stopDestroyBlock")
+	private void stopDestroyBlock(CallbackInfo callback) {
 		EventManager.FORGE_EVENT_BUS.post(new PlayerResetBreakingBlockEvent());
 	}
 }
