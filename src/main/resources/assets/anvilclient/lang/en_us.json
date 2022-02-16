@@ -7,7 +7,6 @@
 	"anvilclient.featureCategory.graphic": "Graphic",
 	"anvilclient.featureCategory.info": "Info",
 	"anvilclient.featureCategory.building": "Building",
-	"anvilclient.featureCategory.miscellaneous": "Miscellaneous",
 	
 	"anvilclient.feature.fullbright": "Fullbright",
 	"anvilclient.feature.fullbright.toggle": "Toggle Fullbright",
@@ -37,9 +36,6 @@
 	"anvilclient.feature.cpsDisplay.toggle": "Toggle CPS Display",
 	"anvilclient.feature.cpsDisplay.mouseButton": "Mouse Button",
 	"anvilclient.feature.cpsDisplay.measuringSpan": "Measuring span in seconds",
-	
-	"anvilclient.feature.narratorBreaker": "Narrator Breaker",
-	"anvilclient.feature.narratorBreaker.toggle": "Toggle Narrator Breaker",
 	
 	
 	"anvilclient.key.openSettings": "Open Settings",

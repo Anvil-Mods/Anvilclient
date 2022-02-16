@@ -61,7 +61,7 @@ public class BedwarsInfo extends TogglableFeature {
 	@SubscribeEvent
 	public void update(GuiOpenEvent event) {
 		if (inBedWars && event.getGui() instanceof DownloadTerrainScreen) {
-			onBWGameLeave();
+			onGameLeave();
 		}
 	}
 
@@ -70,9 +70,9 @@ public class BedwarsInfo extends TogglableFeature {
 		if (ServerDetector.getInstance().getCurrentServer() == Server.HYPIXEL && !inBedWars) {
 			String message = TextUtils.getFormattedText(event.getMessage());
 			if (message.contains(START_TEXT)) {
-				onBWGameStart();
+				onGameStart();
 			} else if (message.contains(REJOIN_TEXT)) {
-				onBWGameRejoin();
+				onGameRejoin();
 			}
 		}
 	}
@@ -120,16 +120,16 @@ public class BedwarsInfo extends TogglableFeature {
 		return false;
 	}
 
-	private void onBWGameStart() {
+	private void onGameStart() {
 		inBedWars = true;
 		gameStartTime = Instant.now().toEpochMilli();
 	}
 
-	private void onBWGameRejoin() {
-		onBWGameStart();
+	private void onGameRejoin() {
+		onGameStart();
 	}
 
-	private void onBWGameLeave() {
+	private void onGameLeave() {
 		inBedWars = false;
 	}
 

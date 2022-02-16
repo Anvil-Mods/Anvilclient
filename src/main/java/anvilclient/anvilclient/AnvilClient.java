@@ -49,13 +49,11 @@ public class AnvilClient {
 	public AnvilClient() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
-				() -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-				() -> () -> anvilclient.anvilclient.util.utils.ScreenUtils.registerForgeConfig());
-
+		
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+		
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> anvilclient.anvilclient.util.utils.ScreenUtils.registerForgeConfig());
+		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -72,7 +70,6 @@ public class AnvilClient {
 		SettingRegister.registerStaticClass(anvilclient.anvilclient.gui.config.ConfigScreen.class);
 		ConfigManager.getInstance().loadProperties();
 		ConfigManager.getInstance().cleanupConfig();
-		Features.FEATURE_LIST.forEach(feature -> feature.onGameStart());
 	}
 
 	@SubscribeEvent

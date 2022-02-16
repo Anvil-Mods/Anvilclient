@@ -7,8 +7,7 @@
 	],
 	"client": [
 		"MixinPlayerController",
-		"IMixinMinecraft",
-		"IMixinAbstractOption"
+		"IMixinMinecraft"
 	],
 	"injectors": {
     	"defaultRequire": 1

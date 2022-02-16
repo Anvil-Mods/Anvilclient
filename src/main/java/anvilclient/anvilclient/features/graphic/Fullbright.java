@@ -49,7 +49,6 @@ public class Fullbright extends TogglableFeature {
 	@IgnoreAsOption
 	public DoubleSetting vanillaGamma = new DoubleSetting(getName() + ".vanillaGamma", "", 1.0, 0.0, 1.0, 0.01F, 2);
 	
-	@Override
 	public void update() {
 		if (isEnabled()) {
 			if (!vanillaGammaInitialized && AbstractOption.GAMMA.get(gameSettings) <= 1.0) {
@@ -66,20 +65,24 @@ public class Fullbright extends TogglableFeature {
 	@Override
 	public void toggleEnabled() {
 		super.toggleEnabled();
+		this.update();
 	}
 	
 	@Override
 	public void setEnabled(Boolean newEnabled) {
 		super.setEnabled(newEnabled);
+		this.update();
 	}
 	
 	@Override
 	public void enable() {
 		super.enable();
+		this.update();
 	}
 	
 	@Override
 	public void disable() {
 		super.disable();
+		this.update();
 	}
 }

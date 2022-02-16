@@ -28,7 +28,6 @@ import anvilclient.anvilclient.features.info.BedwarsInfo;
 import anvilclient.anvilclient.features.info.CPSDisplay;
 import anvilclient.anvilclient.features.info.Coordinates;
 import anvilclient.anvilclient.features.info.FPSDisplay;
-import anvilclient.anvilclient.features.miscellaneous.NarratorBreaker;
 
 public class Features {
 	
@@ -38,7 +37,6 @@ public class Features {
 	public static final BedwarsInfo BEDWARS_INFO = new BedwarsInfo();
 	public static final FPSDisplay FPS_DISPLAY = new FPSDisplay();
 	public static final CPSDisplay CPS_DISPLAY = new CPSDisplay();
-	public static final NarratorBreaker NARRATOR_BREAKER = new NarratorBreaker();
 	
 	public static final List<Feature> FEATURE_LIST = new ArrayList<>();
 	
