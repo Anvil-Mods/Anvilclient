@@ -9,11 +9,11 @@ import net.minecraft.client.settings.IteratableOption;
 import net.minecraft.client.settings.NarratorStatus;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class DisableNarrator extends TogglableFeature {
+public class NarratorBreaker extends TogglableFeature {
 
 	@Override
 	public String getName() {
-		return "disableNarrator";
+		return "narratorBreaker";
 	}
 
 	@Override
@@ -58,7 +58,8 @@ public class DisableNarrator extends TogglableFeature {
 		}
 	}
 	
-	public void onStart() {
+	@Override
+	public void onGameStart() {
 		if (this.isEnabled()) {
 			IMixinAbstractOption.setNarrator(DUMMY_NARRATOR);
 		}

@@ -72,7 +72,7 @@ public class AnvilClient {
 		SettingRegister.registerStaticClass(anvilclient.anvilclient.gui.config.ConfigScreen.class);
 		ConfigManager.getInstance().loadProperties();
 		ConfigManager.getInstance().cleanupConfig();
-		Features.DISABLE_NARRATOR.onStart();
+		Features.FEATURE_LIST.forEach(feature -> feature.onGameStart());
 	}
 
 	@SubscribeEvent

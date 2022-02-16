@@ -30,5 +30,8 @@ public abstract class Feature {
 	
 	public void update() {
 	}
+	
+	public void onGameStart() {
+	}
 
 }
