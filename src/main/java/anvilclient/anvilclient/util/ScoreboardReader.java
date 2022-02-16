@@ -26,12 +26,12 @@ import com.google.common.collect.Lists;
 
 import anvilclient.anvilclient.util.utils.TextUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.scoreboard.Score;
-import net.minecraft.scoreboard.ScoreObjective;
-import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.scores.Score;
+import net.minecraft.world.scores.Objective;
+import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.Scoreboard;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 public class ScoreboardReader {
 
@@ -40,11 +40,11 @@ public class ScoreboardReader {
 
 	public static final Scoreboard DUMMY_SCOREBOARD = new Scoreboard();
 
-	public static ScoreObjective getScoreObjective() {
+	public static Objective getScoreObjective() {
 		Minecraft mc = Minecraft.getInstance();
 		Scoreboard scoreboard = mc.level.getScoreboard();
-		ScoreObjective scoreobjective = null;
-		ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(mc.player.getScoreboardName());
+		Objective scoreobjective = null;
+		PlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(mc.player.getScoreboardName());
 		if (scoreplayerteam != null) {
 			int j2 = scoreplayerteam.getColor().getId();
 			if (j2 >= 0) {
@@ -56,7 +56,7 @@ public class ScoreboardReader {
 	}
 
 	public static Scoreboard getScoreboard() {
-		ScoreObjective scoreobjective = getScoreObjective();
+		Objective scoreobjective = getScoreObjective();
 		if (scoreobjective != null) {
 			return scoreobjective.getScoreboard();
 		}
@@ -67,8 +67,8 @@ public class ScoreboardReader {
 		return getScoreboard().getPlayerScores(getScoreObjective());
 	}
 
-	public static ITextComponent getFirstScoreContaining(String string) {
-		for (ITextComponent textComponent : getLines().values()) {
+	public static Component getFirstScoreContaining(String string) {
+		for (Component textComponent : getLines().values()) {
 			if (TextUtils.removeFormattingCodes(textComponent.getString()).contains(string)) {
 				return textComponent;
 			}
@@ -80,7 +80,7 @@ public class ScoreboardReader {
 		return getFirstScoreContaining(string) != null;
 	}
 
-	public static HashMap<Score, ITextComponent> getLines() {
+	public static HashMap<Score, Component> getLines() {
 		Collection<Score> collection = getSortedScores();
 		List<Score> list = collection.stream().filter((score) -> {
 			return score.getOwner() != null && !score.getOwner().startsWith("#");
@@ -92,12 +92,12 @@ public class ScoreboardReader {
 			collection = list;
 		}
 
-		HashMap<Score, ITextComponent> map = new HashMap<>();
+		HashMap<Score, Component> map = new HashMap<>();
 
 		for (Score score : collection) {
-			ScorePlayerTeam scoreplayerteam = getScoreboard().getPlayersTeam(score.getOwner());
-			ITextComponent itextcomponent = ScorePlayerTeam.formatNameForTeam(scoreplayerteam,
-					new StringTextComponent(score.getOwner()));
+			PlayerTeam scoreplayerteam = getScoreboard().getPlayersTeam(score.getOwner());
+			Component itextcomponent = PlayerTeam.formatNameForTeam(scoreplayerteam,
+					new TextComponent(score.getOwner()));
 			map.put(score, itextcomponent);
 		}
 

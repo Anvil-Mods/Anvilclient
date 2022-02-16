@@ -22,8 +22,8 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.settings.DoubleSetting;
 import anvilclient.anvilclient.settings.IgnoreAsOption;
 import anvilclient.anvilclient.settings.Setting;
-import net.minecraft.client.AbstractOption;
-import net.minecraft.client.GameSettings;
+import net.minecraft.client.Option;
+import net.minecraft.client.Options;
 import net.minecraft.client.Minecraft;
 
 public class Fullbright extends TogglableFeature {
@@ -38,7 +38,7 @@ public class Fullbright extends TogglableFeature {
 		return FeatureCategory.GRAPHIC;
 	}
 	
-	private GameSettings gameSettings = Minecraft.getInstance().options;
+	private Options gameSettings = Minecraft.getInstance().options;
 	
 	private boolean vanillaGammaInitialized = true;
 	
@@ -51,13 +51,13 @@ public class Fullbright extends TogglableFeature {
 	
 	public void update() {
 		if (isEnabled()) {
-			if (!vanillaGammaInitialized && AbstractOption.GAMMA.get(gameSettings) <= 1.0) {
-				vanillaGamma.setValue(AbstractOption.GAMMA.get(gameSettings));
+			if (!vanillaGammaInitialized && Option.GAMMA.get(gameSettings) <= 1.0) {
+				vanillaGamma.setValue(Option.GAMMA.get(gameSettings));
 			}
-			AbstractOption.GAMMA.set(gameSettings, fullbrightLevel.getValue());
+			Option.GAMMA.set(gameSettings, fullbrightLevel.getValue());
 		} else if (!isEnabled()){
-			AbstractOption.GAMMA.set(gameSettings, vanillaGamma.getValue());
-			AnvilClient.LOGGER.debug("Gamma set to VanillaGammma " + AbstractOption.GAMMA.get(gameSettings));
+			Option.GAMMA.set(gameSettings, vanillaGamma.getValue());
+			AnvilClient.LOGGER.debug("Gamma set to VanillaGammma " + Option.GAMMA.get(gameSettings));
 			vanillaGammaInitialized = false;
 		}
 	}

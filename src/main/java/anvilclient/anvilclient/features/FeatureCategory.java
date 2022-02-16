@@ -17,7 +17,7 @@
 package anvilclient.anvilclient.features;
 
 import anvilclient.anvilclient.settings.SettingSuitableEnum;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public enum FeatureCategory implements SettingSuitableEnum{
 	GRAPHIC,
@@ -26,11 +26,11 @@ public enum FeatureCategory implements SettingSuitableEnum{
 	
 	private final String translationKey;
 	
-	private final TranslationTextComponent translationTextComponent;
+	private final TranslatableComponent translationTextComponent;
 	
 	private FeatureCategory() {
 		this.translationKey = "anvilclient.featureCategory." + this.toString().toLowerCase();
-		this.translationTextComponent = new TranslationTextComponent(translationKey);
+		this.translationTextComponent = new TranslatableComponent(translationKey);
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public enum FeatureCategory implements SettingSuitableEnum{
 	}
 
 	@Override
-	public TranslationTextComponent getTranslationTextComponent() {
+	public TranslatableComponent getTranslationTextComponent() {
 		return translationTextComponent;
 	}
 	

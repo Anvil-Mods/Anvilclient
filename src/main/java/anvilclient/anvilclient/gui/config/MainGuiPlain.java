@@ -22,9 +22,9 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.gui.util.ClickOption;
 import anvilclient.anvilclient.util.utils.SettingUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class MainGuiPlain extends ConfigScreen {
 
@@ -48,11 +48,11 @@ public class MainGuiPlain extends ConfigScreen {
 	@Override
 	protected void addButtons() {
 		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET,
-				BUTTON_WIDTH, BUTTON_HEIGHT, new TranslationTextComponent(SortType.PLAIN.getTranslationKey()),
+				BUTTON_WIDTH, BUTTON_HEIGHT, new TranslatableComponent(SortType.PLAIN.getTranslationKey()),
 				button -> this.changeScreen()));
 		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
 				this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT,
-				new TranslationTextComponent("gui.done"), button -> this.onClose()));
+				new TranslatableComponent("gui.done"), button -> this.onClose()));
 	}
 
 	private void changeScreen() {

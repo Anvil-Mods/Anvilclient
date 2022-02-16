@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.TogglableFeature;
@@ -32,9 +32,9 @@ import anvilclient.anvilclient.settings.Setting;
 import anvilclient.anvilclient.settings.SettingSuitableEnum;
 import anvilclient.anvilclient.util.utils.MathUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -69,12 +69,12 @@ public class CPSDisplay extends TogglableFeature {
 		}
 	}
 	
-	public void render(int width, int height, MatrixStack matrixStack, Minecraft mc) {
+	public void render(int width, int height, PoseStack matrixStack, Minecraft mc) {
 		if (isEnabled()) {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25) + 11;
 			double cps = ((double)clicks.size())/((double)measuringSpan.getValue());
-			AbstractGui.drawString(matrixStack, mc.font, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
+			GuiComponent.drawString(matrixStack, mc.font, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
 			long lgt = Instant.now().toEpochMilli() - 1000*measuringSpan.getValue();
 			List<Long> clicks2 = new ArrayList<>(clicks);
 			for (Long click : clicks2) {
@@ -92,13 +92,13 @@ public class CPSDisplay extends TogglableFeature {
 		MIDDLE(GLFW.GLFW_MOUSE_BUTTON_MIDDLE);
 		
 		private final String translationKey;
-		private final ITextComponent translationTextComponent;
+		private final Component translationTextComponent;
 		
 		private final int button;
 
 		private CPSMouseButton(int button) {
 			this.translationKey = "key.mouse." + this.toString().toLowerCase();
-			this.translationTextComponent = new TranslationTextComponent(translationKey);
+			this.translationTextComponent = new TranslatableComponent(translationKey);
 			this.button = button;
 		}
 
@@ -108,7 +108,7 @@ public class CPSDisplay extends TogglableFeature {
 		}
 
 		@Override
-		public ITextComponent getTranslationTextComponent() {
+		public Component getTranslationTextComponent() {
 			return translationTextComponent;
 		}
 		

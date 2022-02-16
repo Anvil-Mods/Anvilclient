@@ -16,16 +16,16 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.hud;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import anvilclient.anvilclient.features.Features;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
-public class Hud extends AbstractGui {
+public class Hud extends GuiComponent {
 	
 	private static final Hud INSTANCE = new Hud();
 	
@@ -33,7 +33,7 @@ public class Hud extends AbstractGui {
 		return INSTANCE;
 	}
 
-	private final MatrixStack matrixStack;
+	private final PoseStack matrixStack;
 
 	private final Minecraft mc;
 
@@ -42,12 +42,12 @@ public class Hud extends AbstractGui {
 
 	private Hud() {
 		this.mc = Minecraft.getInstance();
-		this.matrixStack = new MatrixStack();
+		this.matrixStack = new PoseStack();
 		updateScaledWidthAndHeight();
 	}
 
 	public void render(RenderGameOverlayEvent.Post event) {
-		ClientPlayerEntity player = mc.player;
+		LocalPlayer player = mc.player;
 		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR && player != null) {
 			Features.COORDINATES.render(width, height, matrixStack, mc, player);
 			Features.BEDWARS_INFO.render(width, height, matrixStack, mc, player);

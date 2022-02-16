@@ -20,8 +20,8 @@ import org.lwjgl.glfw.GLFW;
 
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.settings.Setting;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,7 +30,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public abstract class KeyboundFeature extends Feature {
 	
 	@Setting
-	protected KeyBinding keybind = new KeyBinding("anvilclient.feature." + getName() + ".toggle", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
+	protected KeyMapping keybind = new KeyMapping("anvilclient.feature." + getName() + ".toggle", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
 	
 	public abstract void onKey(KeyInputEvent event);
 	

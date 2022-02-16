@@ -18,23 +18,23 @@ package anvilclient.anvilclient.util.utils;
 
 import java.util.Arrays;
 
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.ChatFormatting;
 
 public class TextUtils {
 
 	private TextUtils() {
 	}
 
-	public static String getFormattedText(ITextComponent textComponent) {
+	public static String getFormattedText(Component textComponent) {
 		StringBuilder stringbuilder = new StringBuilder();
 		String s = textComponent.getString();
 		if (!s.isEmpty()) {
 			stringbuilder.append(getFormattingCodeOfStyle(textComponent.getStyle()));
 			stringbuilder.append(s);
-			stringbuilder.append(TextFormatting.RESET.toString());
+			stringbuilder.append(ChatFormatting.RESET.toString());
 		}
 		
 		textComponent.getSiblings().stream().forEachOrdered(textComp -> stringbuilder.append(getFormattedText(textComp)));
@@ -45,31 +45,31 @@ public class TextUtils {
 	public static String getFormattingCodeOfStyle(Style style) {
 
 		StringBuilder stringbuilder = new StringBuilder();
-		Color color = style.getColor();
+		TextColor color = style.getColor();
 		if (color != null) {
-			stringbuilder.append(Arrays.stream(TextFormatting.values()).filter(TextFormatting::isColor)
-					.filter(formatting -> formatting.getColor() == color.getValue()).map(TextFormatting::toString)
+			stringbuilder.append(Arrays.stream(ChatFormatting.values()).filter(ChatFormatting::isColor)
+					.filter(formatting -> formatting.getColor() == color.getValue()).map(ChatFormatting::toString)
 					.findFirst().orElse(""));
 		}
 
 		if (style.isBold()) {
-			stringbuilder.append(TextFormatting.BOLD.toString());
+			stringbuilder.append(ChatFormatting.BOLD.toString());
 		}
 
 		if (style.isItalic()) {
-			stringbuilder.append(TextFormatting.ITALIC.toString());
+			stringbuilder.append(ChatFormatting.ITALIC.toString());
 		}
 
 		if (style.isUnderlined()) {
-			stringbuilder.append(TextFormatting.UNDERLINE.toString());
+			stringbuilder.append(ChatFormatting.UNDERLINE.toString());
 		}
 
 		if (style.isObfuscated()) {
-			stringbuilder.append(TextFormatting.OBFUSCATED.toString());
+			stringbuilder.append(ChatFormatting.OBFUSCATED.toString());
 		}
 
 		if (style.isStrikethrough()) {
-			stringbuilder.append(TextFormatting.STRIKETHROUGH.toString());
+			stringbuilder.append(ChatFormatting.STRIKETHROUGH.toString());
 		}
 
 		return stringbuilder.toString();

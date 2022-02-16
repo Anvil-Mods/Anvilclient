@@ -16,25 +16,25 @@
  *******************************************************************************/
 package anvilclient.anvilclient.util.utils;
 
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
 
 public class WorldUtils {
 	
 	private WorldUtils() {
 	}
 
-	public static ClientWorld getWorld(ClientPlayerEntity localPlayer) {
+	public static ClientLevel getWorld(LocalPlayer localPlayer) {
 		return localPlayer == null ? null : localPlayer.clientLevel;
 	}
 
-	public static ClientWorld getWorld() {
+	public static ClientLevel getWorld() {
 		return getWorld(LocalPlayerUtils.getLocalPlayer());
 	}
 
-	public static boolean canPlaceBlocksAt(ClientPlayerEntity localPlayer, BlockPos blockPos) {
-		ClientWorld world = getWorld(localPlayer);
+	public static boolean canPlaceBlocksAt(LocalPlayer localPlayer, BlockPos blockPos) {
+		ClientLevel world = getWorld(localPlayer);
 		return world.getBlockState(blockPos).getShape(world, blockPos).isEmpty();
 	}
 

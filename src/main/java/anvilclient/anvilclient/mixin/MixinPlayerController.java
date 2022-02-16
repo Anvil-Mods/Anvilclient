@@ -25,11 +25,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import anvilclient.anvilclient.event.PlayerDamageBlockEvent;
 import anvilclient.anvilclient.event.PlayerResetBreakingBlockEvent;
 import anvilclient.anvilclient.util.EventManager;
-import net.minecraft.client.multiplayer.PlayerController;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
-@Mixin(PlayerController.class)
+@Mixin(MultiPlayerGameMode.class)
 public class MixinPlayerController {
 	@Inject(at = @At("HEAD"), method = "continueDestroyBlock(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/Direction;)Z")
 	private void continueDestroyBlock(BlockPos posBlock, Direction directionFacing, CallbackInfoReturnable<Boolean> callback) {

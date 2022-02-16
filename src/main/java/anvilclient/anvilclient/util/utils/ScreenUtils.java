@@ -23,7 +23,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 
 public class ScreenUtils {
 	
-	public static anvilclient.anvilclient.gui.config.ConfigScreen getMainConfigGui(net.minecraft.client.gui.screen.Screen parentScreen) {
+	public static anvilclient.anvilclient.gui.config.ConfigScreen getMainConfigGui(net.minecraft.client.gui.screens.Screen parentScreen) {
 		switch (anvilclient.anvilclient.gui.config.ConfigScreen.sortType.getValue()) {
 		case PLAIN:
 			return new anvilclient.anvilclient.gui.config.MainGuiPlain(parentScreen);

@@ -19,9 +19,9 @@ package anvilclient.anvilclient.gui.config;
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.gui.util.ClickOption;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class MainGuiCategory extends ConfigScreen {
 
@@ -40,11 +40,11 @@ public class MainGuiCategory extends ConfigScreen {
 	@Override
 	protected void addButtons() {
 		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET,
-				BUTTON_WIDTH, BUTTON_HEIGHT, new TranslationTextComponent(SortType.CATEGORY.getTranslationKey()),
+				BUTTON_WIDTH, BUTTON_HEIGHT, new TranslatableComponent(SortType.CATEGORY.getTranslationKey()),
 				button -> this.changeScreen()));
 		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
 				this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT,
-				new TranslationTextComponent("gui.done"), button -> this.onClose()));
+				new TranslatableComponent("gui.done"), button -> this.onClose()));
 	}
 
 	private void changeScreen() {

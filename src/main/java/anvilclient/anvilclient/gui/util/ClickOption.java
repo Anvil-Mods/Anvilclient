@@ -16,26 +16,26 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.util;
 
-import net.minecraft.client.AbstractOption;
-import net.minecraft.client.GameSettings;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.Option;
+import net.minecraft.client.Options;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.TranslatableComponent;
 
-public class ClickOption extends AbstractOption implements Button.IPressable{
+public class ClickOption extends Option implements Button.OnPress{
 	
 	protected String translationKey;
-	protected Button.IPressable pressedAction;
+	protected Button.OnPress pressedAction;
 
-	public ClickOption(String translationKeyIn, Button.IPressable pressedAction) {
+	public ClickOption(String translationKeyIn, Button.OnPress pressedAction) {
 		super(translationKeyIn);
 		this.translationKey = translationKeyIn;
 		this.pressedAction = pressedAction;
 	}
 
 	@Override
-	public Widget createButton(GameSettings options, int xIn, int yIn, int widthIn) {
-		return new Button(xIn, yIn, widthIn, 20, new TranslationTextComponent(translationKey), pressedAction);
+	public AbstractWidget createButton(Options options, int xIn, int yIn, int widthIn) {
+		return new Button(xIn, yIn, widthIn, 20, new TranslatableComponent(translationKey), pressedAction);
 	}
 
 	@Override

@@ -16,18 +16,18 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.config;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import anvilclient.anvilclient.gui.util.ExtendedOptionsRowList;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IgnoreAsOption;
 import anvilclient.anvilclient.settings.Setting;
 import anvilclient.anvilclient.settings.SettingSuitableEnum;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public abstract class ConfigScreen extends Screen {
 	private static final int TITLE_HEIGHT = 8;
@@ -45,7 +45,7 @@ public abstract class ConfigScreen extends Screen {
 	protected Screen parentScreen;
 
 	public ConfigScreen(String nameTranslationKey, Screen parentScreen) {
-		super(new TranslationTextComponent(nameTranslationKey));
+		super(new TranslatableComponent(nameTranslationKey));
 		this.parentScreen = parentScreen;
 	}
 
@@ -67,7 +67,7 @@ public abstract class ConfigScreen extends Screen {
 	
 	protected void addButtons() {
 		this.addButton(new Button((this.width - BUTTON_WIDTH) / 2, this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH,
-				BUTTON_HEIGHT, new TranslationTextComponent("gui.done"), button -> this.onClose()));
+				BUTTON_HEIGHT, new TranslatableComponent("gui.done"), button -> this.onClose()));
 	}
 
 	protected abstract void addOptions();
@@ -77,10 +77,10 @@ public abstract class ConfigScreen extends Screen {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(matrixStack);
 		this.optionsRowList.render(matrixStack, mouseX, mouseY, partialTicks);
-		AbstractGui.drawCenteredString(matrixStack, this.font, this.title, this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
+		GuiComponent.drawCenteredString(matrixStack, this.font, this.title, this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 
@@ -102,11 +102,11 @@ public abstract class ConfigScreen extends Screen {
 		CATEGORY;
 		
 		private final String translationKey;
-		private final ITextComponent translationTextComponent;
+		private final Component translationTextComponent;
 
 		private SortType() {
 			this.translationKey = "anvilclient.configGui.sortType." + this.toString().toLowerCase();
-			this.translationTextComponent = new TranslationTextComponent(translationKey);
+			this.translationTextComponent = new TranslatableComponent(translationKey);
 		}
 
 		@Override
@@ -115,7 +115,7 @@ public abstract class ConfigScreen extends Screen {
 		}
 
 		@Override
-		public ITextComponent getTranslationTextComponent() {
+		public Component getTranslationTextComponent() {
 			return translationTextComponent;
 		}
 		

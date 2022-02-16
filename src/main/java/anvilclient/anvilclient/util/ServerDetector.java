@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -41,7 +41,7 @@ public class ServerDetector {
 	public void update(ClientPlayerNetworkEvent event) {
 		if (event instanceof ClientPlayerNetworkEvent.LoggedInEvent) {
 			Minecraft mc = Minecraft.getInstance();
-			ClientPlayNetHandler clientplaynethandler = mc.getConnection();
+			ClientPacketListener clientplaynethandler = mc.getConnection();
 			if (clientplaynethandler != null && clientplaynethandler.getConnection().isConnected()) {
 				if (mc.getSingleplayerServer() != null && !mc.getSingleplayerServer().isPublished()) {
 					this.currentServer = Server.SINGLEPLAYER;

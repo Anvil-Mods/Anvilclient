@@ -19,14 +19,14 @@ package anvilclient.anvilclient.util;
 import org.lwjgl.glfw.GLFW;
 
 import anvilclient.anvilclient.AnvilClient;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class Keybinds {
-	public static final KeyBinding openSettings = new KeyBinding("anvilclient.key.openSettings",
-			KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, AnvilClient.KEY_CATEGORY);
+	public static final KeyMapping openSettings = new KeyMapping("anvilclient.key.openSettings",
+			KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, AnvilClient.KEY_CATEGORY);
 
 	public static void register() {
 		ClientRegistry.registerKeyBinding(openSettings);

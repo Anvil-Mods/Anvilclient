@@ -25,7 +25,7 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.gui.util.ClickOption;
 import anvilclient.anvilclient.util.utils.SettingUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
 public class CategoryGui extends ConfigScreen {
 	

@@ -16,19 +16,19 @@
  *******************************************************************************/
 package anvilclient.anvilclient.gui.util;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.list.OptionsRowList;
+import net.minecraft.client.gui.components.OptionsList;
 
-public class ExtendedOptionsRowList extends OptionsRowList {
+public class ExtendedOptionsRowList extends OptionsList {
 
 	public ExtendedOptionsRowList(Minecraft mc, int width, int height, int topHeight, int bottomHeight, int itemHeight) {
 		super(mc, width, height, topHeight, bottomHeight, itemHeight);
 	}
 
 	@Override
-	protected void renderBackground(MatrixStack p_230433_1_) {
+	protected void renderBackground(PoseStack p_230433_1_) {
 		super.renderBackground(p_230433_1_);
 	}
 }

@@ -31,14 +31,14 @@ import anvilclient.anvilclient.util.utils.ItemUtils;
 import anvilclient.anvilclient.util.utils.LocalPlayerUtils;
 import anvilclient.anvilclient.util.utils.WorldUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AutoTool extends TogglableFeature {
@@ -121,7 +121,7 @@ public class AutoTool extends TogglableFeature {
 	}
 
 	private Slot getBestTool(BlockPos blockPos) {
-		ClientPlayerEntity localPlayer = LocalPlayerUtils.getLocalPlayer();
+		LocalPlayer localPlayer = LocalPlayerUtils.getLocalPlayer();
 		if (!WorldUtils.canPlaceBlocksAt(localPlayer, blockPos)
 				&& !WorldUtils.getWorld(localPlayer).isEmptyBlock(blockPos)) {
 			return LocalPlayerUtils
@@ -143,7 +143,7 @@ public class AutoTool extends TogglableFeature {
 	public void selectBestTool(BlockPos blockPos) {
 		if (isEnabled() && Minecraft.getInstance().gameMode.hasExperience()) {
 			Slot bestTool = getBestTool(blockPos);
-			ClientPlayerEntity localPlayer = LocalPlayerUtils.getLocalPlayer();
+			LocalPlayer localPlayer = LocalPlayerUtils.getLocalPlayer();
 			if (isOriginalTool) {
 				originalTool = LocalPlayerUtils.getSelectedSlot(localPlayer);
 			}
@@ -180,11 +180,11 @@ public class AutoTool extends TogglableFeature {
 		
 		private final String translationKey;
 		
-		private final ITextComponent translationTextComponent;
+		private final Component translationTextComponent;
 		
 		private SilkTouchMode() {
 			this.translationKey = "anvilclient.feature.autoTool.silkTouchMode." + this.toString().toLowerCase();
-			this.translationTextComponent = new TranslationTextComponent(translationKey);
+			this.translationTextComponent = new TranslatableComponent(translationKey);
 		}
 		
 		@Override
@@ -193,7 +193,7 @@ public class AutoTool extends TogglableFeature {
 		}
 
 		@Override
-		public ITextComponent getTranslationTextComponent() {
+		public Component getTranslationTextComponent() {
 			return translationTextComponent;
 		}
 	}

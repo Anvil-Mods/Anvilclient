@@ -16,15 +16,15 @@
  *******************************************************************************/
 package anvilclient.anvilclient.util.utils;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectUtils;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public class ItemUtils {
 	
@@ -39,7 +39,7 @@ public class ItemUtils {
 		return item.isEmpty() || !item.isDamageableItem();
 	}
 
-	public static double getDiggingSpeed(PlayerEntity player, ItemStack tool, BlockState blockState) {
+	public static double getDiggingSpeed(Player player, ItemStack tool, BlockState blockState) {
 		float destroySpeed = tool.getDestroySpeed(blockState);
 		if (destroySpeed > 1.0F) {
 			int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, tool);
@@ -48,13 +48,13 @@ public class ItemUtils {
 			}
 		}
 
-		if (EffectUtils.hasDigSpeed(player)) {
-			destroySpeed *= 1.0F + (float) (EffectUtils.getDigSpeedAmplification(player) + 1) * 0.2F;
+		if (MobEffectUtil.hasDigSpeed(player)) {
+			destroySpeed *= 1.0F + (float) (MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F;
 		}
 
-		if (player.hasEffect(Effects.DIG_SLOWDOWN)) {
+		if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
 			float f1;
-			switch (player.getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) {
+			switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
 			case 0:
 				f1 = 0.3F;
 				break;
@@ -83,7 +83,7 @@ public class ItemUtils {
 		return destroySpeed;
 	}
 
-	public static double getDiggingSpeedAt(PlayerEntity player, ItemStack tool, BlockPos blockPos) {
+	public static double getDiggingSpeedAt(Player player, ItemStack tool, BlockPos blockPos) {
 		return getDiggingSpeed(player, tool, player.level.getBlockState(blockPos));
 	}
 

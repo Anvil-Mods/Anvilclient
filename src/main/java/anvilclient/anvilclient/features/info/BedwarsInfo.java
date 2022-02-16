@@ -19,7 +19,7 @@ package anvilclient.anvilclient.features.info;
 import java.time.Instant;
 import java.util.Arrays;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
@@ -30,10 +30,10 @@ import anvilclient.anvilclient.util.ServerDetector.Server;
 import anvilclient.anvilclient.util.utils.TextUtils;
 import anvilclient.anvilclient.util.utils.TimeUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.DownloadTerrainScreen;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -60,7 +60,7 @@ public class BedwarsInfo extends TogglableFeature {
 
 	@SubscribeEvent
 	public void update(GuiOpenEvent event) {
-		if (inBedWars && event.getGui() instanceof DownloadTerrainScreen) {
+		if (inBedWars && event.getGui() instanceof ReceivingLevelScreen) {
 			onGameLeave();
 		}
 	}
@@ -80,7 +80,7 @@ public class BedwarsInfo extends TogglableFeature {
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
-	public void render(int width, int height, MatrixStack matrixStack, Minecraft mc, ClientPlayerEntity player) {
+	public void render(int width, int height, PoseStack matrixStack, Minecraft mc, LocalPlayer player) {
 		if (isEnabled() && inBedWars) {
 			long elapsedTime = Instant.now().toEpochMilli() - gameStartTime;
 			int currentHeight = 0;
@@ -91,7 +91,7 @@ public class BedwarsInfo extends TogglableFeature {
 				for (Stages stage : Stages.values()) {
 					long millis = stage.getMillisTo(elapsedTime) + 1000L;
 					if (millis >= 0) {
-						AbstractGui.drawString(matrixStack, mc.font,
+						GuiComponent.drawString(matrixStack, mc.font,
 								stage.getName() + ": " + TimeUtils.formatTimeMillis(millis), coordinatesX,
 								coordinatesY + currentHeight, TEXT_COLOR);
 						currentHeight += LINE_HEIGHT + 1;
@@ -103,7 +103,7 @@ public class BedwarsInfo extends TogglableFeature {
 
 	private boolean syncTime() {
 		for (Stages stage : Stages.values()) {
-			ITextComponent textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName() + " in ");
+			Component textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName() + " in ");
 			try {
 				if (textComponent != null) {
 					String stageTime = TextUtils.removeFormattingCodes(textComponent.getString());

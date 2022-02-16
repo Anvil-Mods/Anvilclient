@@ -18,7 +18,7 @@ package anvilclient.anvilclient.util.utils;
 
 import java.util.Random;
 
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class MathUtils {
 	
@@ -34,7 +34,7 @@ public class MathUtils {
 	
 	public static int normalizeInt(int value, int minold, int maxold, int min, int max, boolean clamp) {
 		if (clamp) {
-			value = MathHelper.clamp(value, minold, maxold);
+			value = Mth.clamp(value, minold, maxold);
 		}
 		return (max-min)/(maxold-minold)*(value-minold)+min;
 	}

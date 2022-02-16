@@ -23,9 +23,9 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.settings.ISetting;
 import anvilclient.anvilclient.settings.SettingRegister;
 import anvilclient.anvilclient.util.utils.SettingUtils;
-import net.minecraft.client.AbstractOption;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.settings.BooleanOption;
+import net.minecraft.client.Option;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.BooleanOption;
 
 public class FeatureGui extends ConfigScreen {
 
@@ -48,7 +48,7 @@ public class FeatureGui extends ConfigScreen {
 		
 		for (ISetting<?> setting : settingList.stream().filter((setting) -> !setting.getName().contains(".enabled"))
 				.toArray(ISetting<?>[]::new)) {
-			AbstractOption option = SettingUtils.getOptionForSetting(setting);
+			Option option = SettingUtils.getOptionForSetting(setting);
 			if (option != null) {
 				this.optionsRowList.addBig(option);
 			}

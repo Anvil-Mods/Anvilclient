@@ -16,8 +16,8 @@
  *******************************************************************************/
 package anvilclient.anvilclient.event;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.eventbus.api.Event;
 
 public class PlayerDamageBlockEvent extends Event {
