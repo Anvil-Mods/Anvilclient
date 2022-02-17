@@ -21,8 +21,9 @@ import org.lwjgl.glfw.GLFW;
 import anvilclient.anvilclient.AnvilClient;
 import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
+
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class Keybinds {
 	public static final KeyMapping openSettings = new KeyMapping("anvilclient.key.openSettings",

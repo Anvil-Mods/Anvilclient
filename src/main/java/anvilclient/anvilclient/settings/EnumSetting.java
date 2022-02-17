@@ -26,6 +26,15 @@ public class EnumSetting<T extends Enum<T> & SettingSuitableEnum> extends Abstra
 	public void setValue(Enum<T> newValue) {
 		super.setValue((T) newValue);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void setValueRaw(Object newValue) {
+		if (this.value.getClass().equals(newValue.getClass())) {
+			super.setValue((T) newValue);
+		} else {
+			throw new IllegalStateException();
+		}
+	}
 
 	@Override
 	public String valueToString() {
@@ -35,6 +44,10 @@ public class EnumSetting<T extends Enum<T> & SettingSuitableEnum> extends Abstra
 	@Override
 	public T stringToValue(String string) {
 		return Enum.valueOf(this.value.getDeclaringClass(), string);
+	}
+	
+	public T[] getValues() {
+		return this.value.getDeclaringClass().getEnumConstants();
 	}
 
 }

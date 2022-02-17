@@ -47,10 +47,10 @@ public class MainGuiPlain extends ConfigScreen {
 
 	@Override
 	protected void addButtons() {
-		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET,
+		this.addRenderableWidget(new Button(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET,
 				BUTTON_WIDTH, BUTTON_HEIGHT, new TranslatableComponent(SortType.PLAIN.getTranslationKey()),
 				button -> this.changeScreen()));
-		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
+		this.addRenderableWidget(new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
 				this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT,
 				new TranslatableComponent("gui.done"), button -> this.onClose()));
 	}

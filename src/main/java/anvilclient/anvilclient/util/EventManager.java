@@ -17,8 +17,8 @@
 package anvilclient.anvilclient.util;
 
 import anvilclient.anvilclient.gui.hud.Hud;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.ScreenOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,8 +50,8 @@ public class EventManager {
     }
 	
 	@SubscribeEvent
-	public void onGuiClose(GuiOpenEvent event) {
-		if (event.getGui() == null) {
+	public void onGuiClose(ScreenOpenEvent event) {
+		if (event.getScreen() == null) {
 			hud.updateScaledWidthAndHeight();
 		}
 	}

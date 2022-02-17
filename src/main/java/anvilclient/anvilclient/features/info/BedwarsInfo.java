@@ -30,12 +30,12 @@ import anvilclient.anvilclient.util.ServerDetector.Server;
 import anvilclient.anvilclient.util.utils.TextUtils;
 import anvilclient.anvilclient.util.utils.TimeUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.ScreenOpenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BedwarsInfo extends TogglableFeature {
@@ -59,8 +59,8 @@ public class BedwarsInfo extends TogglableFeature {
 	private long gameStartTime = Instant.now().toEpochMilli();
 
 	@SubscribeEvent
-	public void update(GuiOpenEvent event) {
-		if (inBedWars && event.getGui() instanceof ReceivingLevelScreen) {
+	public void update(ScreenOpenEvent event) {
+		if (inBedWars && event.getScreen() instanceof ReceivingLevelScreen) {
 			onGameLeave();
 		}
 	}

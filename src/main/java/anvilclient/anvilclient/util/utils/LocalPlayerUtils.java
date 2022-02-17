@@ -36,7 +36,7 @@ public class LocalPlayerUtils {
 	}
 
 	public static Inventory getPlayerInventory(LocalPlayer localPlayer) {
-		return localPlayer.inventory;
+		return localPlayer.getInventory();
 	}
 
 	public static InventoryMenu getPlayerContainer(LocalPlayer localPlayer) {

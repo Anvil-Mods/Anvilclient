@@ -48,7 +48,7 @@ public class Hud extends GuiComponent {
 
 	public void render(RenderGameOverlayEvent.Post event) {
 		LocalPlayer player = mc.player;
-		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR && player != null) {
+		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.TEXT && player != null) {
 			Features.COORDINATES.render(width, height, matrixStack, mc, player);
 			Features.BEDWARS_INFO.render(width, height, matrixStack, mc, player);
 			Features.FPS_DISPLAY.render(width, height, matrixStack, mc);

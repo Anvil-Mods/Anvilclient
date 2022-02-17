@@ -23,9 +23,9 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.settings.ISetting;
 import anvilclient.anvilclient.settings.SettingRegister;
 import anvilclient.anvilclient.util.utils.SettingUtils;
+import net.minecraft.client.CycleOption;
 import net.minecraft.client.Option;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.BooleanOption;
 
 public class FeatureGui extends ConfigScreen {
 
@@ -41,9 +41,9 @@ public class FeatureGui extends ConfigScreen {
 		List<ISetting<?>> settingList = SettingRegister.SETTING_LIST_FOR_OPTIONS.get(feature);
 		
 		if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
-			this.optionsRowList.addBig(new BooleanOption("anvilclient.feature." + feature.getName() + ".toggle",
+			this.optionsRowList.addBig(CycleOption.createOnOff("anvilclient.feature." + feature.getName() + ".toggle",
 					unused -> ((TogglableFeature) feature).isEnabled(),
-					(unused, newValue) -> ((TogglableFeature) feature).setEnabled(newValue)));
+					(unused, unused2, newValue) -> ((TogglableFeature) feature).setEnabled(newValue)));
 		}
 		
 		for (ISetting<?> setting : settingList.stream().filter((setting) -> !setting.getName().contains(".enabled"))

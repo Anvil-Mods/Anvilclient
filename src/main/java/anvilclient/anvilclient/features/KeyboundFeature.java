@@ -22,10 +22,11 @@ import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.settings.Setting;
 import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
+
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public abstract class KeyboundFeature extends Feature {
 	

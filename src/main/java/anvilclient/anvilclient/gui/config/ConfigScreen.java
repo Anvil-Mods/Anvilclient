@@ -60,13 +60,13 @@ public abstract class ConfigScreen extends Screen {
 
 		this.addOptions();
 
-		this.children.add(this.optionsRowList);
+		this.addWidget(this.optionsRowList);
 
 		this.addButtons();
 	}
 	
 	protected void addButtons() {
-		this.addButton(new Button((this.width - BUTTON_WIDTH) / 2, this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH,
+		this.addRenderableWidget(new Button((this.width - BUTTON_WIDTH) / 2, this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH,
 				BUTTON_HEIGHT, new TranslatableComponent("gui.done"), button -> this.onClose()));
 	}
 

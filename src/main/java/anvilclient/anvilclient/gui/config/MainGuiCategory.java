@@ -39,12 +39,12 @@ public class MainGuiCategory extends ConfigScreen {
 
 	@Override
 	protected void addButtons() {
-		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET,
+		this.addRenderableWidget((new Button(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET,
 				BUTTON_WIDTH, BUTTON_HEIGHT, new TranslatableComponent(SortType.CATEGORY.getTranslationKey()),
-				button -> this.changeScreen()));
-		this.addButton(new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
+				button -> this.changeScreen())));
+		this.addRenderableWidget((new Button(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
 				this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT,
-				new TranslatableComponent("gui.done"), button -> this.onClose()));
+				new TranslatableComponent("gui.done"), button -> this.onClose())));
 	}
 
 	private void changeScreen() {

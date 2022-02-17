@@ -17,8 +17,8 @@
 package anvilclient.anvilclient.util.utils;
 
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 
 public class ScreenUtils {
@@ -34,8 +34,8 @@ public class ScreenUtils {
 	}
 	
 	public static void registerForgeConfig() {
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
-				() -> (mc, screen) -> getMainConfigGui(screen)));
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class,
+				() -> new ConfigGuiFactory((mc, screen) -> getMainConfigGui(screen))));
 	}
 
 }
