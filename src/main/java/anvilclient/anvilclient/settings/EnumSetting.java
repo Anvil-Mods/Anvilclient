@@ -29,10 +29,10 @@ public class EnumSetting<T extends Enum<T> & SettingSuitableEnum> extends Abstra
 	
 	@SuppressWarnings("unchecked")
 	public void setValueRaw(Object newValue) {
-		if (this.value.getClass().equals(newValue.getClass())) {
+		if (newValue != null && this.value.getClass().equals(newValue.getClass())) {
 			super.setValue((T) newValue);
 		} else {
-			throw new IllegalStateException();
+			throw new IllegalArgumentException();
 		}
 	}
 
