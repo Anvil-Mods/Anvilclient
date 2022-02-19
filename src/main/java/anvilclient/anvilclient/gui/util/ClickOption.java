@@ -22,7 +22,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.TranslatableComponent;
 
-public class ClickOption extends Option implements Button.OnPress{
+public class ClickOption extends Option {
 	
 	protected String translationKey;
 	protected Button.OnPress pressedAction;
@@ -36,9 +36,5 @@ public class ClickOption extends Option implements Button.OnPress{
 	@Override
 	public AbstractWidget createButton(Options options, int xIn, int yIn, int widthIn) {
 		return new Button(xIn, yIn, widthIn, 20, new TranslatableComponent(translationKey), pressedAction);
-	}
-
-	@Override
-	public void onPress(Button p_onPress_1_) {
 	}
 }

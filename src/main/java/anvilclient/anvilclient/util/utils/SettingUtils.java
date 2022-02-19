@@ -47,21 +47,12 @@ public class SettingUtils {
 
 		} else if (setting instanceof EnumSetting<?> enumSetting) {
 			option = CycleOption.create(translationKey, enumSetting.getValues(), (value) -> {
-				return new TranslatableComponent(enumSetting.getValue().getTranslationKey());
+				return new TranslatableComponent(value.getTranslationKey());
 			}, (options) -> {
 				return enumSetting.getValue();
 			}, (options, option1, newValue) -> {
 				enumSetting.setValueRaw(newValue);
 			});
-			// (unused, newValue) -> enumSetting.setValue(
-			// enumSetting.getValue().getClass().getEnumConstants()[(enumSetting.getValue().ordinal()
-			// + newValue)
-			// % enumSetting.getValue().getClass().getEnumConstants().length]),
-			// (unused, unused2) -> new
-			// TextComponent(I18n.get("anvilclient.feature." +
-			// setting.getName())
-			// + ": " + I18n.get(((SettingSuitableEnum)
-			// setting.getValue()).getTranslationKey())));
 
 		} else if (setting instanceof NumberSetting<?> numberSetting) {
 			option = new ProgressOption(translationKey,
