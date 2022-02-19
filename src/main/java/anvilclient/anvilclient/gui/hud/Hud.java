@@ -33,7 +33,7 @@ public class Hud extends GuiComponent {
 		return INSTANCE;
 	}
 
-	private final PoseStack matrixStack;
+	private final PoseStack poseStack;
 
 	private final Minecraft mc;
 
@@ -42,17 +42,17 @@ public class Hud extends GuiComponent {
 
 	private Hud() {
 		this.mc = Minecraft.getInstance();
-		this.matrixStack = new PoseStack();
+		this.poseStack = new PoseStack();
 		updateScaledWidthAndHeight();
 	}
 
 	public void render(RenderGameOverlayEvent.Post event) {
 		LocalPlayer player = mc.player;
 		if (shouldRender() && event.getType() == RenderGameOverlayEvent.ElementType.TEXT && player != null) {
-			Features.COORDINATES.render(width, height, matrixStack, mc, player);
-			Features.BEDWARS_INFO.render(width, height, matrixStack, mc, player);
-			Features.FPS_DISPLAY.render(width, height, matrixStack, mc);
-			Features.CPS_DISPLAY.render(width, height, matrixStack, mc);
+			Features.COORDINATES.render(width, height, poseStack, mc, player);
+			Features.BEDWARS_INFO.render(width, height, poseStack, mc, player);
+			Features.FPS_DISPLAY.render(width, height, poseStack, mc);
+			Features.CPS_DISPLAY.render(width, height, poseStack, mc);
 		}
 	}
 

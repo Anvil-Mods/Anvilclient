@@ -39,16 +39,16 @@ public class Coordinates extends TogglableFeature {
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
-	public void render(int width, int height, PoseStack matrixStack, Minecraft mc, LocalPlayer player) {
+	public void render(int width, int height, PoseStack poseStack, Minecraft mc, LocalPlayer player) {
 		if (isEnabled()) {
 			int currentHeight = 0;
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.75);
-			GuiComponent.drawString(matrixStack, mc.font, "X: " + player.getX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, mc.font, "X: " + player.getX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			GuiComponent.drawString(matrixStack, mc.font, "Y: " + player.getY(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, mc.font, "Y: " + player.getY(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			GuiComponent.drawString(matrixStack, mc.font, "Z: " + player.getZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, mc.font, "Z: " + player.getZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 		}
 	}
 }

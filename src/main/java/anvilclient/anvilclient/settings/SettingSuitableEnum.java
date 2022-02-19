@@ -16,16 +16,16 @@
  *******************************************************************************/
 package anvilclient.anvilclient.settings;
 
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public interface SettingSuitableEnum {
 	
 	String getTranslationKey();
 	
-	Component getTranslationTextComponent();
+	TranslatableComponent getTranslatableComponent();
 	
 	default String getTranslatedName() {
-		return getTranslationTextComponent().getString();
+		return getTranslatableComponent().getString();
 	}
 
 }

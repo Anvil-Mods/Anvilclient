@@ -30,7 +30,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 @Mixin(MultiPlayerGameMode.class)
-public class MixinPlayerController {
+public class MixinMultiPlayerGameMode {
 	@Inject(at = @At("HEAD"), method = "continueDestroyBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z")
 	private void continueDestroyBlock(BlockPos posBlock, Direction directionFacing, CallbackInfoReturnable<Boolean> callback) {
 		EventManager.FORGE_EVENT_BUS.post(new PlayerDamageBlockEvent(posBlock, directionFacing));

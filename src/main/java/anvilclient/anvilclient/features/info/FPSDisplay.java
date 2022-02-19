@@ -39,14 +39,14 @@ public class FPSDisplay extends TogglableFeature {
 	
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	
-	public void render(int width, int height, PoseStack matrixStack, Minecraft mc) {
+	public void render(int width, int height, PoseStack poseStack, Minecraft mc) {
 		if (isEnabled()) {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25);
 			int fps;
 			try {
 				fps = ((IMixinMinecraft) mc).getFPS();
-				GuiComponent.drawString(matrixStack, mc.font, "FPS: " + fps, coordinatesX, coordinatesY,
+				GuiComponent.drawString(poseStack, mc.font, "FPS: " + fps, coordinatesX, coordinatesY,
 						TEXT_COLOR);
 			} catch (IllegalArgumentException e) {
 				AnvilClient.LOGGER.catching(e);

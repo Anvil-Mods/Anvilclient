@@ -32,7 +32,7 @@ public class MainGuiCategory extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		for (FeatureCategory category : FeatureCategory.values()) {
-			this.optionsRowList.addBig(new ClickOption(category.getTranslationKey(),
+			this.optionsList.addBig(new ClickOption(category.getTranslationKey(),
 					button -> Minecraft.getInstance().setScreen(new CategoryGui(category, this))));
 		}
 	}

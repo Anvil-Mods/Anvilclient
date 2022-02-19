@@ -32,13 +32,12 @@ import anvilclient.anvilclient.util.utils.LocalPlayerUtils;
 import anvilclient.anvilclient.util.utils.WorldUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AutoTool extends TogglableFeature {
@@ -180,11 +179,11 @@ public class AutoTool extends TogglableFeature {
 		
 		private final String translationKey;
 		
-		private final Component translationTextComponent;
+		private final TranslatableComponent translatableComponent;
 		
 		private SilkTouchMode() {
 			this.translationKey = "anvilclient.feature.autoTool.silkTouchMode." + this.toString().toLowerCase();
-			this.translationTextComponent = new TranslatableComponent(translationKey);
+			this.translatableComponent = new TranslatableComponent(translationKey);
 		}
 		
 		@Override
@@ -193,8 +192,8 @@ public class AutoTool extends TogglableFeature {
 		}
 
 		@Override
-		public Component getTranslationTextComponent() {
-			return translationTextComponent;
+		public TranslatableComponent getTranslatableComponent() {
+			return translatableComponent;
 		}
 	}
 }

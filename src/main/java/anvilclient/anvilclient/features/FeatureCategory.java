@@ -26,11 +26,11 @@ public enum FeatureCategory implements SettingSuitableEnum{
 	
 	private final String translationKey;
 	
-	private final TranslatableComponent translationTextComponent;
+	private final TranslatableComponent translatableComponent;
 	
 	private FeatureCategory() {
 		this.translationKey = "anvilclient.featureCategory." + this.toString().toLowerCase();
-		this.translationTextComponent = new TranslatableComponent(translationKey);
+		this.translatableComponent = new TranslatableComponent(translationKey);
 	}
 	
 	@Override
@@ -39,13 +39,13 @@ public enum FeatureCategory implements SettingSuitableEnum{
 	}
 
 	@Override
-	public TranslatableComponent getTranslationTextComponent() {
-		return translationTextComponent;
+	public TranslatableComponent getTranslatableComponent() {
+		return translatableComponent;
 	}
 	
 	@Override
 	public String getTranslatedName() {
-		return translationTextComponent.getString();
+		return translatableComponent.getString();
 	}
 
 }

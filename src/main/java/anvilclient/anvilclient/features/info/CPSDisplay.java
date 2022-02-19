@@ -33,7 +33,6 @@ import anvilclient.anvilclient.settings.SettingSuitableEnum;
 import anvilclient.anvilclient.util.utils.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,12 +68,12 @@ public class CPSDisplay extends TogglableFeature {
 		}
 	}
 	
-	public void render(int width, int height, PoseStack matrixStack, Minecraft mc) {
+	public void render(int width, int height, PoseStack poseStack, Minecraft mc) {
 		if (isEnabled()) {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25) + 11;
 			double cps = ((double)clicks.size())/((double)measuringSpan.getValue());
-			GuiComponent.drawString(matrixStack, mc.font, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, mc.font, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
 			long lgt = Instant.now().toEpochMilli() - 1000*measuringSpan.getValue();
 			List<Long> clicks2 = new ArrayList<>(clicks);
 			for (Long click : clicks2) {
@@ -92,13 +91,13 @@ public class CPSDisplay extends TogglableFeature {
 		MIDDLE(GLFW.GLFW_MOUSE_BUTTON_MIDDLE);
 		
 		private final String translationKey;
-		private final Component translationTextComponent;
+		private final TranslatableComponent translatableComponent;
 		
 		private final int button;
 
 		private CPSMouseButton(int button) {
 			this.translationKey = "key.mouse." + this.toString().toLowerCase();
-			this.translationTextComponent = new TranslatableComponent(translationKey);
+			this.translatableComponent = new TranslatableComponent(translationKey);
 			this.button = button;
 		}
 
@@ -108,8 +107,8 @@ public class CPSDisplay extends TogglableFeature {
 		}
 
 		@Override
-		public Component getTranslationTextComponent() {
-			return translationTextComponent;
+		public TranslatableComponent getTranslatableComponent() {
+			return translatableComponent;
 		}
 		
 		public int getButton() {

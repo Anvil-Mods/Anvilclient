@@ -80,7 +80,7 @@ public class BedwarsInfo extends TogglableFeature {
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
-	public void render(int width, int height, PoseStack matrixStack, Minecraft mc, LocalPlayer player) {
+	public void render(int width, int height, PoseStack poseStack, Minecraft mc, LocalPlayer player) {
 		if (isEnabled() && inBedWars) {
 			long elapsedTime = Instant.now().toEpochMilli() - gameStartTime;
 			int currentHeight = 0;
@@ -91,7 +91,7 @@ public class BedwarsInfo extends TogglableFeature {
 				for (Stages stage : Stages.values()) {
 					long millis = stage.getMillisTo(elapsedTime) + 1000L;
 					if (millis >= 0) {
-						GuiComponent.drawString(matrixStack, mc.font,
+						GuiComponent.drawString(poseStack, mc.font,
 								stage.getName() + ": " + TimeUtils.formatTimeMillis(millis), coordinatesX,
 								coordinatesY + currentHeight, TEXT_COLOR);
 						currentHeight += LINE_HEIGHT + 1;

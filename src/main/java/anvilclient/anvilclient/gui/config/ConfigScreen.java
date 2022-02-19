@@ -18,15 +18,14 @@ package anvilclient.anvilclient.gui.config;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import anvilclient.anvilclient.gui.util.ExtendedOptionsRowList;
+import anvilclient.anvilclient.gui.util.ExtendedOptionsList;
 import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IgnoreAsOption;
 import anvilclient.anvilclient.settings.Setting;
 import anvilclient.anvilclient.settings.SettingSuitableEnum;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public abstract class ConfigScreen extends Screen {
@@ -40,7 +39,7 @@ public abstract class ConfigScreen extends Screen {
 	protected static final int BUTTON_HEIGHT = 20;
 	protected static final int DONE_BUTTON_TOP_OFFSET = 26;
 
-	protected ExtendedOptionsRowList optionsRowList;
+	protected ExtendedOptionsList optionsList;
 
 	protected Screen parentScreen;
 
@@ -55,12 +54,12 @@ public abstract class ConfigScreen extends Screen {
 
 	@Override
 	protected void init() {
-		this.optionsRowList = new ExtendedOptionsRowList(this.minecraft, this.width, this.height,
+		this.optionsList = new ExtendedOptionsList(this.minecraft, this.width, this.height,
 				OPTIONS_LIST_TOP_HEIGHT, this.height - OPTIONS_LIST_BOTTOM_OFFSET, OPTIONS_LIST_ITEM_HEIGHT);
 
 		this.addOptions();
 
-		this.addWidget(this.optionsRowList);
+		this.addWidget(this.optionsList);
 
 		this.addButtons();
 	}
@@ -77,11 +76,11 @@ public abstract class ConfigScreen extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(matrixStack);
-		this.optionsRowList.render(matrixStack, mouseX, mouseY, partialTicks);
-		GuiComponent.drawCenteredString(matrixStack, this.font, this.title, this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground(poseStack);
+		this.optionsList.render(poseStack, mouseX, mouseY, partialTicks);
+		GuiComponent.drawCenteredString(poseStack, this.font, this.title, this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
+		super.render(poseStack, mouseX, mouseY, partialTicks);
 	}
 
 	@Override
@@ -102,11 +101,11 @@ public abstract class ConfigScreen extends Screen {
 		CATEGORY;
 		
 		private final String translationKey;
-		private final Component translationTextComponent;
+		private final TranslatableComponent translatableComponent;
 
 		private SortType() {
 			this.translationKey = "anvilclient.configGui.sortType." + this.toString().toLowerCase();
-			this.translationTextComponent = new TranslatableComponent(translationKey);
+			this.translatableComponent = new TranslatableComponent(translationKey);
 		}
 
 		@Override
@@ -115,8 +114,8 @@ public abstract class ConfigScreen extends Screen {
 		}
 
 		@Override
-		public Component getTranslationTextComponent() {
-			return translationTextComponent;
+		public TranslatableComponent getTranslatableComponent() {
+			return translatableComponent;
 		}
 		
 	}
