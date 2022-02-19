@@ -41,9 +41,9 @@ public class CategoryGui extends ConfigScreen {
 		List<Feature> featureList = Features.FEATURE_LIST_BY_CATEGORY.get(category);
 		
 		for (Feature feature : featureList) {
-			if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
+			if (feature instanceof TogglableFeature togglableFeature) {
 				this.optionsList
-						.addSmall(SettingUtils.getOptionListForTogglableFeature((TogglableFeature) feature, this));
+						.addSmall(SettingUtils.getOptionListForTogglableFeature(togglableFeature, this));
 			} else {
 				this.optionsList.addBig(new ClickOption("anvilclient.feature." + feature.getName(),
 						button -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));

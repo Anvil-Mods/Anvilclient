@@ -40,10 +40,10 @@ public class FeatureGui extends ConfigScreen {
 	protected void addOptions() {
 		List<ISetting<?>> settingList = SettingRegister.SETTING_LIST_FOR_OPTIONS.get(feature);
 		
-		if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
+		if (feature instanceof TogglableFeature togglableFeature) {
 			this.optionsList.addBig(CycleOption.createOnOff("anvilclient.feature." + feature.getName() + ".toggle",
-					unused -> ((TogglableFeature) feature).isEnabled(),
-					(unused, unused2, newValue) -> ((TogglableFeature) feature).setEnabled(newValue)));
+					unused -> togglableFeature.isEnabled(),
+					(unused, unused2, newValue) -> togglableFeature.setEnabled(newValue)));
 		}
 		
 		for (ISetting<?> setting : settingList.stream().filter((setting) -> !setting.getName().contains(".enabled"))

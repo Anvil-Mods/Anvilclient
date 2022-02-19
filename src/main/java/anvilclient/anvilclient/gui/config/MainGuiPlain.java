@@ -35,9 +35,9 @@ public class MainGuiPlain extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		for (Feature feature : Features.FEATURE_LIST) {
-			if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
+			if (feature instanceof TogglableFeature togglableFeature) {
 				this.optionsList
-						.addSmall(SettingUtils.getOptionListForTogglableFeature((TogglableFeature) feature, this));
+						.addSmall(SettingUtils.getOptionListForTogglableFeature(togglableFeature, this));
 			} else {
 				this.optionsList.addBig(new ClickOption("anvilclient.feature." + feature.getName(),
 						button -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
