@@ -79,9 +79,9 @@ public abstract class AbstractSetting<T> implements ISetting<T> {
 	@Override
 	public void loadValue(String string) {
 		try {
-			this.value = this.stringToValue(string);
+			this.setValue(this.stringToValue(string));
 		} catch (Exception e) {
-			this.value = this.defaultValue;
+			this.setValue(this.defaultValue);
 			e.printStackTrace();
 		}
 	}

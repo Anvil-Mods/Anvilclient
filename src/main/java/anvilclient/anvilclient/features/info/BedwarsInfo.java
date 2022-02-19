@@ -27,18 +27,20 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.util.ScoreboardReader;
 import anvilclient.anvilclient.util.ServerDetector;
 import anvilclient.anvilclient.util.ServerDetector.Server;
+import anvilclient.anvilclient.util.utils.HudUtils;
 import anvilclient.anvilclient.util.utils.TextUtils;
 import anvilclient.anvilclient.util.utils.TimeUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.ScreenOpenEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class BedwarsInfo extends TogglableFeature {
+public class BedwarsInfo extends TogglableFeature implements IIngameOverlay {
 
 	@Override
 	public String getName() {
@@ -79,9 +81,16 @@ public class BedwarsInfo extends TogglableFeature {
 
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
+	
+	@Override
+	public void register() {
+		super.register();
+		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "Bedwars Info", this);
+	}
 
-	public void render(int width, int height, PoseStack poseStack, Minecraft mc, LocalPlayer player) {
-		if (isEnabled() && inBedWars) {
+	@Override
+	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+		if (isEnabled() && inBedWars && HudUtils.shouldRender()) {
 			long elapsedTime = Instant.now().toEpochMilli() - gameStartTime;
 			int currentHeight = 0;
 			int coordinatesX = (int) (width * 0.01);
@@ -91,7 +100,7 @@ public class BedwarsInfo extends TogglableFeature {
 				for (Stages stage : Stages.values()) {
 					long millis = stage.getMillisTo(elapsedTime) + 1000L;
 					if (millis >= 0) {
-						GuiComponent.drawString(poseStack, mc.font,
+						GuiComponent.drawString(poseStack, HudUtils.getFont(),
 								stage.getName() + ": " + TimeUtils.formatTimeMillis(millis), coordinatesX,
 								coordinatesY + currentHeight, TEXT_COLOR);
 						currentHeight += LINE_HEIGHT + 1;

@@ -16,7 +16,7 @@
  *******************************************************************************/
 package anvilclient.anvilclient.features;
 
-import anvilclient.anvilclient.util.EventManager;
+import anvilclient.anvilclient.AnvilClient;
 
 public abstract class Feature {
 	
@@ -25,7 +25,7 @@ public abstract class Feature {
 	public abstract FeatureCategory getCategory();
 
 	public void register() {
-		EventManager.FORGE_EVENT_BUS.register(this);
+		AnvilClient.FORGE_EVENT_BUS.register(this);
 	}
 
 }

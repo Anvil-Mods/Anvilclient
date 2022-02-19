@@ -23,11 +23,11 @@ import org.apache.logging.log4j.Logger;
 import anvilclient.anvilclient.features.Features;
 import anvilclient.anvilclient.settings.ConfigManager;
 import anvilclient.anvilclient.settings.SettingRegister;
-import anvilclient.anvilclient.util.EventManager;
 import anvilclient.anvilclient.util.Keybinds;
 import anvilclient.anvilclient.util.ServerDetector;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -43,9 +43,12 @@ public class AnvilClient {
 	public static final String MOD_ID = "anvilclient";
 	public static final String KEY_CATEGORY = "anvilclient.key.categories.anvilclient";
 
+	public static final IEventBus FORGE_EVENT_BUS = MinecraftForge.EVENT_BUS;
+	public static final IEventBus MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
+
 	public AnvilClient() {
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+		MOD_EVENT_BUS.addListener(this::setup);
+		MOD_EVENT_BUS.addListener(this::doClientStuff);
 
 		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
 				() -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
@@ -53,7 +56,7 @@ public class AnvilClient {
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 				() -> () -> anvilclient.anvilclient.util.utils.ScreenUtils.registerForgeConfig());
 
-		MinecraftForge.EVENT_BUS.register(this);
+		FORGE_EVENT_BUS.register(this);
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
@@ -61,8 +64,7 @@ public class AnvilClient {
 
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		Keybinds.register();
-		EventManager.getInstance().registerOnEventBus();
-		EventManager.FORGE_EVENT_BUS.register(ServerDetector.getInstance());
+		FORGE_EVENT_BUS.register(ServerDetector.getInstance());
 		Features.init();
 		Features.register();
 		SettingRegister.registerFeatures();

@@ -78,4 +78,16 @@ public class LocalPlayerUtils {
 	public static void setSelectedSlot(LocalPlayer localPlayer, Slot slot) {
 		setSelectedIndex(localPlayer, slot.getSlotIndex());
 	}
+
+	public static double getX() {
+		return getLocalPlayer().getX();
+	}
+
+	public static double getY() {
+		return getLocalPlayer().getY();
+	}
+
+	public static double getZ() {
+		return getLocalPlayer().getZ();
+	}
 }

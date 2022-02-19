@@ -22,10 +22,14 @@ import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.mixin.IMixinMinecraft;
+import anvilclient.anvilclient.util.utils.HudUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 
-public class FPSDisplay extends TogglableFeature {
+public class FPSDisplay extends TogglableFeature implements IIngameOverlay {
 
 	@Override
 	public String getName() {
@@ -39,14 +43,21 @@ public class FPSDisplay extends TogglableFeature {
 	
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	
-	public void render(int width, int height, PoseStack poseStack, Minecraft mc) {
-		if (isEnabled()) {
+	@Override
+	public void register() {
+		super.register();
+		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "FPS Display", this);
+	}
+
+	@Override
+	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+		if (isEnabled() && HudUtils.shouldRender()) {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25);
 			int fps;
 			try {
-				fps = ((IMixinMinecraft) mc).getFPS();
-				GuiComponent.drawString(poseStack, mc.font, "FPS: " + fps, coordinatesX, coordinatesY,
+				fps = ((IMixinMinecraft) Minecraft.getInstance()).getFPS();
+				GuiComponent.drawString(poseStack, HudUtils.getFont(), "FPS: " + fps, coordinatesX, coordinatesY,
 						TEXT_COLOR);
 			} catch (IllegalArgumentException e) {
 				AnvilClient.LOGGER.catching(e);

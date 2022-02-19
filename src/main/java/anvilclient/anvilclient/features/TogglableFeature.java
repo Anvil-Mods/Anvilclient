@@ -29,8 +29,8 @@ public abstract class TogglableFeature extends KeyboundFeature {
 		this.enabled.setValue(newEnabled);
 	}
 	
-	public Boolean isEnabled() {
-		return this.enabled.getValue();
+	public boolean isEnabled() {
+		return this.enabled.getValue().booleanValue();
 	}
 	
 	public void toggleEnabled() {

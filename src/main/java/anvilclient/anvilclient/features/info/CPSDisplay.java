@@ -30,14 +30,17 @@ import anvilclient.anvilclient.settings.EnumSetting;
 import anvilclient.anvilclient.settings.IntegerSetting;
 import anvilclient.anvilclient.settings.Setting;
 import anvilclient.anvilclient.settings.SettingSuitableEnum;
+import anvilclient.anvilclient.util.utils.HudUtils;
 import anvilclient.anvilclient.util.utils.MathUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class CPSDisplay extends TogglableFeature {
+public class CPSDisplay extends TogglableFeature implements IIngameOverlay {
 	
 	@Override
 	public String getName() {
@@ -50,8 +53,6 @@ public class CPSDisplay extends TogglableFeature {
 	}
 	
 	private List<Long> clicks = new ArrayList<>();
-	
-	private static final int TEXT_COLOR = 0xFFFFFF;
 	
 	@Setting
 	public final EnumSetting<CPSMouseButton> mouseButton = new EnumSetting<CPSDisplay.CPSMouseButton>(getName() + ".mouseButton", "", CPSDisplay.CPSMouseButton.LEFT);
@@ -68,12 +69,22 @@ public class CPSDisplay extends TogglableFeature {
 		}
 	}
 	
-	public void render(int width, int height, PoseStack poseStack, Minecraft mc) {
-		if (isEnabled()) {
+	private static final int TEXT_COLOR = 0xFFFFFF;
+
+	@Override
+	public void register() {
+		super.register();
+		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "CPS Display", this);
+	}
+	
+	@Override
+	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+		if (isEnabled() && HudUtils.shouldRender()) {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25) + 11;
 			double cps = ((double)clicks.size())/((double)measuringSpan.getValue());
-			GuiComponent.drawString(poseStack, mc.font, "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
+			GuiComponent.drawString(poseStack,
+					HudUtils.getFont(), "CPS: " + MathUtils.trimDouble(cps, 2), coordinatesX, coordinatesY, TEXT_COLOR);
 			long lgt = Instant.now().toEpochMilli() - 1000*measuringSpan.getValue();
 			List<Long> clicks2 = new ArrayList<>(clicks);
 			for (Long click : clicks2) {
@@ -84,7 +95,7 @@ public class CPSDisplay extends TogglableFeature {
 		}
 	}
 
-	
+
 	public enum CPSMouseButton implements SettingSuitableEnum {
 		LEFT(GLFW.GLFW_MOUSE_BUTTON_LEFT),
 		RIGHT(GLFW.GLFW_MOUSE_BUTTON_RIGHT),

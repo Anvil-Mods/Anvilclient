@@ -22,22 +22,22 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.event.PlayerDamageBlockEvent;
 import anvilclient.anvilclient.event.PlayerResetBreakingBlockEvent;
-import anvilclient.anvilclient.util.EventManager;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 
 @Mixin(MultiPlayerGameMode.class)
 public class MixinMultiPlayerGameMode {
 	@Inject(at = @At("HEAD"), method = "continueDestroyBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z")
 	private void continueDestroyBlock(BlockPos posBlock, Direction directionFacing, CallbackInfoReturnable<Boolean> callback) {
-		EventManager.FORGE_EVENT_BUS.post(new PlayerDamageBlockEvent(posBlock, directionFacing));
+		AnvilClient.FORGE_EVENT_BUS.post(new PlayerDamageBlockEvent(posBlock, directionFacing));
 	}
 	
 	@Inject(at = @At("HEAD"), method = "stopDestroyBlock")
 	private void stopDestroyBlock(CallbackInfo callback) {
-		EventManager.FORGE_EVENT_BUS.post(new PlayerResetBreakingBlockEvent());
+		AnvilClient.FORGE_EVENT_BUS.post(new PlayerResetBreakingBlockEvent());
 	}
 }

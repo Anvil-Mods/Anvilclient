@@ -20,11 +20,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import anvilclient.anvilclient.features.FeatureCategory;
 import anvilclient.anvilclient.features.TogglableFeature;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
+import anvilclient.anvilclient.util.utils.HudUtils;
+import anvilclient.anvilclient.util.utils.LocalPlayerUtils;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 
-public class Coordinates extends TogglableFeature {
+public class Coordinates extends TogglableFeature implements IIngameOverlay {
 
 	@Override
 	public String getName() {
@@ -39,16 +43,24 @@ public class Coordinates extends TogglableFeature {
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
-	public void render(int width, int height, PoseStack poseStack, Minecraft mc, LocalPlayer player) {
-		if (isEnabled()) {
+	@Override
+	public void register() {
+		super.register();
+		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "Coordinates", this);
+	}
+
+	@Override
+	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+		if (isEnabled() && HudUtils.shouldRender()) {
 			int currentHeight = 0;
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.75);
-			GuiComponent.drawString(poseStack, mc.font, "X: " + player.getX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			Font font = HudUtils.getFont();
+			GuiComponent.drawString(poseStack, font, "X: " + LocalPlayerUtils.getX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			GuiComponent.drawString(poseStack, mc.font, "Y: " + player.getY(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, font, "Y: " + LocalPlayerUtils.getY(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			GuiComponent.drawString(poseStack, mc.font, "Z: " + player.getZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, font, "Z: " + LocalPlayerUtils.getZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
 		}
 	}
 }
