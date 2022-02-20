@@ -1,18 +1,17 @@
 /*******************************************************************************
- * Copyright (C) 2021  Anvilclient and Contributors
+ * Copyright (C) 2021 Anvil-Mods
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
 package anvilclient.anvilclient.settings;
 
@@ -41,7 +40,8 @@ public class CharacterSetting extends AbstractSetting<Character> implements Char
 		if (start == 0 && end == 1) {
 			return getValue().toString();
 		} else {
-			throw new IndexOutOfBoundsException("Cannot copy sequence index " + start + " to " + end + "; must be a range between 0 and 1");
+			throw new IndexOutOfBoundsException(
+					"Cannot copy sequence index " + start + " to " + end + "; must be a range between 0 and 1");
 		}
 	}
 

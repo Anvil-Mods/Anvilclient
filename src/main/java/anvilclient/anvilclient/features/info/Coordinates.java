@@ -1,18 +1,17 @@
 /*******************************************************************************
- * Copyright (C) 2021  Anvilclient and Contributors
+ * Copyright (C) 2021, 2022 Anvil-Mods
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
 package anvilclient.anvilclient.features.info;
 
@@ -34,12 +33,12 @@ public class Coordinates extends TogglableFeature implements IIngameOverlay {
 	public String getName() {
 		return "coordinates";
 	}
-	
+
 	@Override
 	public FeatureCategory getCategory() {
 		return FeatureCategory.INFO;
 	}
-	
+
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
@@ -56,11 +55,14 @@ public class Coordinates extends TogglableFeature implements IIngameOverlay {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.75);
 			Font font = HudUtils.getFont();
-			GuiComponent.drawString(poseStack, font, "X: " + LocalPlayerUtils.getX(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, font, "X: " + LocalPlayerUtils.getX(), coordinatesX,
+					coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			GuiComponent.drawString(poseStack, font, "Y: " + LocalPlayerUtils.getY(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, font, "Y: " + LocalPlayerUtils.getY(), coordinatesX,
+					coordinatesY + currentHeight, TEXT_COLOR);
 			currentHeight += LINE_HEIGHT + 1;
-			GuiComponent.drawString(poseStack, font, "Z: " + LocalPlayerUtils.getZ(), coordinatesX, coordinatesY + currentHeight, TEXT_COLOR);
+			GuiComponent.drawString(poseStack, font, "Z: " + LocalPlayerUtils.getZ(), coordinatesX,
+					coordinatesY + currentHeight, TEXT_COLOR);
 		}
 	}
 }

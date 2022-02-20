@@ -1,18 +1,17 @@
 /*******************************************************************************
- * Copyright (C) 2021  Anvilclient and Contributors
+ * Copyright (C) 2021, 2022 Anvil-Mods
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
 package anvilclient.anvilclient.gui.config;
 
@@ -63,10 +62,11 @@ public abstract class ConfigScreen extends Screen {
 
 		this.addButtons();
 	}
-	
+
 	protected void addButtons() {
-		this.addRenderableWidget(new Button((this.width - BUTTON_WIDTH) / 2, this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH,
-				BUTTON_HEIGHT, new TranslatableComponent("gui.done"), button -> this.onClose()));
+		this.addRenderableWidget(
+				new Button((this.width - BUTTON_WIDTH) / 2, this.height - DONE_BUTTON_TOP_OFFSET, BUTTON_WIDTH,
+						BUTTON_HEIGHT, new TranslatableComponent("gui.done"), button -> this.onClose()));
 	}
 
 	protected abstract void addOptions();
@@ -91,15 +91,16 @@ public abstract class ConfigScreen extends Screen {
 	@Override
 	public void removed() {
 	}
-	
+
 	@Setting
 	@IgnoreAsOption
-	public static EnumSetting<SortType> sortType = new EnumSetting<ConfigScreen.SortType>("anvilclient.sortType", "", SortType.CATEGORY);
-	
+	public static EnumSetting<SortType> sortType = new EnumSetting<ConfigScreen.SortType>("anvilclient.sortType", "",
+			SortType.CATEGORY);
+
 	public enum SortType implements SettingSuitableEnum {
 		PLAIN,
 		CATEGORY;
-		
+
 		private final String translationKey;
 		private final TranslatableComponent translatableComponent;
 
@@ -117,6 +118,6 @@ public abstract class ConfigScreen extends Screen {
 		public TranslatableComponent getTranslatableComponent() {
 			return translatableComponent;
 		}
-		
+
 	}
 }
