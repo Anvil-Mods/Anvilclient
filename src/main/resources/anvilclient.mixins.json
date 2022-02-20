@@ -1,12 +1,12 @@
 {
 	"required": true,
 	"package": "anvilclient.anvilclient.mixin",
-	"compatibilityLevel": "JAVA_8",
+	"compatibilityLevel": "JAVA_17",
 	"refmap": "anvilclient.refmap.json",
 	"mixins": [
 	],
 	"client": [
-		"MixinPlayerController",
+		"MixinMultiPlayerGameMode",
 		"IMixinMinecraft"
 	],
 	"injectors": {

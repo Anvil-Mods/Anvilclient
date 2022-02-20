@@ -1,25 +1,24 @@
 /*******************************************************************************
- * Copyright (C) 2021  Anvilclient and Contributors
+ * Copyright (C) 2021, 2022 Anvil-Mods
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
 package anvilclient.anvilclient.features.info;
 
 import java.time.Instant;
 import java.util.Arrays;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import anvilclient.anvilclient.AnvilClient;
 import anvilclient.anvilclient.features.FeatureCategory;
@@ -27,18 +26,20 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.util.ScoreboardReader;
 import anvilclient.anvilclient.util.ServerDetector;
 import anvilclient.anvilclient.util.ServerDetector.Server;
+import anvilclient.anvilclient.util.utils.HudUtils;
 import anvilclient.anvilclient.util.utils.TextUtils;
 import anvilclient.anvilclient.util.utils.TimeUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.DownloadTerrainScreen;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.ScreenOpenEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class BedwarsInfo extends TogglableFeature {
+public class BedwarsInfo extends TogglableFeature implements IIngameOverlay {
 
 	@Override
 	public String getName() {
@@ -59,8 +60,8 @@ public class BedwarsInfo extends TogglableFeature {
 	private long gameStartTime = Instant.now().toEpochMilli();
 
 	@SubscribeEvent
-	public void update(GuiOpenEvent event) {
-		if (inBedWars && event.getGui() instanceof DownloadTerrainScreen) {
+	public void update(ScreenOpenEvent event) {
+		if (inBedWars && event.getScreen() instanceof ReceivingLevelScreen) {
 			onGameLeave();
 		}
 	}
@@ -80,8 +81,15 @@ public class BedwarsInfo extends TogglableFeature {
 	private static final int TEXT_COLOR = 0xFFFFFF;
 	private static final int LINE_HEIGHT = 10;
 
-	public void render(int width, int height, MatrixStack matrixStack, Minecraft mc, ClientPlayerEntity player) {
-		if (isEnabled() && inBedWars) {
+	@Override
+	public void register() {
+		super.register();
+		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "Bedwars Info", this);
+	}
+
+	@Override
+	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+		if (isEnabled() && inBedWars && HudUtils.shouldRender()) {
 			long elapsedTime = Instant.now().toEpochMilli() - gameStartTime;
 			int currentHeight = 0;
 			int coordinatesX = (int) (width * 0.01);
@@ -91,7 +99,7 @@ public class BedwarsInfo extends TogglableFeature {
 				for (Stages stage : Stages.values()) {
 					long millis = stage.getMillisTo(elapsedTime) + 1000L;
 					if (millis >= 0) {
-						AbstractGui.drawString(matrixStack, mc.font,
+						GuiComponent.drawString(poseStack, HudUtils.getFont(),
 								stage.getName() + ": " + TimeUtils.formatTimeMillis(millis), coordinatesX,
 								coordinatesY + currentHeight, TEXT_COLOR);
 						currentHeight += LINE_HEIGHT + 1;
@@ -103,7 +111,7 @@ public class BedwarsInfo extends TogglableFeature {
 
 	private boolean syncTime() {
 		for (Stages stage : Stages.values()) {
-			ITextComponent textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName() + " in ");
+			Component textComponent = ScoreboardReader.getFirstScoreContaining(stage.getName() + " in ");
 			try {
 				if (textComponent != null) {
 					String stageTime = TextUtils.removeFormattingCodes(textComponent.getString());
@@ -112,7 +120,7 @@ public class BedwarsInfo extends TogglableFeature {
 					int secs = times[0] * 60 + times[1];
 					this.gameStartTime = Instant.now().toEpochMilli() - (stage.getMillis() - secs * 1000);
 					return true;
-				} 
+				}
 			} catch (NumberFormatException e) {
 				AnvilClient.LOGGER.catching(e);
 			}

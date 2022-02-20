@@ -1,18 +1,17 @@
 /*******************************************************************************
- * Copyright (C) 2021  Anvilclient and Contributors
+ * Copyright (C) 2021, 2022 Anvil-Mods
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
 package anvilclient.anvilclient.gui.config;
 
@@ -25,10 +24,10 @@ import anvilclient.anvilclient.features.TogglableFeature;
 import anvilclient.anvilclient.gui.util.ClickOption;
 import anvilclient.anvilclient.util.utils.SettingUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 
 public class CategoryGui extends ConfigScreen {
-	
+
 	FeatureCategory category;
 
 	public CategoryGui(FeatureCategory category, Screen parentScreen) {
@@ -39,17 +38,17 @@ public class CategoryGui extends ConfigScreen {
 	@Override
 	protected void addOptions() {
 		List<Feature> featureList = Features.FEATURE_LIST_BY_CATEGORY.get(category);
-		
+
 		for (Feature feature : featureList) {
-			if (TogglableFeature.class.isAssignableFrom(feature.getClass())) {
-				this.optionsRowList
-						.addSmall(SettingUtils.getOptionListForTogglableFeature((TogglableFeature) feature, this));
+			if (feature instanceof TogglableFeature togglableFeature) {
+				this.optionsList
+						.addSmall(SettingUtils.getOptionListForTogglableFeature(togglableFeature, this));
 			} else {
-				this.optionsRowList.addBig(new ClickOption("anvilclient.feature." + feature.getName(),
+				this.optionsList.addBig(new ClickOption("anvilclient.feature." + feature.getName(),
 						button -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
 			}
 		}
-		
+
 	}
 
 }

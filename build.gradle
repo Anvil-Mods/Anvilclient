@@ -5,24 +5,24 @@ buildscript {
 	}
 	dependencies {
 		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-		classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+		classpath 'org.spongepowered:mixingradle:0.7.+'
 	}
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 
-apply plugin: 'org.spongepowered.mixin'
-
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-version = '1.16.5-1.1.2.1'
-group = 'anvilclient.anvilclient'
+apply plugin: 'org.spongepowered.mixin'
+
+version = '1.18.1-PREVIEW'
+group = 'anvilclient'
 
 archivesBaseName = 'anvilclient'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -31,7 +31,7 @@ minecraft {
 	// stable_#            Stables are built at the discretion of the MCP team.
 	// Use non-default mappings at your own risk. they may not always work.
 	// Simply re-run your setup task after changing the mappings to update your workspace.
-	mappings channel: "official", version: "1.16.5"
+	mappings channel: "official", version: "1.18.1"
 	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
 	// accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -48,7 +48,6 @@ minecraft {
 
 			// Recommended logging level for the console
 			property 'forge.logging.console.level', 'debug'
-			arg "-mixin.config=anvilclient.mixins.json"
 
 			mods {
 				anvilclient {
@@ -66,7 +65,6 @@ minecraft {
 
 			// Recommended logging level for the console
 			property 'forge.logging.console.level', 'debug'
-			arg "-mixin.config=anvilclient.mixins.json"
 
 			mods {
 				anvilclient {
@@ -84,7 +82,6 @@ minecraft {
 
 			// Recommended logging level for the console
 			property 'forge.logging.console.level', 'debug'
-			arg "-mixin.config=anvilclient.mixins.json"
 
 			// Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
 			args '--mod', 'anvilclient', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
@@ -102,10 +99,10 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.16.5-36.2.4'
+	minecraft 'net.minecraftforge:forge:1.18.1-39.0.79'
 
-	implementation 'org.spongepowered:mixin:0.8.4'
-	annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+	implementation 'org.spongepowered:mixin:0.8.5'
+	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 }
 
@@ -145,7 +142,11 @@ publishing {
 }
 
 mixin {
+		config "anvilclient.mixins.json"
 		add sourceSets.main, "anvilclient.refmap.json"
+
+		debug.verbose = true
+    debug.export = true
 }
 
 if (System.getProperty("idea.sync.active") == "true") {

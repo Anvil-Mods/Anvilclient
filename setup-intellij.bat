@@ -1,1 +1,0 @@
-gradlew genIntellijRuns&&gradlew idea&&gradlew openIdea

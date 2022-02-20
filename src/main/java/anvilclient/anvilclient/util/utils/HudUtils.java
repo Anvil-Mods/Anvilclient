@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2021 Anvil-Mods
+ * Copyright (C) 2022 Anvil-Mods
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -13,28 +13,27 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
-package anvilclient.anvilclient.settings;
+package anvilclient.anvilclient.util.utils;
 
-public class IntegerSetting extends NumberSetting<Integer> {
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
+import net.minecraft.client.gui.Font;
 
-	public IntegerSetting(String name, String description, Integer defaultValue, Integer minValue,
-			Integer maxValue, float stepSizeIn) {
-		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, 0);
+public class HudUtils {
+
+	@SuppressWarnings("resource")
+	public static boolean shouldRender() {
+		Options options = getMinecraft().options;
+		return !options.hideGui && !options.renderDebug;
 	}
 
-	@Override
-	public void setValue(Number newValue) {
-		this.value = newValue.intValue();
+	@SuppressWarnings("resource")
+	public static Font getFont() {
+		return getMinecraft().font;
 	}
 
-	@Override
-	public String valueToString() {
-		return Integer.toString(this.value);
-	}
-
-	@Override
-	public Integer stringToValue(String string) {
-		return Integer.parseInt(string);
+	private static Minecraft getMinecraft() {
+		return Minecraft.getInstance();
 	}
 
 }
