@@ -14,27 +14,9 @@ A Minecraft Mod for Forge that is designed to provide useful features to you but
 
 ## About The Project
 
-It always bothered me that Minecraft mods and client that provide useful features do also provide features that are designed to cause harm to others (e.g. Killaura). 
+It always bothered me that Minecraft mods and client that provide useful features do also provide features that are designed to cause harm to others (e.g. Killaura).
 Another problem of these is the missing compabilty with modpacks.
 So I decided to create an own utility mod that is compatible to most other forge mods but doesn't contain any features for the sole purpose of harming others.
-
-
-## Getting Started
-
-To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-
--Java 1.8.0_271 or newer Java 8 (Java 9+ or older Java 8 versions may work but are not supported)
-
--You also need to have Gradle installed properly.
-For more information on how to do that see [this](https://gradle.org/install/)
-
-### Installation
-
-1. Download the code.
-2. Use the setup.bat for your IDE.
-3. Use the build.bat to build the project.
 
 ## Bugs, Questions & Feature Requests
 
