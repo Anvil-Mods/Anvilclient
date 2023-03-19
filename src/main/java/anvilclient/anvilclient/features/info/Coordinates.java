@@ -23,11 +23,11 @@ import anvilclient.anvilclient.util.utils.HudUtils;
 import anvilclient.anvilclient.util.utils.LocalPlayerUtils;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 
-public class Coordinates extends TogglableFeature implements IIngameOverlay {
+public class Coordinates extends TogglableFeature implements IGuiOverlay {
 
 	@Override
 	public String getName() {
@@ -45,11 +45,11 @@ public class Coordinates extends TogglableFeature implements IIngameOverlay {
 	@Override
 	public void register() {
 		super.register();
-		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "Coordinates", this);
+		GuiOverlayManager.registerOverlayAbove(ForgeGui.HUD_TEXT_ELEMENT, "Coordinates", this);
 	}
 
 	@Override
-	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+	public void render(ForgeGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
 		if (isEnabled() && HudUtils.shouldRender()) {
 			int currentHeight = 0;
 			int coordinatesX = (int) (width * 0.75);

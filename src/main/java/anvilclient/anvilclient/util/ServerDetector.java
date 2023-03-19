@@ -38,7 +38,7 @@ public class ServerDetector {
 
 	@SubscribeEvent
 	public void update(ClientPlayerNetworkEvent event) {
-		if (event instanceof ClientPlayerNetworkEvent.LoggedInEvent) {
+		if (event instanceof ClientPlayerNetworkEvent.LoggingIn) {
 			Minecraft mc = Minecraft.getInstance();
 			ClientPacketListener clientplaynethandler = mc.getConnection();
 			if (clientplaynethandler != null && clientplaynethandler.getConnection().isConnected()) {
@@ -62,7 +62,7 @@ public class ServerDetector {
 							this.currentServer = Server.LAN;
 						}
 			}
-		} else if (event instanceof ClientPlayerNetworkEvent.LoggedOutEvent) {
+		} else if (event instanceof ClientPlayerNetworkEvent.LoggingOut) {
 			currentServer = Server.NONE;
 		}
 	}

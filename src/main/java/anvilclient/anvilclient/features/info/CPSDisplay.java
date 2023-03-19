@@ -34,12 +34,12 @@ import anvilclient.anvilclient.util.utils.MathUtils;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class CPSDisplay extends TogglableFeature implements IIngameOverlay {
+public class CPSDisplay extends TogglableFeature implements IGuiOverlay {
 
 	@Override
 	public String getName() {
@@ -74,11 +74,11 @@ public class CPSDisplay extends TogglableFeature implements IIngameOverlay {
 	@Override
 	public void register() {
 		super.register();
-		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "CPS Display", this);
+		GuiOverlayManager.registerOverlayAbove(ForgeGui.HUD_TEXT_ELEMENT, "CPS Display", this);
 	}
 
 	@Override
-	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+	public void render(ForgeGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
 		if (isEnabled() && HudUtils.shouldRender()) {
 			int coordinatesX = (int) (width * 0.75);
 			int coordinatesY = (int) (height * 0.25) + 11;

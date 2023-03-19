@@ -23,7 +23,7 @@ import net.minecraft.client.KeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.client.event.InputEvent.Key;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -33,10 +33,10 @@ public abstract class KeyboundFeature extends Feature {
 	protected KeyMapping keybind = new KeyMapping("anvilclient.feature." + getName() + ".toggle",
 			KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilClient.KEY_CATEGORY);
 
-	public abstract void onKey(KeyInputEvent event);
+	public abstract void onKey(Key event);
 
 	@SubscribeEvent
-	public void onKeyInput(KeyInputEvent event) {
+	public void onKeyInput(Key event) {
 		onKey(event);
 	}
 

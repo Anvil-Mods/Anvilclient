@@ -17,13 +17,13 @@ package anvilclient.anvilclient.util;
 
 import anvilclient.anvilclient.util.utils.ScreenUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.client.event.InputEvent.Key;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class KeyInputHandler {
 
 	@SubscribeEvent
-	public static void onKeyInput(KeyInputEvent event) {
+	public static void onKeyInput(Key event) {
 		if (Keybinds.openSettings.consumeClick()) {
 			Minecraft.getInstance().setScreen(ScreenUtils.getMainConfigGui(null));
 		}

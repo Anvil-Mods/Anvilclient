@@ -17,7 +17,7 @@ package anvilclient.anvilclient.features;
 
 import anvilclient.anvilclient.settings.BooleanSetting;
 import anvilclient.anvilclient.settings.Setting;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.client.event.InputEvent.Key;
 
 public abstract class TogglableFeature extends KeyboundFeature {
 
@@ -45,7 +45,7 @@ public abstract class TogglableFeature extends KeyboundFeature {
 	}
 
 	@Override
-	public void onKey(KeyInputEvent event) {
+	public void onKey(Key event) {
 		if (keybind.consumeClick()) {
 			toggleEnabled();
 		}

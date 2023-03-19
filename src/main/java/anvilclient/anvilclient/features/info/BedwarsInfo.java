@@ -33,13 +33,13 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.ScreenOpenEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.ScreenEvent.Open;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class BedwarsInfo extends TogglableFeature implements IIngameOverlay {
+public class BedwarsInfo extends TogglableFeature implements IGuiOverlay {
 
 	@Override
 	public String getName() {
@@ -60,7 +60,7 @@ public class BedwarsInfo extends TogglableFeature implements IIngameOverlay {
 	private long gameStartTime = Instant.now().toEpochMilli();
 
 	@SubscribeEvent
-	public void update(ScreenOpenEvent event) {
+	public void update(Open event) {
 		if (inBedWars && event.getScreen() instanceof ReceivingLevelScreen) {
 			onGameLeave();
 		}
@@ -84,11 +84,11 @@ public class BedwarsInfo extends TogglableFeature implements IIngameOverlay {
 	@Override
 	public void register() {
 		super.register();
-		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HUD_TEXT_ELEMENT, "Bedwars Info", this);
+		GuiOverlayManager.registerOverlayAbove(ForgeGui.HUD_TEXT_ELEMENT, "Bedwars Info", this);
 	}
 
 	@Override
-	public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
+	public void render(ForgeGui gui, PoseStack poseStack, float partialTicks, int width, int height) {
 		if (isEnabled() && inBedWars && HudUtils.shouldRender()) {
 			long elapsedTime = Instant.now().toEpochMilli() - gameStartTime;
 			int currentHeight = 0;
