@@ -33,11 +33,11 @@ public class HudUtils {
     }
 
     public static int getScreenWidth() {
-		return getMinecraft().getWindow().getScreenWidth();
+        return getMinecraft().getWindow().getGuiScaledWidth();
     }
 
     public static int getScreenHeight() {
-        return getMinecraft().getWindow().getScreenHeight();
+        return getMinecraft().getWindow().getGuiScaledHeight();
     }
 
     private static Minecraft getMinecraft() {
