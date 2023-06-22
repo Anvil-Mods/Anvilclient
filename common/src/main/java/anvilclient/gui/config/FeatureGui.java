@@ -45,7 +45,7 @@ public class FeatureGui extends ConfigScreen {
 					featureToggle::setEnabled));
 		}
 
-		for (ISetting<?> setting : settingList.stream().filter((setting) -> !setting.getKey().contains(".enabled"))
+		for (ISetting<?> setting : settingList.stream().filter((setting) -> !setting.getKey().contains(".featureEnabled"))
 				.toArray(ISetting<?>[]::new)) {
 			OptionInstance<?> option = SettingUtils.getOptionForSetting(setting);
 			if (option != null) {

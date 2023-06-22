@@ -73,7 +73,8 @@ public class SettingUtils {
     private static <T extends Enum<T> & OptionEnum> OptionInstance<T> optionInstanceForEnum(EnumSetting<T> enumSetting, String translationKey) {
         return new OptionInstance<T>(translationKey, OptionInstance.noTooltip(), OptionInstance.forOptionEnum(),
                 new OptionInstance.Enum<T>(Arrays.asList(enumSetting.getValues()),
-                        Codec.INT.xmap(integer -> enumSetting.getValues()[integer], t -> enumSetting.getValue().ordinal())), enumSetting.getValue(), enumSetting::setValueRaw);
+                        Codec.INT.xmap(integer -> enumSetting.getValues()[integer], t -> enumSetting.getValue()
+                .ordinal())), enumSetting.getValue(), enumSetting::setValue);
     }
 
     public static OptionInstance[] getOptionListForFeature(Feature feature, Screen screen) {
@@ -89,14 +90,23 @@ public class SettingUtils {
 
     public static OptionInstance<Object> getClickOption(String translationKey, Runnable pressedAction) {
         return new OptionInstance<>(translationKey, OptionInstance.noTooltip(), ((component, object) -> component),
-                new ClickValueSet(), null, (object) -> pressedAction.run());
+                new ClickValueSet(pressedAction), null, (object) -> {
+        });
     }
 
     private static class ClickValueSet implements OptionInstance.ValueSet<Object> {
 
+        private Runnable action;
+
+        public ClickValueSet(Runnable action) {
+            this.action = action;
+        }
+
         @Override
-        public @NotNull Function<OptionInstance<Object>, AbstractWidget> createButton(OptionInstance.TooltipSupplier tooltipSupplier, Options options, int i, int j, int k, Consumer consumer) {
-            return optionInstance -> Button.builder(optionInstance.caption, button -> consumer.accept(new Object()))
+        public @NotNull Function<OptionInstance<Object>, AbstractWidget> createButton(OptionInstance.TooltipSupplier<Object> tooltipSupplier, Options options, int i, int j, int k, Consumer<Object> consumer) {
+            return optionInstance -> Button.builder(optionInstance.caption, button -> action.run())
+                    .pos(i, j)
+                    .width(k)
                     .build();
         }
 

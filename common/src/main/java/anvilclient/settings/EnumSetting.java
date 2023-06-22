@@ -23,20 +23,6 @@ public class EnumSetting<T extends Enum<T> & OptionEnum> extends AbstractSetting
 		super(name, description, defaultValue, null, null);
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setValue(Enum<T> newValue) {
-		super.setValue((T) newValue);
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setValueRaw(Object newValue) {
-		if (newValue != null && this.value.getClass().equals(newValue.getClass())) {
-			super.setValue((T) newValue);
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-
 	@Override
 	public String valueToString() {
 		return this.value.toString();
