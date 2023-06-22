@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "anvilclient",
+  "version": "${version}",
+  "name": "Anvilclient",
+  "description": "A utility mod for Minecraft",
+  "authors": [
+    "Amboss_Mann"
+  ],
+  "contact": {
+    "homepage": "https://anvil-mods.github.io",
+    "sources": "https://github.com/Anvil-Mods/Anvilclient"
+  },
+  "license": "GPLv3",
+  "icon": "assets/anvilclient/anvilclient.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "anvilclient.fabric.AnvilclientFabric"
+    ],
+    "modmenu": [
+      "anvilclient.fabric.AnvilclientModMenuApiImpl"
+    ]
+  },
+  "mixins": [
+    "anvilclient.mixins.json",
+    "anvilclient-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.19.4",
+    "architectury": ">=8.1.79"
+  }
+}

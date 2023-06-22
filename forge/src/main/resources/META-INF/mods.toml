@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[45,)"
+#issueTrackerURL = ""
+license = "GPLv3"
+
+[[mods]]
+modId="anvilclient"
+version="${version}"
+displayName="Anvilclient"
+displayURL="https://anvil-mods.github.io"
+displayTest="IGNORE_ALL_VERSION"
+logoFile="assets/anvilclient/anvilclient.png"
+credits=""
+authors="Amboss_Mann"
+description='''
+A utility mod for Minecraft
+'''
+
+[[dependencies.anvilclient]]
+modId = "forge"
+mandatory = true
+versionRange = "[45,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.anvilclient]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.4,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.anvilclient]]
+modId = "architectury"
+mandatory = true
+versionRange = "[8.1.79,)"
+ordering = "AFTER"
+side = "CLIENT"

@@ -30,3 +30,4 @@ latest.log
 forge*changelog.txt
 
 /.apt_generated_tests/
+/.architectury-transformer/debug.log
