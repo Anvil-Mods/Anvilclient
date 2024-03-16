@@ -38,7 +38,7 @@ public class ItemUtils {
 		return item.isEmpty() || !item.isDamageableItem();
 	}
 
-	public static double getDiggingSpeed(Player player, ItemStack tool, BlockState blockState) {
+	public static float getDiggingSpeed(Player player, ItemStack tool, BlockState blockState) {
 		float destroySpeed = tool.getDestroySpeed(blockState);
 		if (destroySpeed > 1.0F) {
 			int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, tool);
@@ -52,38 +52,27 @@ public class ItemUtils {
 		}
 
 		if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-			float f1;
-			switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
-				case 0:
-					f1 = 0.3F;
-					break;
-				case 1:
-					f1 = 0.09F;
-					break;
-				case 2:
-					f1 = 0.0027F;
-					break;
-				case 3:
-				default:
-					f1 = 8.1E-4F;
-			}
-
-			destroySpeed *= f1;
+			destroySpeed *= (switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+				case 0 -> 0.3f;
+				case 1 -> 0.09f;
+				case 2 -> 0.0027f;
+				default -> 8.1E-4f;
+			});
 		}
 
 		if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
 			destroySpeed /= 5.0F;
 		}
 
-		if (!player.isOnGround()) {
+		if (!player.onGround()) {
 			destroySpeed /= 5.0F;
 		}
 
 		return destroySpeed;
 	}
 
-	public static double getDiggingSpeedAt(Player player, ItemStack tool, BlockPos blockPos) {
-		return getDiggingSpeed(player, tool, player.level.getBlockState(blockPos));
+	public static float getDiggingSpeedAt(Player player, ItemStack tool, BlockPos blockPos) {
+		return getDiggingSpeed(player, tool, player.level().getBlockState(blockPos));
 	}
 
 }

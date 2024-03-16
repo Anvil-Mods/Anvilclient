@@ -1,11 +1,11 @@
 modLoader = "javafml"
-loaderVersion = "[45,)"
+loaderVersion = "${loader_version_range}"
 #issueTrackerURL = ""
 license = "GPLv3"
 
 [[mods]]
 modId="anvilclient"
-version="${version}"
+version="${mod_version}"
 displayName="Anvilclient"
 displayURL="https://anvil-mods.github.io"
 displayTest="IGNORE_ALL_VERSION"
@@ -16,23 +16,26 @@ description='''
 A utility mod for Minecraft
 '''
 
+[[mixins]]
+config = "anvilclient.mixins.json"
+
 [[dependencies.anvilclient]]
-modId = "forge"
+modId = "neoforge"
 mandatory = true
-versionRange = "[45,)"
+versionRange = "${neo_version_range}"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.anvilclient]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.4,)"
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.anvilclient]]
 modId = "architectury"
 mandatory = true
-versionRange = "[8.1.79,)"
+versionRange = "[${architectury_version})"
 ordering = "AFTER"
 side = "CLIENT"

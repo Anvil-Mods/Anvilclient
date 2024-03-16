@@ -18,8 +18,7 @@ package anvilclient.gui.config;
 import anvilclient.settings.EnumSetting;
 import anvilclient.settings.IgnoreAsOption;
 import anvilclient.settings.Setting;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.Screen;
@@ -54,7 +53,7 @@ public abstract class ConfigScreen extends Screen {
 	@Override
 	protected void init() {
 		this.optionsList = new OptionsList(this.minecraft, this.width, this.height,
-				OPTIONS_LIST_TOP_HEIGHT, this.height - OPTIONS_LIST_BOTTOM_OFFSET, OPTIONS_LIST_ITEM_HEIGHT);
+				OPTIONS_LIST_TOP_HEIGHT, OPTIONS_LIST_ITEM_HEIGHT);
 
 		this.addOptions();
 
@@ -78,11 +77,10 @@ public abstract class ConfigScreen extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(poseStack);
-		this.optionsList.render(poseStack, mouseX, mouseY, partialTicks);
-		GuiComponent.drawCenteredString(poseStack, this.font, this.title, this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
-		super.render(poseStack, mouseX, mouseY, partialTicks);
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+		super.render(graphics, mouseX, mouseY, partialTicks);
+		this.optionsList.render(graphics, mouseX, mouseY, partialTicks);
+		graphics.drawCenteredString(this.font, this.title, this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
 	}
 
 	@Override

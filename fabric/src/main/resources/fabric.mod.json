@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "anvilclient",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "Anvilclient",
   "description": "A utility mod for Minecraft",
   "authors": [
@@ -23,12 +23,11 @@
     ]
   },
   "mixins": [
-    "anvilclient.mixins.json",
-    "anvilclient-common.mixins.json"
+    "anvilclient.mixins.json"
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.19.4",
-    "architectury": ">=8.1.79"
+    "minecraft": ">=${minecraft_version}",
+    "architectury": ">=${architectury_version}"
   }
 }

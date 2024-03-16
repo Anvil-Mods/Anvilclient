@@ -25,7 +25,7 @@ public class HudUtils {
 
     public static boolean shouldRender() {
         Options options = getMinecraft().options;
-        return !options.hideGui && !options.renderDebug;
+        return !options.hideGui && !getMinecraft().getDebugOverlay().showDebugScreen();
     }
 
     public static Font getFont() {

@@ -20,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.language.I18n;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -44,17 +45,18 @@ public class ServerDetector {
     private void join(LocalPlayer localPlayer) {
         Minecraft mc = Minecraft.getInstance();
         if (Objects.equals(mc.player, localPlayer)) {
-            ClientPacketListener clientplaynethandler = mc.getConnection();
-            if (clientplaynethandler != null && clientplaynethandler.getConnection().isConnected()) {
+            ClientPacketListener clientPacketListener = mc.getConnection();
+            if (clientPacketListener != null && clientPacketListener.getConnection().isConnected()) {
+                ServerData serverData = Minecraft.getInstance().getCurrentServer();
                 if (mc.getSingleplayerServer() != null && !mc.getSingleplayerServer().isPublished()) {
                     this.currentServer = Server.SINGLEPLAYER;
-                } else if (mc.isConnectedToRealms()) {
+                } else if (serverData != null && serverData.isRealm()) {
                     this.currentServer = Server.REALMS;
-                } else if (mc.getSingleplayerServer() == null
-                        && (mc.getCurrentServer() == null || !mc.getCurrentServer().isLan())) {
-                    ServerData currentServer = Minecraft.getInstance().getCurrentServer();
-                    if (currentServer != null) {
-                        String serverAddress = currentServer.ip.toLowerCase();
+                } else if (mc.getSingleplayerServer() != null || serverData != null && serverData.isLan()) {
+                    this.currentServer = Server.LAN;
+                } else {
+                    if (serverData != null) {
+                        String serverAddress = serverData.ip.toLowerCase();
                         this.currentServer = Arrays.stream(Server.values())
                                 .filter(server -> server.DOMAIN != null)
                                 .filter(server -> serverAddress.contains(server.DOMAIN)).findFirst()
@@ -62,8 +64,6 @@ public class ServerDetector {
                     } else {
                         this.currentServer = Server.NONE;
                     }
-                } else {
-                    this.currentServer = Server.LAN;
                 }
             }
         }

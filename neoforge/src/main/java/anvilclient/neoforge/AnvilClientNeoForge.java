@@ -14,20 +14,20 @@
  * this program. If not, see <https://www.gnu.org/licenses/>.
  *******************************************************************************/
 
-package anvilclient.forge;
+package anvilclient.neoforge;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 @Mod(anvilclient.AnvilclientCommon.MOD_ID)
-public class AnvilClientForge {
-	static final IEventBus MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
+public class AnvilClientNeoForge {
 
-	public AnvilClientForge() {
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ForgeClientSetup::setup);
+	public AnvilClientNeoForge(IEventBus modEventBus) {
+		if (FMLEnvironment.dist == Dist.CLIENT) {
+			NeoForgeClientSetup.setup();
+		}
 	}
 
 }

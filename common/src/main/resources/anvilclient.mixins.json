@@ -1,13 +1,14 @@
 {
   "required": true,
-  "package": "anvilclient.mixin.forge",
+  "package": "anvilclient.mixin",
   "compatibilityLevel": "JAVA_17",
-  "minVersion": "0.8",
-  "client": [
-  ],
   "mixins": [
+  ],
+  "client": [
+    "MixinMultiPlayerGameMode"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "minVersion": "0.8"
 }

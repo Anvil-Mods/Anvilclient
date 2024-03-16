@@ -18,12 +18,14 @@ package anvilclient.util;
 import anvilclient.util.utils.TextUtils;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.scores.Objective;
-import net.minecraft.world.scores.PlayerTeam;
-import net.minecraft.world.scores.Score;
-import net.minecraft.world.scores.Scoreboard;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.numbers.NumberFormat;
+import net.minecraft.network.chat.numbers.StyledFormat;
+import net.minecraft.world.scores.*;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,16 +42,15 @@ public class ScoreboardReader {
     public static Objective getScoreObjective() {
         Minecraft mc = Minecraft.getInstance();
         Scoreboard scoreboard = mc.level.getScoreboard();
-        Objective scoreobjective = null;
         PlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(mc.player.getScoreboardName());
         if (scoreplayerteam != null) {
-            int j2 = scoreplayerteam.getColor().getId();
-            if (j2 >= 0) {
-                scoreobjective = scoreboard.getDisplayObjective(3 + j2);
+            ChatFormatting teamColor = scoreplayerteam.getColor();
+            if (teamColor != ChatFormatting.RESET) {
+                return scoreboard.getDisplayObjective(DisplaySlot.teamColorToSlot(teamColor));
             }
         }
 
-        return scoreobjective != null ? scoreobjective : scoreboard.getDisplayObjective(1);
+        return scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR);
     }
 
     public static Scoreboard getScoreboard() {
@@ -60,12 +61,12 @@ public class ScoreboardReader {
         return DUMMY_SCOREBOARD;
     }
 
-    public static Collection<Score> getSortedScores() {
-        return getScoreboard().getPlayerScores(getScoreObjective());
+    public static Collection<PlayerScoreEntry> getScores() {
+        return getScoreboard().listPlayerScores(getScoreObjective());
     }
 
     public static Component getFirstScoreContaining(String string) {
-        for (Component textComponent : getLines().values()) {
+        for (Component textComponent : getLines()) {
             if (TextUtils.removeFormattingCodes(textComponent.getString()).contains(string)) {
                 return textComponent;
             }
@@ -77,27 +78,14 @@ public class ScoreboardReader {
         return getFirstScoreContaining(string) != null;
     }
 
-    public static HashMap<Score, Component> getLines() {
-        Collection<Score> collection = getSortedScores();
-        List<Score> list = collection.stream()
-                .filter((score) -> !score.getOwner().startsWith("#"))
-                .collect(Collectors.toList());
-
-        if (list.size() > 15) {
-            collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
-        } else {
-            collection = list;
-        }
-
-        HashMap<Score, Component> map = new HashMap<>();
-
-        for (Score score : collection) {
-            PlayerTeam scoreplayerteam = getScoreboard().getPlayersTeam(score.getOwner());
-            Component itextcomponent = PlayerTeam.formatNameForTeam(scoreplayerteam,
-                    Component.literal(score.getOwner()));
-            map.put(score, itextcomponent);
-        }
-
-        return map;
+    public static List<Component> getLines() {
+        Scoreboard scoreboard = getScoreboard();
+        return scoreboard.listPlayerScores(getScoreObjective()).stream()
+                .filter(playerScoreEntry -> !playerScoreEntry.isHidden())
+                .sorted(Gui.SCORE_DISPLAY_ORDER).limit(15L).map(playerScoreEntry -> {
+                    PlayerTeam playerTeam = scoreboard.getPlayersTeam(playerScoreEntry.owner());
+                    Component ownerName = playerScoreEntry.ownerName();
+                    return (Component) PlayerTeam.formatNameForTeam(playerTeam, ownerName);
+                }).toList();
     }
 }
