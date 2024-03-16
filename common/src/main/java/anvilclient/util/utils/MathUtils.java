@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,14 +15,13 @@
  */
 package anvilclient.util.utils;
 
-import net.minecraft.util.Mth;
-
+import java.util.Locale;
 import java.util.Random;
+import net.minecraft.util.Mth;
 
 public class MathUtils {
 
-	private MathUtils() {
-	}
+	private MathUtils() {}
 
 	private static Random randomGenerator = new Random();
 
@@ -31,7 +30,8 @@ public class MathUtils {
 		return normalizeInt(number, 0, max - min, min, max, false);
 	}
 
-	public static int normalizeInt(int value, int minold, int maxold, int min, int max, boolean clamp) {
+	public static int normalizeInt(
+			int value, int minold, int maxold, int min, int max, boolean clamp) {
 		if (clamp) {
 			value = Mth.clamp(value, minold, maxold);
 		}
@@ -41,6 +41,11 @@ public class MathUtils {
 	public static double trimDouble(double value, int decimalCount) {
 		double factor = Math.pow(10, decimalCount);
 		return ((double) ((int) (value * factor))) / factor;
+	}
+
+	public static String formatDouble(double value, int decimalCount) {
+		String formatString = "%." + decimalCount + "f";
+		return String.format(Locale.ENGLISH, formatString, value);
 	}
 
 	public static float trimFloat(float value, int decimalCount) {
