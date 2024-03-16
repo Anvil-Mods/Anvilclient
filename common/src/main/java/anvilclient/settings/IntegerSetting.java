@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (C) 2021 Anvil-Mods
+/*
+ * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -12,7 +12,7 @@
  *
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
- *******************************************************************************/
+ */
 package anvilclient.settings;
 
 public class IntegerSetting extends NumberSetting<Integer> {
