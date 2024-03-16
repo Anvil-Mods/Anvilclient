@@ -29,13 +29,12 @@ import net.minecraft.util.OptionEnum;
 public abstract class ConfigScreen extends Screen {
 	private static final int TITLE_HEIGHT = 8;
 
-	protected static final int OPTIONS_LIST_TOP_HEIGHT = 24;
-	protected static final int OPTIONS_LIST_BOTTOM_OFFSET = 32;
+	protected static final int OPTIONS_LIST_TOP_BOTTOM_OFFSET = 32;
 	protected static final int OPTIONS_LIST_ITEM_HEIGHT = 25;
 
 	protected static final int BUTTON_WIDTH = 200;
 	protected static final int BUTTON_HEIGHT = 20;
-	protected static final int DONE_BUTTON_TOP_OFFSET = 26;
+	protected static final int DONE_BUTTON_TOP_OFFSET = 27;
 
 	protected OptionsList optionsList;
 
@@ -52,12 +51,16 @@ public abstract class ConfigScreen extends Screen {
 
 	@Override
 	protected void init() {
-		this.optionsList = new OptionsList(this.minecraft, this.width, this.height,
-				OPTIONS_LIST_TOP_HEIGHT, OPTIONS_LIST_ITEM_HEIGHT);
+		this.optionsList =
+				this.addRenderableWidget(
+						new OptionsList(
+								this.minecraft,
+								this.width,
+								this.height - 2 * OPTIONS_LIST_TOP_BOTTOM_OFFSET,
+								OPTIONS_LIST_TOP_BOTTOM_OFFSET,
+								OPTIONS_LIST_ITEM_HEIGHT));
 
 		this.addOptions();
-
-		this.addWidget(this.optionsList);
 
 		this.addButtons();
 	}
@@ -88,14 +91,9 @@ public abstract class ConfigScreen extends Screen {
 		this.minecraft.setScreen(parentScreen);
 	}
 
-	@Override
-	public void removed() {
-	}
-
-	@Setting
-	@IgnoreAsOption
-	public static EnumSetting<SortType> sortType = new EnumSetting<>("anvilclient.sortType", "",
-			SortType.CATEGORY);
+	@Setting @IgnoreAsOption
+	public static EnumSetting<SortType> sortType =
+			new EnumSetting<>("anvilclient.sortType", "", SortType.CATEGORY);
 
 	public enum SortType implements OptionEnum {
 		PLAIN,
