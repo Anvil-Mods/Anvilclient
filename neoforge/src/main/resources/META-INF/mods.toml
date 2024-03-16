@@ -21,21 +21,21 @@ config = "anvilclient.mixins.json"
 
 [[dependencies.anvilclient]]
 modId = "neoforge"
-mandatory = true
+type = "required"
 versionRange = "${neo_version_range}"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.anvilclient]]
 modId = "minecraft"
-mandatory = true
+type = "required"
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.anvilclient]]
 modId = "architectury"
-mandatory = true
+type = "required"
 versionRange = "[${architectury_version},${architectury_next_api})"
 ordering = "AFTER"
 side = "CLIENT"
