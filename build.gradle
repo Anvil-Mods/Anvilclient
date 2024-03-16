@@ -57,6 +57,7 @@ allprojects {
                 loader_version_range   : rootProject.loader_version_range,
                 mod_version            : rootProject.mod_version,
                 architectury_version   : rootProject.architectury_version,
+                architectury_next_api  : Integer.toString(Integer.parseInt(rootProject.architectury_version.split("\\.")[0]) + 1)
         ]
         inputs.properties replaceProperties
 
