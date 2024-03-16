@@ -77,7 +77,7 @@ allprojects {
     }
 
     spotless {
-//        ratchetFrom 'origin/1.20.x'
+        ratchetFrom 'origin/1.20.x'
 
         format 'misc', {
             target '*.gradle', '.gitattributes', '.gitignore'
@@ -89,11 +89,10 @@ allprojects {
         java {
             licenseHeaderFile("${rootProject.projectDir}/.spotless/licenseHeader.txt")
 
-//            googleJavaFormat()
-//            formatAnnotations()
-//            removeUnusedImports()
-//
-//            indentWithTabs()
+            googleJavaFormat()
+            formatAnnotations()
+            removeUnusedImports()
+            indentWithTabs(2)
         }
     }
 }
