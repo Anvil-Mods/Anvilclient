@@ -78,7 +78,7 @@ allprojects {
     }
 
     spotless {
-        ratchetFrom 'origin/1.20.x'
+        ratchetFrom 'a5f30617540958f8d6d89f88bf5845b87a696f57'
 
         format 'misc', {
             target '*.gradle', '.gitattributes', '.gitignore'
