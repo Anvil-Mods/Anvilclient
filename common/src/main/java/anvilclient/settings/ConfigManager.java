@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,79 +17,79 @@ package anvilclient.settings;
 
 import anvilclient.AnvilclientCommon;
 import dev.architectury.platform.Platform;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class ConfigManager {
 
-    private static final ConfigManager INSTANCE = new ConfigManager();
+	private static final ConfigManager INSTANCE = new ConfigManager();
 
-    public static ConfigManager getInstance() {
-        return INSTANCE;
-    }
+	public static ConfigManager getInstance() {
+		return INSTANCE;
+	}
 
-    private ConfigManager() {
-    }
+	private ConfigManager() {}
 
-    private Properties properties = new Properties();
+	private Properties properties = new Properties();
 
-    private File configFile = new File(Platform.getConfigFolder() + File.separator + "anvilclient.cfg");
+	private File configFile =
+			new File(Platform.getConfigFolder() + File.separator + "anvilclient.cfg");
 
-    public void loadProperties() {
-        load();
-        for (ISetting<?> setting : SettingRegister.SETTING_LIST) {
-            if (properties.containsKey(setting.getKey())) {
-                setting.loadValue(properties.getProperty(setting.getKey()));
-            } else {
-                properties.setProperty(setting.getKey(), setting.valueToString());
-            }
-        }
-        save();
-    }
+	public void loadProperties() {
+		load();
+		for (ISetting<?> setting : SettingRegister.SETTING_LIST) {
+			if (properties.containsKey(setting.getKey())) {
+				setting.loadValue(properties.getProperty(setting.getKey()));
+			} else {
+				properties.setProperty(setting.getKey(), setting.valueToString());
+			}
+		}
+		save();
+	}
 
-    private void load() {
-        try {
-            FileReader reader = new FileReader(configFile);
-            properties.load(reader);
-            reader.close();
-        } catch (FileNotFoundException e) {
-            AnvilclientCommon.LOGGER.warn("Config file not found.");
-        } catch (IOException e) {
-            AnvilclientCommon.LOGGER.error("Error loading config file.");
-            AnvilclientCommon.LOGGER.catching(e);
-        }
-    }
+	private void load() {
+		try {
+			FileReader reader = new FileReader(configFile);
+			properties.load(reader);
+			reader.close();
+		} catch (FileNotFoundException e) {
+			AnvilclientCommon.LOGGER.warn("Config file not found. Using default configuration.");
+		} catch (IOException e) {
+			AnvilclientCommon.LOGGER.error("Error loading config file.");
+			AnvilclientCommon.LOGGER.error(ExceptionUtils.getStackTrace(e));
+		}
+	}
 
-    public void save() {
-        try {
-            FileWriter writer = new FileWriter(configFile);
-            properties.store(writer, "host settings");
-            writer.close();
-        } catch (IOException e) {
-            AnvilclientCommon.LOGGER.error("Error saving config.");
-            AnvilclientCommon.LOGGER.catching(e);
-        }
-    }
+	public void save() {
+		try {
+			FileWriter writer = new FileWriter(configFile);
+			properties.store(writer, "host settings");
+			writer.close();
+		} catch (IOException e) {
+			AnvilclientCommon.LOGGER.error("Error saving config.");
+			AnvilclientCommon.LOGGER.error(ExceptionUtils.getStackTrace(e));
+		}
+	}
 
-    public void setPropertyWithoutSaving(String key, String value) {
-        properties.setProperty(key, value);
-    }
+	public void setPropertyWithoutSaving(String key, String value) {
+		properties.setProperty(key, value);
+	}
 
-    public void setProperty(String key, String value) {
-        properties.setProperty(key, value);
-        save();
-    }
+	public void setProperty(String key, String value) {
+		properties.setProperty(key, value);
+		save();
+	}
 
-    public void cleanupConfig() {
-        Object[] settings = SettingRegister.SETTING_LIST.stream().map(ISetting::getKey).toArray();
-        for (Object key : Collections.list(this.properties.keys())) {
-            if (Arrays.stream(settings).noneMatch(key::equals)) {
-                properties.remove(key);
-            }
-        }
-        save();
-    }
+	public void cleanupConfig() {
+		Object[] settings = SettingRegister.SETTING_LIST.stream().map(ISetting::getKey).toArray();
+		for (Object key : Collections.list(this.properties.keys())) {
+			if (Arrays.stream(settings).noneMatch(key::equals)) {
+				properties.remove(key);
+			}
+		}
+		save();
+	}
 }

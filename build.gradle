@@ -13,6 +13,7 @@ subprojects {
 
     loom {
         silentMojangMappingsLicense()
+        runtimeOnlyLog4j = true
     }
 
     dependencies {
