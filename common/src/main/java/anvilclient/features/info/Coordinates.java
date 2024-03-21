@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -29,32 +29,50 @@ import org.lwjgl.glfw.GLFW;
 
 public class Coordinates extends Feature {
 
-    @Override
-    public String getName() {
-        return "coordinates";
-    }
+	@Override
+	public String getName() {
+		return "coordinates";
+	}
 
-    @Override
-    public FeatureCategory getCategory() {
-        return FeatureCategory.INFO;
-    }
+	@Override
+	public FeatureCategory getCategory() {
+		return FeatureCategory.INFO;
+	}
 
-    private static final int TEXT_COLOR = 0xFFFFFF;
+	private final FeatureToggleComponent toggleComponent =
+			new FeatureToggleComponent(this, "", false);
+	private final KeybindingComponent keybindingComponent =
+			new KeybindingComponent(
+					this,
+					new KeyMapping(
+							"anvilclient" + ".feature." + getName() + ".toggle",
+							InputConstants.Type.KEYSYM,
+							GLFW.GLFW_KEY_UNKNOWN,
+							AnvilclientCommon.KEY_CATEGORY),
+					toggleComponent::toggleEnabled);
 
-    private final FeatureToggleComponent toggleComponent = new FeatureToggleComponent(this,  "", false);
-    private final KeybindingComponent keybindingComponent = new KeybindingComponent(this, new KeyMapping("anvilclient" +
-            ".feature." + getName() + ".toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN,
-            AnvilclientCommon.KEY_CATEGORY), toggleComponent::toggleEnabled);
-    private final HudComponent hudComponentX = new HudComponent(this, () -> "X: " + LocalPlayerUtils.getX(),
-            toggleComponent::isEnabled, (width) -> (int) (width * 0.75), (height) -> (int) (height * 0.75), TEXT_COLOR);
-    private final HudComponent hudComponentY = hudComponentX.chained(() -> "Y: " + LocalPlayerUtils.getY(),
-            HudUtils.DEFAULT_LINE_HEIGHT);
-    private final HudComponent hudComponentZ = hudComponentY.chained(() -> "Z: " + LocalPlayerUtils.getZ(),
-            HudUtils.DEFAULT_LINE_HEIGHT);
+	private final HudComponent hudComponent =
+			new HudComponent(
+					this,
+					new HudComponent.TextRenderFunction(() -> "X: " + LocalPlayerUtils.getX()),
+					toggleComponent::isEnabled,
+					0.75,
+					0.75);
 
-    @Override
-    public void register() {
-        addComponents(toggleComponent, keybindingComponent, hudComponentX, hudComponentY, hudComponentZ);
-        super.register();
-    }
+	{
+		hudComponent.addRenderFunction(
+				new HudComponent.TextRenderFunction(() -> "Y: " + LocalPlayerUtils.getY()),
+				0,
+				HudUtils.DEFAULT_LINE_HEIGHT);
+		hudComponent.addRenderFunction(
+				new HudComponent.TextRenderFunction(() -> "Z: " + LocalPlayerUtils.getZ()),
+				0,
+				HudUtils.DEFAULT_LINE_HEIGHT * 2);
+	}
+
+	@Override
+	public void register() {
+		addComponents(toggleComponent, keybindingComponent, hudComponent);
+		super.register();
+	}
 }

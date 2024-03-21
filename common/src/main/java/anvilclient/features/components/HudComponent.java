@@ -16,45 +16,111 @@
 package anvilclient.features.components;
 
 import anvilclient.features.Feature;
+import anvilclient.settings.DoubleSetting;
+import anvilclient.settings.IgnoreAsOption;
+import anvilclient.settings.Setting;
 import anvilclient.util.utils.HudUtils;
 import dev.architectury.event.events.client.ClientGuiEvent;
-import net.minecraft.client.gui.GuiGraphics;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BooleanSupplier;
-import java.util.function.IntUnaryOperator;
+import java.util.function.IntSupplier;
 import java.util.function.Supplier;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class HudComponent extends BaseComponent {
 
-    private final Supplier<String> textSupplier;
-    private final BooleanSupplier enabled;
-    private final IntUnaryOperator xFunction;
+	private final List<RenderFunctionContainer> renderFunctionContainers = new ArrayList<>();
+	private final BooleanSupplier enabledSupplier;
+	private final String name;
 
-    private final IntUnaryOperator yFunction;
-    private final int textColor;
+	@Setting @IgnoreAsOption public final DoubleSetting x;
 
-    public HudComponent(Feature parentFeature, Supplier<String> textSupplier, BooleanSupplier enabled, IntUnaryOperator xFunction, IntUnaryOperator yFunction, int textColor) {
-        super(parentFeature);
-        this.textSupplier = textSupplier;
-        this.enabled = enabled;
-        this.xFunction = xFunction;
-        this.yFunction = yFunction;
-        this.textColor = textColor;
-    }
+	@Setting @IgnoreAsOption public final DoubleSetting y;
 
-    @Override
-    public void register() {
-        super.register();
-        ClientGuiEvent.RENDER_HUD.register(this::renderHud);
-    }
+	public HudComponent(
+			Feature parentFeature,
+			RenderFunction renderFunction,
+			BooleanSupplier enabledSupplier,
+			double defaultX,
+			double defaultY) {
+		this(parentFeature, renderFunction, enabledSupplier, "hud", defaultX, defaultY);
+	}
 
-    private void renderHud(GuiGraphics graphics, float tickDelta) {
-        if (enabled.getAsBoolean() && HudUtils.shouldRender()) {
-            graphics.drawString(HudUtils.getFont(), textSupplier.get(), xFunction.applyAsInt(HudUtils.getScreenWidth()), yFunction.applyAsInt(HudUtils.getScreenHeight()), textColor);
-        }
-    }
+	public HudComponent(
+			Feature parentFeature,
+			RenderFunction renderFunction,
+			BooleanSupplier enabledSupplier,
+			String name,
+			double defaultX,
+			double defaultY) {
+		super(parentFeature);
+		this.enabledSupplier = enabledSupplier;
+		this.name = name;
 
-    public HudComponent chained(Supplier<String> textSupplier, int spacing) {
-        return new HudComponent(parentFeature, textSupplier, enabled, xFunction, (i) -> yFunction.applyAsInt(i) + spacing, textColor);
-    }
+		this.x =
+				new DoubleSetting(
+						parentFeature.getName() + "." + name + ".x", "", defaultX, 0.0, 1.0, 0, 3);
+		this.y =
+				new DoubleSetting(
+						parentFeature.getName() + "." + name + ".y", "", defaultY, 0.0, 1.0, 0, 3);
+
+		renderFunctionContainers.add(new RenderFunctionContainer(renderFunction, 0, 0));
+	}
+
+	@Override
+	public void register() {
+		super.register();
+		ClientGuiEvent.RENDER_HUD.register(this::renderHud);
+	}
+
+	private void renderHud(GuiGraphics graphics, float tickDelta) {
+		if (enabledSupplier.getAsBoolean() && HudUtils.shouldRender()) {
+			int startX = (int) (HudUtils.getScreenWidth() * x.getDoubleValue());
+			int startY = (int) (HudUtils.getScreenHeight() * y.getDoubleValue());
+			for (RenderFunctionContainer container : renderFunctionContainers) {
+				container.renderFunction.render(
+						graphics, tickDelta, startX + container.xOffset, startY + container.yOffset);
+			}
+		}
+	}
+
+	public boolean addRenderFunction(RenderFunction renderFunction, int xOffset, int yOffset) {
+		return addRenderFunctionContainer(
+				new RenderFunctionContainer(renderFunction, xOffset, yOffset));
+	}
+
+	private boolean addRenderFunctionContainer(RenderFunctionContainer renderFunctionContainer) {
+		if (renderFunctionContainers.contains(renderFunctionContainer)) {
+			return false;
+		}
+		renderFunctionContainers.add(renderFunctionContainer);
+		return true;
+	}
+
+	private record RenderFunctionContainer(RenderFunction renderFunction, int xOffset, int yOffset) {}
+
+	@FunctionalInterface
+	public interface RenderFunction {
+
+		void render(GuiGraphics graphics, float tickDelta, int x, int y);
+	}
+
+	public record TextRenderFunction(Supplier<String> textSupplier, IntSupplier textColorSupplier)
+			implements RenderFunction {
+
+		public TextRenderFunction(Supplier<String> textSupplier, int textColor) {
+			this(textSupplier, () -> textColor);
+		}
+
+		public TextRenderFunction(Supplier<String> textSupplier) {
+			this(textSupplier, () -> 0xFFFFFF);
+		}
+
+		@Override
+		public void render(GuiGraphics graphics, float tickDelta, int x, int y) {
+			graphics.drawString(
+					HudUtils.getFont(), textSupplier.get(), x, y, textColorSupplier.getAsInt());
+		}
+	}
 }

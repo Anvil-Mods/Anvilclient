@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -32,19 +32,34 @@ public class FPSDisplay extends Feature {
 	public String getName() {
 		return "fpsDisplay";
 	}
+
 	@Override
 	public FeatureCategory getCategory() {
 		return FeatureCategory.INFO;
 	}
-	private static final int TEXT_COLOR = 0xFFFFFF;
-	private final FeatureToggleComponent toggleComponent = new FeatureToggleComponent(this, "", false);
-	private final KeybindingComponent keybindingComponent = new KeybindingComponent(this, new KeyMapping("anvilclient.feature." + getName() + ".toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilclientCommon.KEY_CATEGORY), toggleComponent::toggleEnabled);
-	private final HudComponent hudComponent = new HudComponent(this, () -> "FPS: " + Minecraft.getInstance().getFps(), toggleComponent::isEnabled, (width) -> (int) (width * 0.75), (height) -> (int) (height * 0.25), TEXT_COLOR);
+
+	private final FeatureToggleComponent toggleComponent =
+			new FeatureToggleComponent(this, "", false);
+	private final KeybindingComponent keybindingComponent =
+			new KeybindingComponent(
+					this,
+					new KeyMapping(
+							"anvilclient.feature." + getName() + ".toggle",
+							InputConstants.Type.KEYSYM,
+							GLFW.GLFW_KEY_UNKNOWN,
+							AnvilclientCommon.KEY_CATEGORY),
+					toggleComponent::toggleEnabled);
+	private final HudComponent hudComponent =
+			new HudComponent(
+					this,
+					new HudComponent.TextRenderFunction(() -> "FPS: " + Minecraft.getInstance().getFps()),
+					toggleComponent::isEnabled,
+					0.75,
+					0.25);
 
 	@Override
 	public void register() {
 		addComponents(toggleComponent, keybindingComponent, hudComponent);
 		super.register();
 	}
-
 }
