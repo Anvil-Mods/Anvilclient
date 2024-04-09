@@ -21,27 +21,28 @@ import net.minecraft.client.gui.Font;
 
 public class HudUtils {
 
-    public static final int DEFAULT_LINE_HEIGHT = 11;
+	public static final int DEFAULT_LINE_HEIGHT = 11;
 
-    public static boolean shouldRender() {
-        Options options = getMinecraft().options;
-        return !options.hideGui && !getMinecraft().getDebugOverlay().showDebugScreen();
-    }
+	public static final int ITEM_ICON_SIZE = 16;
 
-    public static Font getFont() {
-        return getMinecraft().font;
-    }
+	public static boolean shouldRender() {
+		Options options = getMinecraft().options;
+		return !options.hideGui && !getMinecraft().getDebugOverlay().showDebugScreen();
+	}
 
-    public static int getScreenWidth() {
-        return getMinecraft().getWindow().getGuiScaledWidth();
-    }
+	public static Font getFont() {
+		return getMinecraft().font;
+	}
 
-    public static int getScreenHeight() {
-        return getMinecraft().getWindow().getGuiScaledHeight();
-    }
+	public static int getScreenWidth() {
+		return getMinecraft().getWindow().getGuiScaledWidth();
+	}
 
-    private static Minecraft getMinecraft() {
-        return Minecraft.getInstance();
-    }
+	public static int getScreenHeight() {
+		return getMinecraft().getWindow().getGuiScaledHeight();
+	}
 
+	private static Minecraft getMinecraft() {
+		return Minecraft.getInstance();
+	}
 }

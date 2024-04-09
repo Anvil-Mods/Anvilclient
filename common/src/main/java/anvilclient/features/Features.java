@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,10 +17,10 @@ package anvilclient.features;
 
 import anvilclient.features.building.AutoTool;
 import anvilclient.features.graphic.Fullbright;
+import anvilclient.features.info.ArmorDurability;
 import anvilclient.features.info.CPSDisplay;
 import anvilclient.features.info.Coordinates;
 import anvilclient.features.info.FPSDisplay;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -32,13 +32,15 @@ public class Features {
 	public static final AutoTool AUTO_TOOL = new AutoTool();
 	public static final Coordinates COORDINATES = new Coordinates();
 	public static final Fullbright FULLBRIGHT = new Fullbright();
-//	public static final BedwarsInfo BEDWARS_INFO = new BedwarsInfo();
+	//	public static final BedwarsInfo BEDWARS_INFO = new BedwarsInfo();
 	public static final FPSDisplay FPS_DISPLAY = new FPSDisplay();
 	public static final CPSDisplay CPS_DISPLAY = new CPSDisplay();
+	public static final ArmorDurability ARMOR_DURABILITY = new ArmorDurability();
 
 	public static final List<Feature> FEATURE_LIST = new ArrayList<>();
 
-	public static final HashMap<FeatureCategory, List<Feature>> FEATURE_LIST_BY_CATEGORY = new HashMap<>();
+	public static final HashMap<FeatureCategory, List<Feature>> FEATURE_LIST_BY_CATEGORY =
+			new HashMap<>();
 
 	public static void init() {
 		for (Field featureField : Features.class.getDeclaredFields()) {
@@ -68,5 +70,4 @@ public class Features {
 			feature.register();
 		}
 	}
-
 }

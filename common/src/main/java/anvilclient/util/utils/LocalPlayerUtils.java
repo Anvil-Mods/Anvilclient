@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,6 +15,7 @@
  */
 package anvilclient.util.utils;
 
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,12 +23,14 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.List;
-
 public class LocalPlayerUtils {
 
-	private LocalPlayerUtils() {
-	}
+	public static final int SLOT_ARMOR_HEAD = 5;
+	public static final int SLOT_ARMOR_CHEST = 6;
+	public static final int SLOT_ARMOR_LEGS = 7;
+	public static final int SLOT_ARMOR_FEET = 8;
+
+	private LocalPlayerUtils() {}
 
 	public static LocalPlayer getLocalPlayer() {
 		return Minecraft.getInstance().player;
@@ -50,7 +53,21 @@ public class LocalPlayerUtils {
 	}
 
 	public static List<Slot> getHotbarSlots(LocalPlayer localPlayer) {
-		return getSlots(localPlayer).subList(36, 45);
+		return getSlots(localPlayer)
+				.subList(InventoryMenu.USE_ROW_SLOT_START, InventoryMenu.USE_ROW_SLOT_END);
+	}
+
+	public static List<Slot> getArmorSlots(LocalPlayer localPlayer) {
+		return getSlots(localPlayer)
+				.subList(InventoryMenu.ARMOR_SLOT_START, InventoryMenu.ARMOR_SLOT_END);
+	}
+
+	public static Slot getSlot(LocalPlayer localPlayer, int slotId) {
+		return getPlayerContainer(localPlayer).getSlot(slotId);
+	}
+
+	public static ItemStack getItem(LocalPlayer localPlayer, int slotId) {
+		return getSlot(localPlayer, slotId).getItem();
 	}
 
 	public static int getSelectedIndex(LocalPlayer localPlayer) {

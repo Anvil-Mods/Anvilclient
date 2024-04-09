@@ -26,7 +26,9 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.ItemStack;
 
 public class HudComponent extends BaseComponent {
 
@@ -121,6 +123,16 @@ public class HudComponent extends BaseComponent {
 		public void render(GuiGraphics graphics, float tickDelta, int x, int y) {
 			graphics.drawString(
 					HudUtils.getFont(), textSupplier.get(), x, y, textColorSupplier.getAsInt());
+		}
+	}
+
+	public record ItemRenderFunction(Supplier<ItemStack> itemSupplier) implements RenderFunction {
+
+		@Override
+		public void render(GuiGraphics graphics, float tickDelta, int x, int y) {
+			ItemStack itemStack = itemSupplier.get();
+			graphics.renderItem(itemStack, x, y);
+			graphics.renderItemDecorations(Minecraft.getInstance().font, itemStack, x, y);
 		}
 	}
 }
