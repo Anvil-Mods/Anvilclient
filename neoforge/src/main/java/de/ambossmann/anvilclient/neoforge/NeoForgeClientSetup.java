@@ -1,0 +1,31 @@
+/*
+ * Copyright (C) 2024 Ambossmann <https://github.com/Ambossmann>
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+package de.ambossmann.anvilclient.neoforge;
+
+import de.ambossmann.anvilclient.AnvilclientCommon;
+import de.ambossmann.anvilclient.util.utils.ScreenUtils;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.neoforge.client.ConfigScreenHandler;
+
+public class NeoForgeClientSetup {
+
+    public static void setup() {
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> ScreenUtils.getMainConfigGui(screen)));
+        AnvilclientCommon.init();
+    }
+
+}

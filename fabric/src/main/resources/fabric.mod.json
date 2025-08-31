@@ -16,10 +16,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "anvilclient.fabric.AnvilclientFabric"
+      "de.ambossmann.anvilclient.fabric.AnvilclientFabric"
     ],
     "modmenu": [
-      "anvilclient.fabric.AnvilclientModMenuApiImpl"
+      "de.ambossmann.anvilclient.fabric.AnvilclientModMenuApiImpl"
     ]
   },
   "mixins": [
