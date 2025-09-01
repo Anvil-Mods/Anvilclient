@@ -45,46 +45,45 @@ public class SettingUtils {
 	public static <T> OptionInstance<T> getOptionForSetting(ISetting<T> setting) {
 		OptionInstance<T> option = null;
 		String translationKey = "anvilclient.feature." + setting.getKey();
-		if (setting instanceof BooleanSetting booleanSetting) {
-			option =
-					(OptionInstance<T>)
-							OptionInstance.createBoolean(
-									translationKey, booleanSetting.getValue(), booleanSetting::setValue);
-
-		} else if (setting instanceof EnumSetting<?> enumSetting) {
-			option = (OptionInstance<T>) optionInstanceForEnum(enumSetting, translationKey);
-
-		} else if (setting instanceof IntegerSetting integerSetting) {
-			option =
-					(OptionInstance<T>)
-							new OptionInstance<Integer>(
-									translationKey,
-									OptionInstance.noTooltip(),
-									(component, integer) ->
-											Options.genericValueLabel(component, integerSetting.getIntValue()),
-									new OptionInstance.IntRange(
-											integerSetting.getMinValue(), integerSetting.getMaxValue()),
-									integerSetting.getValue(),
-									integerSetting::setValue);
-
-		} else if (setting instanceof DoubleSetting doubleSetting) {
-			option =
-					(OptionInstance<T>)
-							new OptionInstance<Double>(
-									translationKey,
-									OptionInstance.noTooltip(),
-									(component, doubleValue) ->
-											Options.genericValueLabel(
-													component,
-													Component.literal(
-															MathUtils.formatDouble(
-																	doubleValue, doubleSetting.getDecimalCount()))),
-									new DoubleRange(
-											doubleSetting.getMinValue(),
-											doubleSetting.getMaxValue(),
-											doubleSetting.getDecimalCount()),
-									doubleSetting.getValue(),
-									doubleSetting::setValue);
+		switch (setting) {
+			case BooleanSetting booleanSetting ->
+					option =
+							(OptionInstance<T>)
+									OptionInstance.createBoolean(
+											translationKey, booleanSetting.getValue(), booleanSetting::setValue);
+			case EnumSetting<?> enumSetting ->
+					option = (OptionInstance<T>) optionInstanceForEnum(enumSetting, translationKey);
+			case IntegerSetting integerSetting ->
+					option =
+							(OptionInstance<T>)
+									new OptionInstance<Integer>(
+											translationKey,
+											OptionInstance.noTooltip(),
+											(component, integer) ->
+													Options.genericValueLabel(component, integerSetting.getIntValue()),
+											new OptionInstance.IntRange(
+													integerSetting.getMinValue(), integerSetting.getMaxValue()),
+											integerSetting.getValue(),
+											integerSetting::setValue);
+			case DoubleSetting doubleSetting ->
+					option =
+							(OptionInstance<T>)
+									new OptionInstance<Double>(
+											translationKey,
+											OptionInstance.noTooltip(),
+											(component, doubleValue) ->
+													Options.genericValueLabel(
+															component,
+															Component.literal(
+																	MathUtils.formatDouble(
+																			doubleValue, doubleSetting.getDecimalCount()))),
+											new DoubleRange(
+													doubleSetting.getMinValue(),
+													doubleSetting.getMaxValue(),
+													doubleSetting.getDecimalCount()),
+											doubleSetting.getValue(),
+											doubleSetting::setValue);
+			default -> {}
 		}
 		return option;
 	}

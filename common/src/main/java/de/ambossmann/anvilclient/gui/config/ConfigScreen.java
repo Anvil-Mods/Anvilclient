@@ -19,7 +19,6 @@ import de.ambossmann.anvilclient.settings.EnumSetting;
 import de.ambossmann.anvilclient.settings.IgnoreAsOption;
 import de.ambossmann.anvilclient.settings.Setting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.network.chat.Component;
@@ -28,13 +27,6 @@ import net.minecraft.util.OptionEnum;
 public abstract class ConfigScreen extends OptionsSubScreen {
 	public ConfigScreen(String nameTranslationKey, Screen lastScreen) {
 		super(lastScreen, Minecraft.getInstance().options, Component.translatable(nameTranslationKey));
-	}
-
-	@Override
-	protected void init() {
-		this.list = this.addRenderableWidget(new OptionsList(this.minecraft, this.width, this));
-
-		super.init();
 	}
 
 	@Setting @IgnoreAsOption
