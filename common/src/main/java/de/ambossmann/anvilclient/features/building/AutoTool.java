@@ -108,8 +108,8 @@ public class AutoTool extends Feature {
 				Minecraft.getInstance()
 						.level
 						.registryAccess()
-						.registryOrThrow(Registries.ENCHANTMENT)
-						.getHolderOrThrow(Enchantments.SILK_TOUCH);
+						.lookupOrThrow(Registries.ENCHANTMENT)
+						.getOrThrow(Enchantments.SILK_TOUCH);
 		int level = EnchantmentHelper.getItemEnchantmentLevel(silkTouch, tool);
 		return switch (silkTouchMode.getValue()) {
 			case DONT_USE -> level < 1;
@@ -127,8 +127,8 @@ public class AutoTool extends Feature {
 				Minecraft.getInstance()
 						.level
 						.registryAccess()
-						.registryOrThrow(Registries.ENCHANTMENT)
-						.getHolderOrThrow(Enchantments.SILK_TOUCH);
+						.lookupOrThrow(Registries.ENCHANTMENT)
+						.getOrThrow(Enchantments.SILK_TOUCH);
 		int level = EnchantmentHelper.getItemEnchantmentLevel(silkTouch, tool);
 		return switch (silkTouchMode.getValue()) {
 			case DONT_USE, PREFER_NOT_TO_USE -> level * -1;
@@ -142,8 +142,8 @@ public class AutoTool extends Feature {
 				Minecraft.getInstance()
 						.level
 						.registryAccess()
-						.registryOrThrow(Registries.ENCHANTMENT)
-						.getHolderOrThrow(Enchantments.SILK_TOUCH);
+						.lookupOrThrow(Registries.ENCHANTMENT)
+						.getOrThrow(Enchantments.SILK_TOUCH);
 		return EnchantmentHelper.getItemEnchantmentLevel(fortune, tool);
 	}
 
