@@ -36,6 +36,7 @@ public class ItemUtils {
 		return item.isEmpty() || !item.isDamageableItem();
 	}
 
+	// Slightly modified version of net.minecraft.world.entity.player.Player#getDestroySpeed
 	public static float getDiggingSpeed(Player player, ItemStack tool, BlockState blockState) {
 		float destroySpeed = tool.getDestroySpeed(blockState);
 		if (destroySpeed > 1.0F) {
@@ -46,9 +47,9 @@ public class ItemUtils {
 			destroySpeed *= 1.0F + (MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F;
 		}
 
-		if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
+		if (player.hasEffect(MobEffects.MINING_FATIGUE)) {
 			destroySpeed *=
-					switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+					switch (player.getEffect(MobEffects.MINING_FATIGUE).getAmplifier()) {
 						case 0 -> 0.3f;
 						case 1 -> 0.09f;
 						case 2 -> 0.0027f;

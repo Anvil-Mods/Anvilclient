@@ -71,11 +71,11 @@ public class LocalPlayerUtils {
 	}
 
 	public static int getSelectedIndex(LocalPlayer localPlayer) {
-		return getPlayerInventory(localPlayer).selected;
+		return getPlayerInventory(localPlayer).getSelectedSlot();
 	}
 
 	public static ItemStack getSelectedItem(LocalPlayer localPlayer) {
-		return getPlayerInventory(localPlayer).getSelected();
+		return getPlayerInventory(localPlayer).getSelectedItem();
 	}
 
 	public static Slot getSelectedSlot(LocalPlayer localPlayer) {
@@ -88,7 +88,7 @@ public class LocalPlayerUtils {
 					"index must be between 0 and " + (getHotbarSize() - 1) + ", got " + index);
 		}
 
-		getPlayerInventory(localPlayer).selected = index;
+		getPlayerInventory(localPlayer).setSelectedSlot(index);
 	}
 
 	public static void setSelectedSlot(LocalPlayer localPlayer, Slot slot) {
