@@ -18,39 +18,23 @@ package de.ambossmann.anvilclient.gui.config;
 import de.ambossmann.anvilclient.settings.EnumSetting;
 import de.ambossmann.anvilclient.settings.IgnoreAsOption;
 import de.ambossmann.anvilclient.settings.Setting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.OptionsList;
-import net.minecraft.client.gui.screens.OptionsSubScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.OptionEnum;
 
 public abstract class ConfigScreen extends OptionsSubScreen {
-	protected static final int BUTTON_WIDTH = 200;
-	protected static final int BUTTON_HEIGHT = 20;
-	protected static final int DONE_BUTTON_TOP_OFFSET = 27;
-
-	protected OptionsList list;
-
 	public ConfigScreen(String nameTranslationKey, Screen lastScreen) {
-		super(lastScreen, null, Component.translatable(nameTranslationKey));
+		super(lastScreen, Minecraft.getInstance().options, Component.translatable(nameTranslationKey));
 	}
 
 	@Override
 	protected void init() {
-		this.list =
-				this.addRenderableWidget(new OptionsList(this.minecraft, this.width, this.height, this));
-
-		this.addOptions();
+		this.list = this.addRenderableWidget(new OptionsList(this.minecraft, this.width, this));
 
 		super.init();
-	}
-
-	protected abstract void addOptions();
-
-	@Override
-	protected void repositionElements() {
-		super.repositionElements();
-		this.list.updateSize(this.width, this.layout);
 	}
 
 	@Setting @IgnoreAsOption

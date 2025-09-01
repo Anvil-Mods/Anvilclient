@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
@@ -76,13 +77,13 @@ public class HudComponent extends BaseComponent {
 		ClientGuiEvent.RENDER_HUD.register(this::renderHud);
 	}
 
-	private void renderHud(GuiGraphics graphics, float tickDelta) {
+	private void renderHud(GuiGraphics graphics, DeltaTracker deltaTracker) {
 		if (enabledSupplier.getAsBoolean() && HudUtils.shouldRender()) {
 			int startX = (int) (HudUtils.getScreenWidth() * x.getDoubleValue());
 			int startY = (int) (HudUtils.getScreenHeight() * y.getDoubleValue());
 			for (RenderFunctionContainer container : renderFunctionContainers) {
 				container.renderFunction.render(
-						graphics, tickDelta, startX + container.xOffset, startY + container.yOffset);
+						graphics, deltaTracker, startX + container.xOffset, startY + container.yOffset);
 			}
 		}
 	}
@@ -105,7 +106,7 @@ public class HudComponent extends BaseComponent {
 	@FunctionalInterface
 	public interface RenderFunction {
 
-		void render(GuiGraphics graphics, float tickDelta, int x, int y);
+		void render(GuiGraphics graphics, DeltaTracker deltaTracker, int x, int y);
 	}
 
 	public record TextRenderFunction(Supplier<String> textSupplier, IntSupplier textColorSupplier)
@@ -120,7 +121,7 @@ public class HudComponent extends BaseComponent {
 		}
 
 		@Override
-		public void render(GuiGraphics graphics, float tickDelta, int x, int y) {
+		public void render(GuiGraphics graphics, DeltaTracker deltaTracker, int x, int y) {
 			graphics.drawString(
 					HudUtils.getFont(), textSupplier.get(), x, y, textColorSupplier.getAsInt());
 		}
@@ -129,7 +130,7 @@ public class HudComponent extends BaseComponent {
 	public record ItemRenderFunction(Supplier<ItemStack> itemSupplier) implements RenderFunction {
 
 		@Override
-		public void render(GuiGraphics graphics, float tickDelta, int x, int y) {
+		public void render(GuiGraphics graphics, DeltaTracker deltaTracker, int x, int y) {
 			ItemStack itemStack = itemSupplier.get();
 			graphics.renderItem(itemStack, x, y);
 			graphics.renderItemDecorations(Minecraft.getInstance().font, itemStack, x, y);

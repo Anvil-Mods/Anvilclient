@@ -19,10 +19,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ItemUtils {
@@ -40,29 +39,26 @@ public class ItemUtils {
 	public static float getDiggingSpeed(Player player, ItemStack tool, BlockState blockState) {
 		float destroySpeed = tool.getDestroySpeed(blockState);
 		if (destroySpeed > 1.0F) {
-			int efficiencyLevel =
-					EnchantmentHelper.getItemEnchantmentLevel(Enchantments.EFFICIENCY, tool);
-			if (efficiencyLevel > 0 && !tool.isEmpty()) {
-				destroySpeed += (float) (efficiencyLevel * efficiencyLevel + 1);
-			}
+			destroySpeed += (float) player.getAttributeValue(Attributes.MINING_EFFICIENCY);
 		}
 
 		if (MobEffectUtil.hasDigSpeed(player)) {
-			destroySpeed *= 1.0F + (float) (MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F;
+			destroySpeed *= 1.0F + (MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F;
 		}
 
 		if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
 			destroySpeed *=
-					(switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+					switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
 						case 0 -> 0.3f;
 						case 1 -> 0.09f;
 						case 2 -> 0.0027f;
 						default -> 8.1E-4f;
-					});
+					};
 		}
 
-		if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
-			destroySpeed /= 5.0F;
+		destroySpeed *= (float) player.getAttributeValue(Attributes.BLOCK_BREAK_SPEED);
+		if (player.isEyeInFluid(FluidTags.WATER)) {
+			destroySpeed *= (float) player.getAttribute(Attributes.SUBMERGED_MINING_SPEED).getValue();
 		}
 
 		if (!player.onGround()) {

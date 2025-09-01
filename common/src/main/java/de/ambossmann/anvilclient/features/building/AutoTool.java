@@ -35,9 +35,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.OptionEnum;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import org.lwjgl.glfw.GLFW;
@@ -100,7 +103,14 @@ public class AutoTool extends Feature {
 	}
 
 	private boolean filterSilkTouchMode(ItemStack tool) {
-		int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
+		// TODO create level aware cache for stuff like this
+		Holder<Enchantment> silkTouch =
+				Minecraft.getInstance()
+						.level
+						.registryAccess()
+						.registryOrThrow(Registries.ENCHANTMENT)
+						.getHolderOrThrow(Enchantments.SILK_TOUCH);
+		int level = EnchantmentHelper.getItemEnchantmentLevel(silkTouch, tool);
 		return switch (silkTouchMode.getValue()) {
 			case DONT_USE -> level < 1;
 			case USE_ONLY -> level >= 1;
@@ -113,7 +123,13 @@ public class AutoTool extends Feature {
 	}
 
 	private int getSilkTouchEnchantmentLevel(ItemStack tool) {
-		int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
+		Holder<Enchantment> silkTouch =
+				Minecraft.getInstance()
+						.level
+						.registryAccess()
+						.registryOrThrow(Registries.ENCHANTMENT)
+						.getHolderOrThrow(Enchantments.SILK_TOUCH);
+		int level = EnchantmentHelper.getItemEnchantmentLevel(silkTouch, tool);
 		return switch (silkTouchMode.getValue()) {
 			case DONT_USE, PREFER_NOT_TO_USE -> level * -1;
 			case DOESNT_MATTER -> 0;
@@ -122,7 +138,13 @@ public class AutoTool extends Feature {
 	}
 
 	private int getFortuneEnchantmentLevel(ItemStack tool) {
-		return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FORTUNE, tool);
+		Holder<Enchantment> fortune =
+				Minecraft.getInstance()
+						.level
+						.registryAccess()
+						.registryOrThrow(Registries.ENCHANTMENT)
+						.getHolderOrThrow(Enchantments.SILK_TOUCH);
+		return EnchantmentHelper.getItemEnchantmentLevel(fortune, tool);
 	}
 
 	private Slot getBestTool(BlockPos blockPos) {
