@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -36,5 +36,4 @@ public class EnumSetting<T extends Enum<T> & OptionEnum> extends AbstractSetting
 	public T[] getValues() {
 		return this.value.getDeclaringClass().getEnumConstants();
 	}
-
 }

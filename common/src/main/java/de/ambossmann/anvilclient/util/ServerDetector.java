@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -16,90 +16,88 @@
 package de.ambossmann.anvilclient.util;
 
 import dev.architectury.event.events.client.ClientPlayerEvent;
+import java.util.Arrays;
+import java.util.Objects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.player.LocalPlayer;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 public class ServerDetector {
 
-    private static final ServerDetector INSTANCE = new ServerDetector();
+	private static final ServerDetector INSTANCE = new ServerDetector();
 
-    public static ServerDetector getInstance() {
-        return INSTANCE;
-    }
+	public static ServerDetector getInstance() {
+		return INSTANCE;
+	}
 
-    private ServerDetector() {
-    }
+	private ServerDetector() {}
 
-    public void register() {
-        ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(this::join);
-        ClientPlayerEvent.CLIENT_PLAYER_QUIT.register(this::quit);
-    }
+	public void register() {
+		ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(this::join);
+		ClientPlayerEvent.CLIENT_PLAYER_QUIT.register(this::quit);
+	}
 
-    //TODO test if this works
-    private void join(LocalPlayer localPlayer) {
-        Minecraft mc = Minecraft.getInstance();
-        if (Objects.equals(mc.player, localPlayer)) {
-            ClientPacketListener clientPacketListener = mc.getConnection();
-            if (clientPacketListener != null && clientPacketListener.getConnection().isConnected()) {
-                ServerData serverData = Minecraft.getInstance().getCurrentServer();
-                if (mc.getSingleplayerServer() != null && !mc.getSingleplayerServer().isPublished()) {
-                    this.currentServer = Server.SINGLEPLAYER;
-                } else if (serverData != null && serverData.isRealm()) {
-                    this.currentServer = Server.REALMS;
-                } else if (mc.getSingleplayerServer() != null || serverData != null && serverData.isLan()) {
-                    this.currentServer = Server.LAN;
-                } else {
-                    if (serverData != null) {
-                        String serverAddress = serverData.ip.toLowerCase();
-                        this.currentServer = Arrays.stream(Server.values())
-                                .filter(server -> server.DOMAIN != null)
-                                .filter(server -> serverAddress.contains(server.DOMAIN)).findFirst()
-                                .orElse(Server.UNKNOWN);
-                    } else {
-                        this.currentServer = Server.NONE;
-                    }
-                }
-            }
-        }
-    }
+	// TODO test if this works
+	private void join(LocalPlayer localPlayer) {
+		Minecraft mc = Minecraft.getInstance();
+		if (Objects.equals(mc.player, localPlayer)) {
+			ClientPacketListener clientPacketListener = mc.getConnection();
+			if (clientPacketListener != null && clientPacketListener.getConnection().isConnected()) {
+				ServerData serverData = Minecraft.getInstance().getCurrentServer();
+				if (mc.getSingleplayerServer() != null && !mc.getSingleplayerServer().isPublished()) {
+					this.currentServer = Server.SINGLEPLAYER;
+				} else if (serverData != null && serverData.isRealm()) {
+					this.currentServer = Server.REALMS;
+				} else if (mc.getSingleplayerServer() != null || serverData != null && serverData.isLan()) {
+					this.currentServer = Server.LAN;
+				} else {
+					if (serverData != null) {
+						String serverAddress = serverData.ip.toLowerCase();
+						this.currentServer =
+								Arrays.stream(Server.values())
+										.filter(server -> server.DOMAIN != null)
+										.filter(server -> serverAddress.contains(server.DOMAIN))
+										.findFirst()
+										.orElse(Server.UNKNOWN);
+					} else {
+						this.currentServer = Server.NONE;
+					}
+				}
+			}
+		}
+	}
 
-    private void quit(LocalPlayer localPlayer) {
-        Minecraft mc = Minecraft.getInstance();
-        if (Objects.equals(mc.player, localPlayer)) {
-            currentServer = Server.NONE;
-        }
-    }
+	private void quit(LocalPlayer localPlayer) {
+		Minecraft mc = Minecraft.getInstance();
+		if (Objects.equals(mc.player, localPlayer)) {
+			currentServer = Server.NONE;
+		}
+	}
 
-    private Server currentServer = Server.NONE;
+	private Server currentServer = Server.NONE;
 
-    public Server getCurrentServer() {
-        return currentServer;
-    }
+	public Server getCurrentServer() {
+		return currentServer;
+	}
 
-    public enum Server {
-        SINGLEPLAYER,
-        LAN,
-        REALMS,
-        NONE,
+	public enum Server {
+		SINGLEPLAYER,
+		LAN,
+		REALMS,
+		NONE,
 
-        UNKNOWN,
-        HYPIXEL("hypixel.net");
+		UNKNOWN,
+		HYPIXEL("hypixel.net");
 
+		public final String DOMAIN;
 
-        public final String DOMAIN;
+		private Server(String domain) {
+			this.DOMAIN = domain;
+		}
 
-        private Server(String domain) {
-            this.DOMAIN = domain;
-        }
-
-        private Server() {
-            this.DOMAIN = null;
-        }
-    }
-
+		private Server() {
+			this.DOMAIN = null;
+		}
+	}
 }

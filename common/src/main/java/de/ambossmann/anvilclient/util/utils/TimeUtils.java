@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,8 +17,7 @@ package de.ambossmann.anvilclient.util.utils;
 
 public class TimeUtils {
 
-	private TimeUtils() {
-	}
+	private TimeUtils() {}
 
 	public static String formatTimeSecs(long secs) {
 		String formattedTime;
@@ -33,5 +32,4 @@ public class TimeUtils {
 	public static String formatTimeMillis(long millis) {
 		return formatTimeSecs(millis / 1000L);
 	}
-
 }

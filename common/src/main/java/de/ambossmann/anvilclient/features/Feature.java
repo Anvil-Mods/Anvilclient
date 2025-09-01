@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -18,49 +18,46 @@ package de.ambossmann.anvilclient.features;
 import de.ambossmann.anvilclient.features.components.BaseComponent;
 import de.ambossmann.anvilclient.features.components.FeatureToggleComponent;
 import dev.architectury.event.events.client.ClientTickEvent;
-import net.minecraft.client.Minecraft;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.Minecraft;
 
 public abstract class Feature {
 
-    protected List<BaseComponent> components = new ArrayList<>();
+	protected List<BaseComponent> components = new ArrayList<>();
 
-    public FeatureToggleComponent getFeatureToggle() {
-        return featureToggle;
-    }
+	public FeatureToggleComponent getFeatureToggle() {
+		return featureToggle;
+	}
 
-    protected FeatureToggleComponent featureToggle;
+	protected FeatureToggleComponent featureToggle;
 
-    public abstract String getName();
+	public abstract String getName();
 
-    public abstract FeatureCategory getCategory();
+	public abstract FeatureCategory getCategory();
 
-    protected void addComponents(BaseComponent... components) {
-        for (BaseComponent component : components) {
-            this.components.add(component);
-            if (component instanceof FeatureToggleComponent featureToggleComponent) {
-                if (featureToggle != null) {
-                    throw new UnsupportedOperationException("Can't register more than one toggle");
-                }
-                featureToggle = featureToggleComponent;
-            }
-        }
-    }
+	protected void addComponents(BaseComponent... components) {
+		for (BaseComponent component : components) {
+			this.components.add(component);
+			if (component instanceof FeatureToggleComponent featureToggleComponent) {
+				if (featureToggle != null) {
+					throw new UnsupportedOperationException("Can't register more than one toggle");
+				}
+				featureToggle = featureToggleComponent;
+			}
+		}
+	}
 
-    public List<BaseComponent> getComponents() {
-        return components;
-    }
+	public List<BaseComponent> getComponents() {
+		return components;
+	}
 
-    public void register() {
-        ClientTickEvent.CLIENT_POST.register(this::onClientTick);
-        for (BaseComponent component : components) {
-            component.register();
-        }
-    }
+	public void register() {
+		ClientTickEvent.CLIENT_POST.register(this::onClientTick);
+		for (BaseComponent component : components) {
+			component.register();
+		}
+	}
 
-    protected void onClientTick(Minecraft minecraft) {
-    }
-
+	protected void onClientTick(Minecraft minecraft) {}
 }

@@ -16,10 +16,10 @@
 package de.ambossmann.anvilclient;
 
 import de.ambossmann.anvilclient.features.Features;
+import de.ambossmann.anvilclient.gui.config.ConfigScreen;
 import de.ambossmann.anvilclient.settings.ConfigManager;
 import de.ambossmann.anvilclient.settings.SettingRegister;
 import de.ambossmann.anvilclient.util.Keybinds;
-import de.ambossmann.anvilclient.gui.config.ConfigScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

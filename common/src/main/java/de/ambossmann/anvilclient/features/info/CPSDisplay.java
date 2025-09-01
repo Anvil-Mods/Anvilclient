@@ -15,6 +15,7 @@
  */
 package de.ambossmann.anvilclient.features.info;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import de.ambossmann.anvilclient.AnvilclientCommon;
 import de.ambossmann.anvilclient.features.Feature;
 import de.ambossmann.anvilclient.features.FeatureCategory;
@@ -25,7 +26,6 @@ import de.ambossmann.anvilclient.settings.EnumSetting;
 import de.ambossmann.anvilclient.settings.IntegerSetting;
 import de.ambossmann.anvilclient.settings.Setting;
 import de.ambossmann.anvilclient.util.utils.MathUtils;
-import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.client.ClientRawInputEvent;
 import it.unimi.dsi.fastutil.longs.LongArrayList;

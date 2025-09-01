@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,19 +15,17 @@
  */
 package de.ambossmann.anvilclient.util.utils;
 
-import de.ambossmann.anvilclient.features.Feature;
-import de.ambossmann.anvilclient.features.components.ToggleComponent;
-import de.ambossmann.anvilclient.gui.config.FeatureGui;
-import de.ambossmann.anvilclient.settings.*;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
+import de.ambossmann.anvilclient.features.Feature;
+import de.ambossmann.anvilclient.features.components.ToggleComponent;
+import de.ambossmann.anvilclient.gui.config.FeatureGui;
+import de.ambossmann.anvilclient.settings.*;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.*;
-
-import de.ambossmann.anvilclient.settings.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;

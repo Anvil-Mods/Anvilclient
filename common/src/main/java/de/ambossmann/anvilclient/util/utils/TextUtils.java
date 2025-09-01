@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,17 +15,15 @@
  */
 package de.ambossmann.anvilclient.util.utils;
 
+import java.util.Arrays;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 
-import java.util.Arrays;
-
 public class TextUtils {
 
-	private TextUtils() {
-	}
+	private TextUtils() {}
 
 	public static String getFormattedText(Component textComponent) {
 		StringBuilder stringbuilder = new StringBuilder();
@@ -47,9 +45,13 @@ public class TextUtils {
 		StringBuilder stringbuilder = new StringBuilder();
 		TextColor color = style.getColor();
 		if (color != null) {
-			stringbuilder.append(Arrays.stream(ChatFormatting.values()).filter(ChatFormatting::isColor)
-					.filter(formatting -> formatting.getColor() == color.getValue()).map(ChatFormatting::toString)
-					.findFirst().orElse(""));
+			stringbuilder.append(
+					Arrays.stream(ChatFormatting.values())
+							.filter(ChatFormatting::isColor)
+							.filter(formatting -> formatting.getColor() == color.getValue())
+							.map(ChatFormatting::toString)
+							.findFirst()
+							.orElse(""));
 		}
 
 		if (style.isBold()) {
@@ -78,5 +80,4 @@ public class TextUtils {
 	public static String removeFormattingCodes(String string) {
 		return string.replaceAll("\u00A7.", "");
 	}
-
 }

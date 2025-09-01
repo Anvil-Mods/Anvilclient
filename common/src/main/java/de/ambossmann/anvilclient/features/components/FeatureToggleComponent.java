@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2023-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -16,15 +16,18 @@
 package de.ambossmann.anvilclient.features.components;
 
 import de.ambossmann.anvilclient.features.Feature;
-
 import java.util.function.Consumer;
 
 public class FeatureToggleComponent extends ToggleComponent {
-    public FeatureToggleComponent(Feature parentFeature, String description, boolean defaultValue, Consumer<Boolean> updateHook) {
-        super(parentFeature, "featureEnabled", description, defaultValue, updateHook);
-    }
+	public FeatureToggleComponent(
+			Feature parentFeature,
+			String description,
+			boolean defaultValue,
+			Consumer<Boolean> updateHook) {
+		super(parentFeature, "featureEnabled", description, defaultValue, updateHook);
+	}
 
-    public FeatureToggleComponent(Feature parentFeature, String description, boolean defaultValue) {
-        super(parentFeature, "featureEnabled", description, defaultValue);
-    }
+	public FeatureToggleComponent(Feature parentFeature, String description, boolean defaultValue) {
+		super(parentFeature, "featureEnabled", description, defaultValue);
+	}
 }

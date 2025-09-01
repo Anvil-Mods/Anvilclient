@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2023-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -18,47 +18,52 @@ package de.ambossmann.anvilclient.features.components;
 import de.ambossmann.anvilclient.features.Feature;
 import de.ambossmann.anvilclient.settings.BooleanSetting;
 import de.ambossmann.anvilclient.settings.Setting;
-
 import java.util.function.Consumer;
 
 public class ToggleComponent extends BaseComponent {
 
-    @Setting
-    public final BooleanSetting enabled;
+	@Setting public final BooleanSetting enabled;
 
-    private final Consumer<Boolean> updateHook;
+	private final Consumer<Boolean> updateHook;
 
-    public ToggleComponent(Feature parentFeature, String toggleName, String description, boolean defaultValue, Consumer<Boolean> updateHook) {
-        super(parentFeature);
-        enabled = new BooleanSetting(parentFeature.getName() + ".toggle." + toggleName, description, defaultValue);
-        this.updateHook = updateHook;
-    }
+	public ToggleComponent(
+			Feature parentFeature,
+			String toggleName,
+			String description,
+			boolean defaultValue,
+			Consumer<Boolean> updateHook) {
+		super(parentFeature);
+		enabled =
+				new BooleanSetting(
+						parentFeature.getName() + ".toggle." + toggleName, description, defaultValue);
+		this.updateHook = updateHook;
+	}
 
-    public ToggleComponent(Feature parentFeature, String toggleName, String description, boolean defaultValue) {
-        this(parentFeature, toggleName, description, defaultValue, (b) -> {});
-    }
+	public ToggleComponent(
+			Feature parentFeature, String toggleName, String description, boolean defaultValue) {
+		this(parentFeature, toggleName, description, defaultValue, (b) -> {});
+	}
 
-    public void setEnabled(Boolean newEnabled) {
-        this.enabled.setValue(newEnabled);
-    }
+	public void setEnabled(Boolean newEnabled) {
+		this.enabled.setValue(newEnabled);
+	}
 
-    public boolean isEnabled() {
-        return this.enabled.getValue();
-    }
+	public boolean isEnabled() {
+		return this.enabled.getValue();
+	}
 
-    public void toggleEnabled() {
-        this.enabled.toggle();
-        updateHook.accept(this.enabled.getValue());
-    }
+	public void toggleEnabled() {
+		this.enabled.toggle();
+		updateHook.accept(this.enabled.getValue());
+	}
 
-    public void enable() {
-        this.enabled.enable();
-        updateHook.accept(this.enabled.getValue());
-    }
+	public void enable() {
+		this.enabled.enable();
+		updateHook.accept(this.enabled.getValue());
+	}
 
-    public void disable() {
-        this.enabled.disable();
-        updateHook.accept(this.enabled.getValue());
-    }
-
+	public void disable() {
+		this.enabled.disable();
+		updateHook.accept(this.enabled.getValue());
+	}
 }

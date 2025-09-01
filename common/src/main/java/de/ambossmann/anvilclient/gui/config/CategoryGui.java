@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -19,10 +19,9 @@ import de.ambossmann.anvilclient.features.Feature;
 import de.ambossmann.anvilclient.features.FeatureCategory;
 import de.ambossmann.anvilclient.features.Features;
 import de.ambossmann.anvilclient.util.utils.SettingUtils;
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-
-import java.util.List;
 
 public class CategoryGui extends ConfigScreen {
 
@@ -39,14 +38,13 @@ public class CategoryGui extends ConfigScreen {
 
 		for (Feature feature : featureList) {
 			if (feature.getFeatureToggle() != null) {
-				this.optionsList
-						.addSmall(SettingUtils.getOptionListForFeature(feature, this));
+				this.optionsList.addSmall(SettingUtils.getOptionListForFeature(feature, this));
 			} else {
-				this.optionsList.addBig(SettingUtils.getClickOption("anvilclient.feature." + feature.getName(),
-						() -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
+				this.optionsList.addBig(
+						SettingUtils.getClickOption(
+								"anvilclient.feature." + feature.getName(),
+								() -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
 			}
 		}
-
 	}
-
 }

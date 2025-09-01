@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,8 +17,14 @@ package de.ambossmann.anvilclient.settings;
 
 public class DoubleSetting extends NumberSetting<Double> {
 
-	public DoubleSetting(String name, String description, Double defaultValue, Double minValue, Double maxValue,
-			float stepSizeIn, int decimalCountIn) {
+	public DoubleSetting(
+			String name,
+			String description,
+			Double defaultValue,
+			Double minValue,
+			Double maxValue,
+			float stepSizeIn,
+			int decimalCountIn) {
 		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, decimalCountIn);
 	}
 
@@ -31,5 +37,4 @@ public class DoubleSetting extends NumberSetting<Double> {
 	public Double stringToValue(String string) {
 		return Double.parseDouble(string);
 	}
-
 }

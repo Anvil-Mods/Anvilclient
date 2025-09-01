@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,6 +15,7 @@
  */
 package de.ambossmann.anvilclient.features.graphic;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import de.ambossmann.anvilclient.AnvilclientCommon;
 import de.ambossmann.anvilclient.features.Feature;
 import de.ambossmann.anvilclient.features.FeatureCategory;
@@ -22,7 +23,6 @@ import de.ambossmann.anvilclient.features.components.FeatureToggleComponent;
 import de.ambossmann.anvilclient.features.components.KeybindingComponent;
 import de.ambossmann.anvilclient.settings.DoubleSetting;
 import de.ambossmann.anvilclient.settings.Setting;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;

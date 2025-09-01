@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -20,7 +20,13 @@ public abstract class NumberSetting<T extends Number> extends AbstractSetting<T>
 	protected float stepSize;
 	protected int decimalCount;
 
-	protected NumberSetting(String name, String description, T defaultValue, T minValue, T maxValue, float stepSizeIn,
+	protected NumberSetting(
+			String name,
+			String description,
+			T defaultValue,
+			T minValue,
+			T maxValue,
+			float stepSizeIn,
 			int decimalCountIn) {
 		super(name, description, defaultValue, minValue, maxValue);
 		this.stepSize = stepSizeIn;

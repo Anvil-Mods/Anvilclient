@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -21,8 +21,7 @@ import net.minecraft.core.BlockPos;
 
 public class WorldUtils {
 
-	private WorldUtils() {
-	}
+	private WorldUtils() {}
 
 	public static ClientLevel getWorld(LocalPlayer localPlayer) {
 		return localPlayer == null ? null : localPlayer.clientLevel;
@@ -36,5 +35,4 @@ public class WorldUtils {
 		ClientLevel world = getWorld(localPlayer);
 		return world.getBlockState(blockPos).getShape(world, blockPos).isEmpty();
 	}
-
 }

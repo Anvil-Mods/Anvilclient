@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2024-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -22,10 +22,13 @@ import net.neoforged.neoforge.client.ConfigScreenHandler;
 
 public class NeoForgeClientSetup {
 
-    public static void setup() {
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> ScreenUtils.getMainConfigGui(screen)));
-        AnvilclientCommon.init();
-    }
-
+	public static void setup() {
+		ModLoadingContext.get()
+				.registerExtensionPoint(
+						ConfigScreenHandler.ConfigScreenFactory.class,
+						() ->
+								new ConfigScreenHandler.ConfigScreenFactory(
+										(mc, screen) -> ScreenUtils.getMainConfigGui(screen)));
+		AnvilclientCommon.init();
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -20,10 +20,9 @@ import de.ambossmann.anvilclient.features.components.ToggleComponent;
 import de.ambossmann.anvilclient.settings.ISetting;
 import de.ambossmann.anvilclient.settings.SettingRegister;
 import de.ambossmann.anvilclient.util.utils.SettingUtils;
+import java.util.TreeSet;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
-
-import java.util.TreeSet;
 
 public class FeatureGui extends ConfigScreen {
 
@@ -40,18 +39,21 @@ public class FeatureGui extends ConfigScreen {
 
 		ToggleComponent featureToggle = feature.getFeatureToggle();
 		if (featureToggle != null) {
-			this.optionsList.addBig(OptionInstance.createBoolean("anvilclient.feature." + feature.getName() + ".toggle",
-					featureToggle.isEnabled(),
-					featureToggle::setEnabled));
+			this.optionsList.addBig(
+					OptionInstance.createBoolean(
+							"anvilclient.feature." + feature.getName() + ".toggle",
+							featureToggle.isEnabled(),
+							featureToggle::setEnabled));
 		}
 
-		for (ISetting<?> setting : settingList.stream().filter((setting) -> !setting.getKey().contains(".featureEnabled"))
-				.toArray(ISetting<?>[]::new)) {
+		for (ISetting<?> setting :
+				settingList.stream()
+						.filter((setting) -> !setting.getKey().contains(".featureEnabled"))
+						.toArray(ISetting<?>[]::new)) {
 			OptionInstance<?> option = SettingUtils.getOptionForSetting(setting);
 			if (option != null) {
 				this.optionsList.addBig(option);
 			}
 		}
 	}
-
 }

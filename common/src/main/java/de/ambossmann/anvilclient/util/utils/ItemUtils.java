@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -27,8 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ItemUtils {
 
-	private ItemUtils() {
-	}
+	private ItemUtils() {}
 
 	public static int getDurability(ItemStack item) {
 		return item.isDamageableItem() ? item.getMaxDamage() - item.getDamageValue() : 0;
@@ -41,7 +40,8 @@ public class ItemUtils {
 	public static float getDiggingSpeed(Player player, ItemStack tool, BlockState blockState) {
 		float destroySpeed = tool.getDestroySpeed(blockState);
 		if (destroySpeed > 1.0F) {
-			int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, tool);
+			int efficiencyLevel =
+					EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, tool);
 			if (efficiencyLevel > 0 && !tool.isEmpty()) {
 				destroySpeed += (float) (efficiencyLevel * efficiencyLevel + 1);
 			}
@@ -52,12 +52,13 @@ public class ItemUtils {
 		}
 
 		if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-			destroySpeed *= (switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
-				case 0 -> 0.3f;
-				case 1 -> 0.09f;
-				case 2 -> 0.0027f;
-				default -> 8.1E-4f;
-			});
+			destroySpeed *=
+					(switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+						case 0 -> 0.3f;
+						case 1 -> 0.09f;
+						case 2 -> 0.0027f;
+						default -> 8.1E-4f;
+					});
 		}
 
 		if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
@@ -74,5 +75,4 @@ public class ItemUtils {
 	public static float getDiggingSpeedAt(Player player, ItemStack tool, BlockPos blockPos) {
 		return getDiggingSpeed(player, tool, player.level().getBlockState(blockPos));
 	}
-
 }

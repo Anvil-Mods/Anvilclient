@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -27,9 +27,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MultiPlayerGameMode.class)
 public class MixinMultiPlayerGameMode {
-	@Inject(at = @At("HEAD"), method = "continueDestroyBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z")
-	private void continueDestroyBlock(BlockPos blockPos, Direction directionFacing,
-			CallbackInfoReturnable<Boolean> callback) {
+	@Inject(
+			at = @At("HEAD"),
+			method = "continueDestroyBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z")
+	private void continueDestroyBlock(
+			BlockPos blockPos, Direction directionFacing, CallbackInfoReturnable<Boolean> callback) {
 		PlayerDamageBlockEvent.STARTED.invoker().started(blockPos, directionFacing);
 	}
 

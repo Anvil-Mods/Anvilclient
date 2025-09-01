@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,8 +17,13 @@ package de.ambossmann.anvilclient.settings;
 
 public class IntegerSetting extends NumberSetting<Integer> {
 
-	public IntegerSetting(String name, String description, Integer defaultValue, Integer minValue,
-			Integer maxValue, float stepSizeIn) {
+	public IntegerSetting(
+			String name,
+			String description,
+			Integer defaultValue,
+			Integer minValue,
+			Integer maxValue,
+			float stepSizeIn) {
 		super(name, description, defaultValue, minValue, maxValue, stepSizeIn, 0);
 	}
 
@@ -31,5 +36,4 @@ public class IntegerSetting extends NumberSetting<Integer> {
 	public Integer stringToValue(String string) {
 		return Integer.parseInt(string);
 	}
-
 }

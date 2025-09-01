@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -31,7 +31,8 @@ public class CharacterSetting extends AbstractSetting<Character> implements Char
 		if (index == 0) {
 			return getValue();
 		} else {
-			throw new IndexOutOfBoundsException("Tried to get character at index #" + index + "; only #0 is allowed");
+			throw new IndexOutOfBoundsException(
+					"Tried to get character at index #" + index + "; only #0 is allowed");
 		}
 	}
 
@@ -41,7 +42,11 @@ public class CharacterSetting extends AbstractSetting<Character> implements Char
 			return getValue().toString();
 		} else {
 			throw new IndexOutOfBoundsException(
-					"Cannot copy sequence index " + start + " to " + end + "; must be a range between 0 and 1");
+					"Cannot copy sequence index "
+							+ start
+							+ " to "
+							+ end
+							+ "; must be a range between 0 and 1");
 		}
 	}
 
@@ -54,5 +59,4 @@ public class CharacterSetting extends AbstractSetting<Character> implements Char
 	public Character stringToValue(String string) {
 		return string.charAt(0);
 	}
-
 }

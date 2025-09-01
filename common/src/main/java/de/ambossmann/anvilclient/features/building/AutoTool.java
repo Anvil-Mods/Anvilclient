@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,6 +15,7 @@
  */
 package de.ambossmann.anvilclient.features.building;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import de.ambossmann.anvilclient.AnvilclientCommon;
 import de.ambossmann.anvilclient.event.PlayerDamageBlockEvent;
 import de.ambossmann.anvilclient.features.Feature;
@@ -28,7 +29,7 @@ import de.ambossmann.anvilclient.settings.Setting;
 import de.ambossmann.anvilclient.util.utils.ItemUtils;
 import de.ambossmann.anvilclient.util.utils.LocalPlayerUtils;
 import de.ambossmann.anvilclient.util.utils.WorldUtils;
-import com.mojang.blaze3d.platform.InputConstants;
+import java.util.Comparator;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -40,8 +41,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.Comparator;
 
 public class AutoTool extends Feature {
 
@@ -58,19 +57,29 @@ public class AutoTool extends Feature {
 	private boolean isOriginalTool = true;
 	private Slot originalTool;
 
-	private final FeatureToggleComponent toggleComponent = new FeatureToggleComponent(this, "", false);
-	private final KeybindingComponent keybindingComponent = new KeybindingComponent(this, new KeyMapping("anvilclient.feature." + getName() + ".toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, AnvilclientCommon.KEY_CATEGORY), toggleComponent::toggleEnabled);
+	private final FeatureToggleComponent toggleComponent =
+			new FeatureToggleComponent(this, "", false);
+	private final KeybindingComponent keybindingComponent =
+			new KeybindingComponent(
+					this,
+					new KeyMapping(
+							"anvilclient.feature." + getName() + ".toggle",
+							InputConstants.Type.KEYSYM,
+							GLFW.GLFW_KEY_UNKNOWN,
+							AnvilclientCommon.KEY_CATEGORY),
+					toggleComponent::toggleEnabled);
 
 	@Setting
-	public IntegerSetting minDurability = new IntegerSetting(getName() + ".minDurability", "", 5, 0,
-			(int) Byte.MAX_VALUE, 1.0F);
+	public IntegerSetting minDurability =
+			new IntegerSetting(getName() + ".minDurability", "", 5, 0, (int) Byte.MAX_VALUE, 1.0F);
 
 	@Setting
 	public BooleanSetting revertTool = new BooleanSetting(getName() + ".revertTool", "", true);
 
 	@Setting
-	public EnumSetting<AutoTool.SilkTouchMode> silkTouchMode = new EnumSetting<AutoTool.SilkTouchMode>(
-			getName() + ".silkTouchMode", "", AutoTool.SilkTouchMode.DOESNT_MATTER);
+	public EnumSetting<AutoTool.SilkTouchMode> silkTouchMode =
+			new EnumSetting<AutoTool.SilkTouchMode>(
+					getName() + ".silkTouchMode", "", AutoTool.SilkTouchMode.DOESNT_MATTER);
 
 	@Override
 	public void register() {
@@ -81,7 +90,8 @@ public class AutoTool extends Feature {
 	}
 
 	private boolean isDurabilityGood(ItemStack tool) {
-		return minDurability.getValue() < 1 || ItemUtils.isUnbreakable(tool)
+		return minDurability.getValue() < 1
+				|| ItemUtils.isUnbreakable(tool)
 				|| ItemUtils.getDurability(tool) >= minDurability.getValue();
 	}
 
@@ -119,18 +129,18 @@ public class AutoTool extends Feature {
 		LocalPlayer localPlayer = LocalPlayerUtils.getLocalPlayer();
 		if (!WorldUtils.canPlaceBlocksAt(localPlayer, blockPos)
 				&& !WorldUtils.getWorld(localPlayer).isEmptyBlock(blockPos)) {
-			return LocalPlayerUtils
-					.getHotbarSlots(localPlayer).stream()
+			return LocalPlayerUtils.getHotbarSlots(localPlayer).stream()
 					.filter(this::isDurabilityGood)
 					.filter(this::filterSilkTouchMode)
-					.max(Comparator
-							.comparing(Slot::getItem, Comparator
-									.<ItemStack>comparingDouble(
-											tool -> ItemUtils.getDiggingSpeedAt(localPlayer, tool, blockPos))
-									.thenComparingInt(this::getSilkTouchEnchantmentLevel)
-									.thenComparingInt(this::getFortuneEnchantmentLevel)
-									.thenComparing(ItemUtils::isUnbreakable))
-							.thenComparing(slot -> slot == LocalPlayerUtils.getSelectedSlot(localPlayer)))
+					.max(
+							Comparator.comparing(
+											Slot::getItem,
+											Comparator.<ItemStack>comparingDouble(
+															tool -> ItemUtils.getDiggingSpeedAt(localPlayer, tool, blockPos))
+													.thenComparingInt(this::getSilkTouchEnchantmentLevel)
+													.thenComparingInt(this::getFortuneEnchantmentLevel)
+													.thenComparing(ItemUtils::isUnbreakable))
+									.thenComparing(slot -> slot == LocalPlayerUtils.getSelectedSlot(localPlayer)))
 					.orElse(LocalPlayerUtils.getSelectedSlot(localPlayer));
 		}
 		return LocalPlayerUtils.getSelectedSlot(localPlayer);
@@ -175,7 +185,8 @@ public class AutoTool extends Feature {
 		private final String translationKey;
 
 		private SilkTouchMode() {
-			this.translationKey = "anvilclient.feature.autoTool.silkTouchMode." + this.toString().toLowerCase();
+			this.translationKey =
+					"anvilclient.feature.autoTool.silkTouchMode." + this.toString().toLowerCase();
 		}
 
 		@Override

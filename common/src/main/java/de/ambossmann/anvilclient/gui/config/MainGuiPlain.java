@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -26,43 +26,43 @@ import net.minecraft.network.chat.Component;
 
 public class MainGuiPlain extends ConfigScreen {
 
-    public MainGuiPlain(Screen parentScreen) {
-        super("de/ambossmann/anvilclient", parentScreen);
-    }
+	public MainGuiPlain(Screen parentScreen) {
+		super("de/ambossmann/anvilclient", parentScreen);
+	}
 
-    @Override
-    protected void addOptions() {
-        for (Feature feature : Features.FEATURE_LIST) {
-            if (feature.getFeatureToggle() != null) {
-                this.optionsList
-                        .addSmall(SettingUtils.getOptionListForFeature(feature, this));
-            } else {
-                this.optionsList.addBig(SettingUtils.getClickOption("anvilclient.feature." + feature.getName(),
-                        () -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
-            }
-        }
-    }
+	@Override
+	protected void addOptions() {
+		for (Feature feature : Features.FEATURE_LIST) {
+			if (feature.getFeatureToggle() != null) {
+				this.optionsList.addSmall(SettingUtils.getOptionListForFeature(feature, this));
+			} else {
+				this.optionsList.addBig(
+						SettingUtils.getClickOption(
+								"anvilclient.feature." + feature.getName(),
+								() -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
+			}
+		}
+	}
 
-    @Override
-    protected void addButtons() {
-        this.addRenderableWidget(
-                Button.builder(Component.translatable(SortType.PLAIN.getKey()),
-                                button -> this.changeScreen())
-                        .pos(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET)
-                        .size(BUTTON_WIDTH, BUTTON_HEIGHT)
-                        .build());
-        this.addRenderableWidget(
-                Button.builder(CommonComponents.GUI_DONE,
-                                button -> this.onClose())
-                        .pos(this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
-                                this.height - DONE_BUTTON_TOP_OFFSET)
-                        .size(BUTTON_WIDTH, BUTTON_HEIGHT)
-                        .build());
-    }
+	@Override
+	protected void addButtons() {
+		this.addRenderableWidget(
+				Button.builder(
+								Component.translatable(SortType.PLAIN.getKey()), button -> this.changeScreen())
+						.pos(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET)
+						.size(BUTTON_WIDTH, BUTTON_HEIGHT)
+						.build());
+		this.addRenderableWidget(
+				Button.builder(CommonComponents.GUI_DONE, button -> this.onClose())
+						.pos(
+								this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
+								this.height - DONE_BUTTON_TOP_OFFSET)
+						.size(BUTTON_WIDTH, BUTTON_HEIGHT)
+						.build());
+	}
 
-    private void changeScreen() {
-        ConfigScreen.sortType.setValue(SortType.CATEGORY);
-        this.minecraft.setScreen(new MainGuiCategory(this.parentScreen));
-    }
-
+	private void changeScreen() {
+		ConfigScreen.sortType.setValue(SortType.CATEGORY);
+		this.minecraft.setScreen(new MainGuiCategory(this.parentScreen));
+	}
 }

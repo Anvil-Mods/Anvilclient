@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2023-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -19,12 +19,11 @@ import de.ambossmann.anvilclient.features.Feature;
 
 public abstract class BaseComponent {
 
-    protected BaseComponent(Feature parentFeature) {
-        this.parentFeature = parentFeature;
-    }
+	protected BaseComponent(Feature parentFeature) {
+		this.parentFeature = parentFeature;
+	}
 
-    protected Feature parentFeature;
+	protected Feature parentFeature;
 
-    public void register() {
-    }
+	public void register() {}
 }

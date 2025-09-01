@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2024-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -15,8 +15,8 @@
  */
 package de.ambossmann.anvilclient.mixin;
 
-import de.ambossmann.anvilclient.features.Features;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import de.ambossmann.anvilclient.features.Features;
 import net.minecraft.client.renderer.LightTexture;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

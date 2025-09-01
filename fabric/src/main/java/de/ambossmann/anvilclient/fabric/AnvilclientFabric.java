@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2023-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -19,8 +19,8 @@ import de.ambossmann.anvilclient.AnvilclientCommon;
 import net.fabricmc.api.ClientModInitializer;
 
 public class AnvilclientFabric implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-        AnvilclientCommon.init();
-    }
+	@Override
+	public void onInitializeClient() {
+		AnvilclientCommon.init();
+	}
 }

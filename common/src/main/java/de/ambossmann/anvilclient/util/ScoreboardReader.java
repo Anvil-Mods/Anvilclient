@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Ambossmann <https://github.com/Ambossmann>
+ * Copyright (C) 2021-2025 Ambossmann <https://github.com/Ambossmann>
  *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -16,69 +16,71 @@
 package de.ambossmann.anvilclient.util;
 
 import de.ambossmann.anvilclient.util.utils.TextUtils;
+import java.util.Collection;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.scores.*;
 
-import java.util.Collection;
-import java.util.List;
-
 public class ScoreboardReader {
 
-    private ScoreboardReader() {
-    }
+	private ScoreboardReader() {}
 
-    public static final Scoreboard DUMMY_SCOREBOARD = new Scoreboard();
+	public static final Scoreboard DUMMY_SCOREBOARD = new Scoreboard();
 
-    public static Objective getScoreObjective() {
-        Minecraft mc = Minecraft.getInstance();
-        Scoreboard scoreboard = mc.level.getScoreboard();
-        PlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(mc.player.getScoreboardName());
-        if (scoreplayerteam != null) {
-            ChatFormatting teamColor = scoreplayerteam.getColor();
-            if (teamColor != ChatFormatting.RESET) {
-                return scoreboard.getDisplayObjective(DisplaySlot.teamColorToSlot(teamColor));
-            }
-        }
+	public static Objective getScoreObjective() {
+		Minecraft mc = Minecraft.getInstance();
+		Scoreboard scoreboard = mc.level.getScoreboard();
+		PlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(mc.player.getScoreboardName());
+		if (scoreplayerteam != null) {
+			ChatFormatting teamColor = scoreplayerteam.getColor();
+			if (teamColor != ChatFormatting.RESET) {
+				return scoreboard.getDisplayObjective(DisplaySlot.teamColorToSlot(teamColor));
+			}
+		}
 
-        return scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR);
-    }
+		return scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR);
+	}
 
-    public static Scoreboard getScoreboard() {
-        Objective scoreobjective = getScoreObjective();
-        if (scoreobjective != null) {
-            return scoreobjective.getScoreboard();
-        }
-        return DUMMY_SCOREBOARD;
-    }
+	public static Scoreboard getScoreboard() {
+		Objective scoreobjective = getScoreObjective();
+		if (scoreobjective != null) {
+			return scoreobjective.getScoreboard();
+		}
+		return DUMMY_SCOREBOARD;
+	}
 
-    public static Collection<PlayerScoreEntry> getScores() {
-        return getScoreboard().listPlayerScores(getScoreObjective());
-    }
+	public static Collection<PlayerScoreEntry> getScores() {
+		return getScoreboard().listPlayerScores(getScoreObjective());
+	}
 
-    public static Component getFirstScoreContaining(String string) {
-        for (Component textComponent : getLines()) {
-            if (TextUtils.removeFormattingCodes(textComponent.getString()).contains(string)) {
-                return textComponent;
-            }
-        }
-        return null;
-    }
+	public static Component getFirstScoreContaining(String string) {
+		for (Component textComponent : getLines()) {
+			if (TextUtils.removeFormattingCodes(textComponent.getString()).contains(string)) {
+				return textComponent;
+			}
+		}
+		return null;
+	}
 
-    public static boolean contains(String string) {
-        return getFirstScoreContaining(string) != null;
-    }
+	public static boolean contains(String string) {
+		return getFirstScoreContaining(string) != null;
+	}
 
-    public static List<Component> getLines() {
-        Scoreboard scoreboard = getScoreboard();
-        return scoreboard.listPlayerScores(getScoreObjective()).stream()
-                .filter(playerScoreEntry -> !playerScoreEntry.isHidden())
-                .sorted(Gui.SCORE_DISPLAY_ORDER).limit(15L).map(playerScoreEntry -> {
-                    PlayerTeam playerTeam = scoreboard.getPlayersTeam(playerScoreEntry.owner());
-                    Component ownerName = playerScoreEntry.ownerName();
-                    return (Component) PlayerTeam.formatNameForTeam(playerTeam, ownerName);
-                }).toList();
-    }
+	public static List<Component> getLines() {
+		Scoreboard scoreboard = getScoreboard();
+		return scoreboard.listPlayerScores(getScoreObjective()).stream()
+				.filter(playerScoreEntry -> !playerScoreEntry.isHidden())
+				.sorted(Gui.SCORE_DISPLAY_ORDER)
+				.limit(15L)
+				.map(
+						playerScoreEntry -> {
+							PlayerTeam playerTeam = scoreboard.getPlayersTeam(playerScoreEntry.owner());
+							Component ownerName = playerScoreEntry.ownerName();
+							return (Component) PlayerTeam.formatNameForTeam(playerTeam, ownerName);
+						})
+				.toList();
+	}
 }

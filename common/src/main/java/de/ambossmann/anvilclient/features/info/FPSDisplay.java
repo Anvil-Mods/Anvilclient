@@ -15,13 +15,13 @@
  */
 package de.ambossmann.anvilclient.features.info;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import de.ambossmann.anvilclient.AnvilclientCommon;
 import de.ambossmann.anvilclient.features.Feature;
 import de.ambossmann.anvilclient.features.FeatureCategory;
 import de.ambossmann.anvilclient.features.components.FeatureToggleComponent;
 import de.ambossmann.anvilclient.features.components.HudComponent;
 import de.ambossmann.anvilclient.features.components.KeybindingComponent;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
