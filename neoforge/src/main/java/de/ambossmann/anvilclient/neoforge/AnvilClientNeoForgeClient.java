@@ -17,18 +17,17 @@ package de.ambossmann.anvilclient.neoforge;
 
 import de.ambossmann.anvilclient.AnvilclientCommon;
 import de.ambossmann.anvilclient.util.utils.ScreenUtils;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.neoforge.client.ConfigScreenHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-public class NeoForgeClientSetup {
+@Mod(value = AnvilclientCommon.MOD_ID, dist = Dist.CLIENT)
+public class AnvilClientNeoForgeClient {
 
-	public static void setup() {
-		ModLoadingContext.get()
-				.registerExtensionPoint(
-						ConfigScreenHandler.ConfigScreenFactory.class,
-						() ->
-								new ConfigScreenHandler.ConfigScreenFactory(
-										(mc, screen) -> ScreenUtils.getMainConfigGui(screen)));
+	public AnvilClientNeoForgeClient(ModContainer container) {
+		container.registerExtensionPoint(
+				IConfigScreenFactory.class, (mc, screen) -> ScreenUtils.getMainConfigGui(screen));
 		AnvilclientCommon.init();
 	}
 }

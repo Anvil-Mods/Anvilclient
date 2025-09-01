@@ -1,7 +1,8 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.5-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.11-SNAPSHOT" apply false
     id "com.diffplug.spotless" version "6.25.0"
+    id 'com.gradleup.shadow' version '8.3.6' apply false
 }
 
 architectury {
@@ -22,6 +23,23 @@ subprojects {
         mappings loom.layered() {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-${rootProject.parchment_minecraft_version}:${rootProject.parchment_version}")
+        }
+    }
+
+    processResources {
+        var replaceProperties = [
+                minecraft_version      : rootProject.minecraft_version,
+                minecraft_version_range: rootProject.minecraft_version_range,
+                neo_version_range      : rootProject.neo_version_range,
+                loader_version_range   : rootProject.loader_version_range,
+                mod_version            : rootProject.mod_version,
+                architectury_version   : rootProject.architectury_version,
+        ]
+        inputs.properties replaceProperties
+        replaceProperties.put 'project', project
+
+        filesMatching(['META-INF/neoforge.mods.toml', 'fabric.mod.json']) {
+            expand replaceProperties
         }
     }
 }
@@ -49,29 +67,11 @@ allprojects {
         }
     }
 
-    tasks.withType(ProcessResources).configureEach {
-        var replaceProperties = [
-                minecraft_version      : rootProject.minecraft_version,
-                minecraft_version_range: rootProject.minecraft_version_range,
-                neo_version            : rootProject.neo_version,
-                neo_version_range      : rootProject.neo_version_range,
-                loader_version_range   : rootProject.loader_version_range,
-                mod_version            : rootProject.mod_version,
-                architectury_version   : rootProject.architectury_version,
-                architectury_next_api  : Integer.toString(Integer.parseInt(rootProject.architectury_version.split("\\.")[0]) + 1)
-        ]
-        inputs.properties replaceProperties
-
-        filesMatching(['META-INF/mods.toml', 'fabric.mod.json']) {
-            expand replaceProperties + [project: project]
-        }
-    }
-
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
-        options.release = 17
+        options.release = 21
     }
 
     java {

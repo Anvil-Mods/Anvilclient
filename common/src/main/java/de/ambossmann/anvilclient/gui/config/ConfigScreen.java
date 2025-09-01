@@ -18,77 +18,39 @@ package de.ambossmann.anvilclient.gui.config;
 import de.ambossmann.anvilclient.settings.EnumSetting;
 import de.ambossmann.anvilclient.settings.IgnoreAsOption;
 import de.ambossmann.anvilclient.settings.Setting;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
+import net.minecraft.client.gui.screens.OptionsSubScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.OptionEnum;
 
-public abstract class ConfigScreen extends Screen {
-	private static final int TITLE_HEIGHT = 8;
-
-	protected static final int OPTIONS_LIST_TOP_BOTTOM_OFFSET = 32;
-	protected static final int OPTIONS_LIST_ITEM_HEIGHT = 25;
-
+public abstract class ConfigScreen extends OptionsSubScreen {
 	protected static final int BUTTON_WIDTH = 200;
 	protected static final int BUTTON_HEIGHT = 20;
 	protected static final int DONE_BUTTON_TOP_OFFSET = 27;
 
-	protected OptionsList optionsList;
+	protected OptionsList list;
 
-	protected Screen parentScreen;
-
-	public ConfigScreen(String nameTranslationKey, Screen parentScreen) {
-		super(Component.translatable(nameTranslationKey));
-		this.parentScreen = parentScreen;
-	}
-
-	public ConfigScreen(String nameTranslationKey) {
-		this(nameTranslationKey, null);
+	public ConfigScreen(String nameTranslationKey, Screen lastScreen) {
+		super(lastScreen, null, Component.translatable(nameTranslationKey));
 	}
 
 	@Override
 	protected void init() {
-		this.optionsList =
-				this.addRenderableWidget(
-						new OptionsList(
-								this.minecraft,
-								this.width,
-								this.height - 2 * OPTIONS_LIST_TOP_BOTTOM_OFFSET,
-								OPTIONS_LIST_TOP_BOTTOM_OFFSET,
-								OPTIONS_LIST_ITEM_HEIGHT));
+		this.list =
+				this.addRenderableWidget(new OptionsList(this.minecraft, this.width, this.height, this));
 
 		this.addOptions();
 
-		this.addButtons();
-	}
-
-	protected void addButtons() {
-		this.addRenderableWidget(
-				Button.builder(CommonComponents.GUI_DONE, button -> this.onClose())
-						.pos((this.width - BUTTON_WIDTH) / 2, this.height - DONE_BUTTON_TOP_OFFSET)
-						.size(BUTTON_WIDTH, BUTTON_HEIGHT)
-						.build());
+		super.init();
 	}
 
 	protected abstract void addOptions();
 
-	public void showScreen(Screen screen) {
-		this.minecraft.setScreen(screen);
-	}
-
 	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-		super.render(graphics, mouseX, mouseY, partialTicks);
-		this.optionsList.render(graphics, mouseX, mouseY, partialTicks);
-		graphics.drawCenteredString(this.font, this.title, this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
-	}
-
-	@Override
-	public void onClose() {
-		this.minecraft.setScreen(parentScreen);
+	protected void repositionElements() {
+		super.repositionElements();
+		this.list.updateSize(this.width, this.layout);
 	}
 
 	@Setting @IgnoreAsOption
@@ -101,7 +63,7 @@ public abstract class ConfigScreen extends Screen {
 
 		private final String translationKey;
 
-		private SortType() {
+		SortType() {
 			this.translationKey = "anvilclient.configGui.sortType." + this.toString().toLowerCase();
 		}
 

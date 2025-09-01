@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AnvilclientCommon {
-	public static final String MOD_ID = "de/ambossmann/anvilclient";
+	public static final String MOD_ID = "anvilclient";
 	public static final String KEY_CATEGORY = "anvilclient.key.categories.anvilclient";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 

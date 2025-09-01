@@ -41,7 +41,7 @@ public class ItemUtils {
 		float destroySpeed = tool.getDestroySpeed(blockState);
 		if (destroySpeed > 1.0F) {
 			int efficiencyLevel =
-					EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, tool);
+					EnchantmentHelper.getItemEnchantmentLevel(Enchantments.EFFICIENCY, tool);
 			if (efficiencyLevel > 0 && !tool.isEmpty()) {
 				destroySpeed += (float) (efficiencyLevel * efficiencyLevel + 1);
 			}

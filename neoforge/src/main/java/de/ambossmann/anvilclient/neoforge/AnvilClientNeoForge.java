@@ -16,17 +16,11 @@
 package de.ambossmann.anvilclient.neoforge;
 
 import de.ambossmann.anvilclient.AnvilclientCommon;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLEnvironment;
 
 @Mod(AnvilclientCommon.MOD_ID)
 public class AnvilClientNeoForge {
 
-	public AnvilClientNeoForge(IEventBus modEventBus) {
-		if (FMLEnvironment.dist == Dist.CLIENT) {
-			NeoForgeClientSetup.setup();
-		}
-	}
+	public AnvilClientNeoForge(IEventBus modEventBus) {}
 }

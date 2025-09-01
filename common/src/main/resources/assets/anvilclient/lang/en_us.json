@@ -26,9 +26,6 @@
 	"anvilclient.feature.autoTool.silkTouchMode.prefer": "Prefer",
 	"anvilclient.feature.autoTool.silkTouchMode.use_only": "Use only",
 	
-	"anvilclient.feature.bedwarsInfo": "Bedwars Info",
-	"anvilclient.feature.bedwarsInfo.toggle": "Toggle Bedwars Info",
-	
 	"anvilclient.feature.fpsDisplay": "FPS Display",
 	"anvilclient.feature.fpsDisplay.toggle": "Toggle FPS Display",
 	
@@ -36,7 +33,12 @@
 	"anvilclient.feature.cpsDisplay.toggle": "Toggle CPS Display",
 	"anvilclient.feature.cpsDisplay.mouseButton": "Mouse Button",
 	"anvilclient.feature.cpsDisplay.measuringSpan": "Measuring span in seconds",
-	
+
+    "anvilclient.feature.armorDurability": "Armor Durability Hud",
+    "anvilclient.feature.armorDurability.toggle": "Toggle Armor Durability Hud",
+    "anvilclient.feature.armorDurability.displayDirection": "Display Direction",
+    "anvilclient.feature.armorDurability.horizontal": "Horizontal",
+    "anvilclient.feature.armorDurability.vertical": "Vertical",
 	
 	"anvilclient.key.openSettings": "Open Settings",
 	"anvilclient.key.categories.anvilclient": "Anvilclient"

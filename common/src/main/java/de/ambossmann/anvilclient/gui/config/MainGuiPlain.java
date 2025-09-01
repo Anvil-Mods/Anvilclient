@@ -20,6 +20,7 @@ import de.ambossmann.anvilclient.features.Features;
 import de.ambossmann.anvilclient.util.utils.SettingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -27,16 +28,16 @@ import net.minecraft.network.chat.Component;
 public class MainGuiPlain extends ConfigScreen {
 
 	public MainGuiPlain(Screen parentScreen) {
-		super("de/ambossmann/anvilclient", parentScreen);
+		super("anvilclient", parentScreen);
 	}
 
 	@Override
 	protected void addOptions() {
 		for (Feature feature : Features.FEATURE_LIST) {
 			if (feature.getFeatureToggle() != null) {
-				this.optionsList.addSmall(SettingUtils.getOptionListForFeature(feature, this));
+				this.list.addSmall(SettingUtils.getOptionListForFeature(feature, this));
 			} else {
-				this.optionsList.addBig(
+				this.list.addBig(
 						SettingUtils.getClickOption(
 								"anvilclient.feature." + feature.getName(),
 								() -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
@@ -45,24 +46,18 @@ public class MainGuiPlain extends ConfigScreen {
 	}
 
 	@Override
-	protected void addButtons() {
-		this.addRenderableWidget(
+	protected void addFooter() {
+		LinearLayout linearLayout = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
+		linearLayout.addChild(
 				Button.builder(
 								Component.translatable(SortType.PLAIN.getKey()), button -> this.changeScreen())
-						.pos(this.width / 2 - (BUTTON_WIDTH + 5), this.height - DONE_BUTTON_TOP_OFFSET)
-						.size(BUTTON_WIDTH, BUTTON_HEIGHT)
 						.build());
-		this.addRenderableWidget(
-				Button.builder(CommonComponents.GUI_DONE, button -> this.onClose())
-						.pos(
-								this.width / 2 - (BUTTON_WIDTH + 5) + BUTTON_WIDTH + 10,
-								this.height - DONE_BUTTON_TOP_OFFSET)
-						.size(BUTTON_WIDTH, BUTTON_HEIGHT)
-						.build());
+		linearLayout.addChild(
+				Button.builder(CommonComponents.GUI_DONE, button -> this.onClose()).build());
 	}
 
 	private void changeScreen() {
 		ConfigScreen.sortType.setValue(SortType.CATEGORY);
-		this.minecraft.setScreen(new MainGuiCategory(this.parentScreen));
+		this.minecraft.setScreen(new MainGuiCategory(this.lastScreen));
 	}
 }

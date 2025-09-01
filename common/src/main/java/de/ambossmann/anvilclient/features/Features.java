@@ -32,7 +32,6 @@ public class Features {
 	public static final AutoTool AUTO_TOOL = new AutoTool();
 	public static final Coordinates COORDINATES = new Coordinates();
 	public static final Fullbright FULLBRIGHT = new Fullbright();
-	//	public static final BedwarsInfo BEDWARS_INFO = new BedwarsInfo();
 	public static final FPSDisplay FPS_DISPLAY = new FPSDisplay();
 	public static final CPSDisplay CPS_DISPLAY = new CPSDisplay();
 	public static final ArmorDurability ARMOR_DURABILITY = new ArmorDurability();

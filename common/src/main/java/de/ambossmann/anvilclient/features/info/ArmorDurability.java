@@ -108,8 +108,7 @@ public class ArmorDurability extends Feature {
 		private final String translationKey;
 
 		DisplayDirection() {
-			this.translationKey =
-					"anvilclient.feature.autoTool.armorDurability." + this.toString().toLowerCase();
+			this.translationKey = "anvilclient.feature.armorDurability." + this.toString().toLowerCase();
 		}
 
 		@Override

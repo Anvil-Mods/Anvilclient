@@ -39,7 +39,7 @@ public class FeatureGui extends ConfigScreen {
 
 		ToggleComponent featureToggle = feature.getFeatureToggle();
 		if (featureToggle != null) {
-			this.optionsList.addBig(
+			this.list.addBig(
 					OptionInstance.createBoolean(
 							"anvilclient.feature." + feature.getName() + ".toggle",
 							featureToggle.isEnabled(),
@@ -52,7 +52,7 @@ public class FeatureGui extends ConfigScreen {
 						.toArray(ISetting<?>[]::new)) {
 			OptionInstance<?> option = SettingUtils.getOptionForSetting(setting);
 			if (option != null) {
-				this.optionsList.addBig(option);
+				this.list.addBig(option);
 			}
 		}
 	}

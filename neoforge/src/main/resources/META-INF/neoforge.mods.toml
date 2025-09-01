@@ -36,6 +36,6 @@ side = "CLIENT"
 [[dependencies.anvilclient]]
 modId = "architectury"
 type = "required"
-versionRange = "[${architectury_version},${architectury_next_api})"
+versionRange = "[${architectury_version},)"
 ordering = "AFTER"
 side = "CLIENT"

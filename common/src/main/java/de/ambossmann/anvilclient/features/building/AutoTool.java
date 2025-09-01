@@ -122,7 +122,7 @@ public class AutoTool extends Feature {
 	}
 
 	private int getFortuneEnchantmentLevel(ItemStack tool) {
-		return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
+		return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FORTUNE, tool);
 	}
 
 	private Slot getBestTool(BlockPos blockPos) {

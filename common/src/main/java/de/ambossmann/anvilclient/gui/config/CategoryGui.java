@@ -38,9 +38,9 @@ public class CategoryGui extends ConfigScreen {
 
 		for (Feature feature : featureList) {
 			if (feature.getFeatureToggle() != null) {
-				this.optionsList.addSmall(SettingUtils.getOptionListForFeature(feature, this));
+				this.list.addSmall(SettingUtils.getOptionListForFeature(feature, this));
 			} else {
-				this.optionsList.addBig(
+				this.list.addBig(
 						SettingUtils.getClickOption(
 								"anvilclient.feature." + feature.getName(),
 								() -> Minecraft.getInstance().setScreen(new FeatureGui(feature, this))));
