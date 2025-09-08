@@ -13,19 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         fetch-depth: 0
     - name: Set up JDK 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         java-version: '21'
         distribution: 'temurin'
-        cache: gradle
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@v2
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
     - name: Build with Gradle
       run: ./gradlew build
     - uses: actions/upload-artifact@v4
@@ -36,7 +33,3 @@ jobs:
       with:
         name: NeoForge build
         path: neoforge/build/libs
-    - name: Cleanup Gradle Cache
-      run: |
-        rm -f ~/.gradle/caches/modules-2/modules-2.lock
-        rm -f ~/.gradle/caches/modules-2/gc.properties
