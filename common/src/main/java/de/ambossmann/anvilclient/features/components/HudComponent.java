@@ -117,7 +117,7 @@ public class HudComponent extends BaseComponent {
 		}
 
 		public TextRenderFunction(Supplier<String> textSupplier) {
-			this(textSupplier, () -> 0xFFFFFF);
+			this(textSupplier, () -> 0xFFFFFFFF);
 		}
 
 		@Override
